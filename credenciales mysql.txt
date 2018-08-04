@@ -1,0 +1,4 @@
+Server: sql10.freemysqlhosting.net
+Name: sql10250495
+Username: sql10250495
+Password: cV7tBgzEkW
