@@ -4,13 +4,87 @@ import java.sql.*;
 
 public class PersonaBE {
 
-    private int IdentPersona;
-    private ParametroTipoBE TipoDocumento;
-    private String Documento;
-    private String Nombres;
-    private String Paterno;
-    private Date FechaNacimiento;
-    private String Direccion;
-    private String Telefono;
-    private String Email;
+    private int identPersona;
+    private ParametroTipoBE tipoDocumento;
+    private String documento;
+    private String nombres;
+    private String paterno;
+    private Date fechaNacimiento;
+    private String direccion;
+    private String telefono;
+    private String email;
+
+    public int getIdentPersona() {
+        return identPersona;
+    }
+
+    public void setIdentPersona(int identPersona) {
+        this.identPersona = identPersona;
+    }
+
+    public ParametroTipoBE getTipoDocumento() {
+        return tipoDocumento;
+    }
+
+    public void setTipoDocumento(ParametroTipoBE tipoDocumento) {
+        this.tipoDocumento = tipoDocumento;
+    }
+
+    public String getDocumento() {
+        return documento;
+    }
+
+    public void setDocumento(String documento) {
+        this.documento = documento;
+    }
+
+    public String getNombres() {
+        return nombres;
+    }
+
+    public void setNombres(String nombres) {
+        this.nombres = nombres;
+    }
+
+    public String getPaterno() {
+        return paterno;
+    }
+
+    public void setPaterno(String paterno) {
+        this.paterno = paterno;
+    }
+
+    public Date getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+
+    public void setFechaNacimiento(Date fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    
+    
 }
