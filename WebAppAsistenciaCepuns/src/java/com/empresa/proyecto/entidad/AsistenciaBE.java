@@ -9,10 +9,12 @@ public class AsistenciaBE {
     private Date fecha;
     private int numeroSemana;
     private ParametroBE dia;
+    private TurnoBE turno;
 
     public AsistenciaBE() {
         programacionHorario = new ProgramacionHorarioBE();
         dia = new ParametroBE();
+        turno = new TurnoBE();
     }
 
     public int getIdentAsistencia() {
@@ -55,4 +57,13 @@ public class AsistenciaBE {
         this.dia = dia;
     }
 
+    public TurnoBE getTurno() {
+        return turno;
+    }
+
+    public void setTurno(TurnoBE turno) {
+        this.turno = turno;
+    }
+
+    
 }

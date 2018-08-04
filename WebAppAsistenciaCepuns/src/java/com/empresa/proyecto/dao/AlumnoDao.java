@@ -13,9 +13,11 @@ import java.util.List;
  * @author VICTOR
  */
 public interface AlumnoDao {
-    
+
     public List<AlumnoBE> obtener(AlumnoBE alumno);
+
     public int registrar(AlumnoBE alumno);
+
     public boolean actualizar(AlumnoBE alumno);
-    
+
 }
