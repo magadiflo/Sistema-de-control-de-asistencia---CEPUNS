@@ -7,6 +7,7 @@ package com.empresa.proyecto.dao.daoImpl;
 
 import com.empresa.proyecto.dao.AlumnoDao;
 import com.empresa.proyecto.entidad.AlumnoBE;
+import com.empresa.proyecto.util.Util;
 import com.empresa.proyecto.util.conexion.MySQLConexion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -131,14 +132,15 @@ public class AlumnoDaoImpl implements AlumnoDao{
         ResultSet rs = null;
         try {
             ps = mysqlConexion.getConnection().prepareCall(QUERY_ACTUALIZAR);
-            ps.setInt(1, alumno.getPersona().getIdentPersona());
-            ps.setString(2, alumno.getCodigo());
-            ps.setInt(3, alumno.getMatriculaEspecialidad().getIdentMatriculaEspecialidad());
-            ps.setInt(4, alumno.getEstadoHabilitado().getIdentParametro());
-            ps.setString(5, alumno.getApoderado());
-            ps.setString(6, alumno.getTelefonoContacto());
-            ps.setInt(7, alumno.getEstado().getIdentParametro());
-            ps.setInt(8, alumno.getIdentAlumno());
+            
+            ps.setObject(1, Util.obtenerValorParametro(alumno.getPersona().getIdentPersona()));
+            ps.setObject(2, Util.obtenerValorParametro(alumno.getCodigo()));
+            ps.setObject(3, Util.obtenerValorParametro(alumno.getMatriculaEspecialidad().getIdentMatriculaEspecialidad()));
+            ps.setObject(4, Util.obtenerValorParametro(alumno.getEstadoHabilitado().getIdentParametro()));
+            ps.setObject(5, Util.obtenerValorParametro(alumno.getApoderado()));
+            ps.setObject(6, Util.obtenerValorParametro(alumno.getTelefonoContacto()));
+            ps.setObject(7, Util.obtenerValorParametro(alumno.getEstado().getIdentParametro()));
+            ps.setObject(8, Util.obtenerValorParametro(alumno.getIdentAlumno()));
             
             actualizo = ps.executeUpdate() > 0;
             

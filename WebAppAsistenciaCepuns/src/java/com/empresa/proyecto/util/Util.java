@@ -5,6 +5,7 @@
  */
 package com.empresa.proyecto.util;
 
+import com.empresa.proyecto.util.constante.Constante;
 import java.util.Properties;
 
 /**
@@ -13,5 +14,17 @@ import java.util.Properties;
  */
 public class Util {
     public static Properties propiedadesBaseDatos = null;
+    
+    public static boolean esVacio(String text){
+        return text == null || Constante.VACIO.equals(text);
+    }
+    
+    public static Integer obtenerValorParametro(int valor){
+        return valor == 0? null : valor;
+    }
+    
+    public static String obtenerValorParametro(String valor){
+        return esVacio(valor)? null : valor;
+    }
     
 }

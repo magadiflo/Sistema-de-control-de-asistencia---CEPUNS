@@ -14,4 +14,6 @@ public class Constante {
     public static final String PARAM_DATABASE = "database";
     public static final String PARAM_USER = "user";
     public static final String PARAM_PASSWORD = "password";
+    
+    public static final String VACIO = "";
 }
