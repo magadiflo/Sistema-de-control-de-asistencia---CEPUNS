@@ -14,6 +14,12 @@ public class MatriculaBE {
     private boolean asignarPrimerTurnoDefecto;
     private ParametroBE estado;
 
+    public MatriculaBE() {
+        ciclo = new ParametroBE();
+        estadoMatricula = new ParametroBE();
+        estado = new ParametroBE();
+    }
+
     public int getIdentMatricula() {
         return identMatricula;
     }
@@ -85,6 +91,5 @@ public class MatriculaBE {
     public void setEstado(ParametroBE estado) {
         this.estado = estado;
     }
-    
-    
+
 }

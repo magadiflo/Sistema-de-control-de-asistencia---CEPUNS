@@ -3,8 +3,13 @@ package com.empresa.proyecto.entidad;
 public class MatriculaEspecialidadBE {
 
     private int identMatriculaEspecialidad;
-    private MatriculaBE identMatricula;
-    private EspecialidadBE identEspecialidad;
+    private MatriculaBE matricula;
+    private EspecialidadBE especialidad;
+
+    public MatriculaEspecialidadBE() {
+        matricula = new MatriculaBE();
+        especialidad = new EspecialidadBE();
+    }
 
     public int getIdentMatriculaEspecialidad() {
         return identMatriculaEspecialidad;
@@ -14,21 +19,20 @@ public class MatriculaEspecialidadBE {
         this.identMatriculaEspecialidad = identMatriculaEspecialidad;
     }
 
-    public MatriculaBE getIdentMatricula() {
-        return identMatricula;
+    public MatriculaBE getMatricula() {
+        return matricula;
     }
 
-    public void setIdentMatricula(MatriculaBE identMatricula) {
-        this.identMatricula = identMatricula;
+    public void setMatricula(MatriculaBE matricula) {
+        this.matricula = matricula;
     }
 
-    public EspecialidadBE getIdentEspecialidad() {
-        return identEspecialidad;
+    public EspecialidadBE getEspecialidad() {
+        return especialidad;
     }
 
-    public void setIdentEspecialidad(EspecialidadBE identEspecialidad) {
-        this.identEspecialidad = identEspecialidad;
+    public void setEspecialidad(EspecialidadBE especialidad) {
+        this.especialidad = especialidad;
     }
-    
-    
+
 }

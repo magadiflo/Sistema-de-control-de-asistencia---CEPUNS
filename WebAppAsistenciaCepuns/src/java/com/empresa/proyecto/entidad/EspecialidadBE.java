@@ -7,6 +7,10 @@ public class EspecialidadBE {
     private int codigo;
     private ParametroBE estado;
 
+    public EspecialidadBE() {
+        estado = new ParametroBE();
+    }
+    
     public int getIdentEspecialidad() {
         return identEspecialidad;
     }

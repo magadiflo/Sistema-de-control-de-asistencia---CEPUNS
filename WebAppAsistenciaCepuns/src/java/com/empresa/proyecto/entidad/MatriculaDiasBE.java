@@ -3,8 +3,13 @@ package com.empresa.proyecto.entidad;
 public class MatriculaDiasBE {
 
     private int identMatriculaDias;
-    private MatriculaBE identMatricula;
+    private MatriculaBE matricula;
     private ParametroBE dia;
+
+    public MatriculaDiasBE() {
+        matricula = new MatriculaBE();
+        dia = new ParametroBE();
+    }
 
     public int getIdentMatriculaDias() {
         return identMatriculaDias;
@@ -14,12 +19,12 @@ public class MatriculaDiasBE {
         this.identMatriculaDias = identMatriculaDias;
     }
 
-    public MatriculaBE getIdentMatricula() {
-        return identMatricula;
+    public MatriculaBE getMatricula() {
+        return matricula;
     }
 
-    public void setIdentMatricula(MatriculaBE identMatricula) {
-        this.identMatricula = identMatricula;
+    public void setMatricula(MatriculaBE matricula) {
+        this.matricula = matricula;
     }
 
     public ParametroBE getDia() {
@@ -29,6 +34,5 @@ public class MatriculaDiasBE {
     public void setDia(ParametroBE dia) {
         this.dia = dia;
     }
-    
-    
+
 }

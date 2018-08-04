@@ -6,6 +6,10 @@ public class EntidadBE {
     private String descripcion;
     private String url;
     private String urlIcono;
+    
+    public EntidadBE(){
+        
+    }
 
     public int getIdentEntidad() {
         return identEntidad;

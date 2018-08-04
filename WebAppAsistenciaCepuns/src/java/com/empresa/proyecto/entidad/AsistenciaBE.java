@@ -5,10 +5,15 @@ import java.sql.*;
 public class AsistenciaBE {
 
     private int identAsistencia;
-    private ProgramacionHorarioBE identProgramacionHorario;
+    private ProgramacionHorarioBE programacionHorario;
     private Date fecha;
     private int numeroSemana;
     private ParametroBE dia;
+
+    public AsistenciaBE() {
+        programacionHorario = new ProgramacionHorarioBE();
+        dia = new ParametroBE();
+    }
 
     public int getIdentAsistencia() {
         return identAsistencia;
@@ -18,12 +23,12 @@ public class AsistenciaBE {
         this.identAsistencia = identAsistencia;
     }
 
-    public ProgramacionHorarioBE getIdentProgramacionHorario() {
-        return identProgramacionHorario;
+    public ProgramacionHorarioBE getProgramacionHorario() {
+        return programacionHorario;
     }
 
-    public void setIdentProgramacionHorario(ProgramacionHorarioBE identProgramacionHorario) {
-        this.identProgramacionHorario = identProgramacionHorario;
+    public void setProgramacionHorario(ProgramacionHorarioBE programacionHorario) {
+        this.programacionHorario = programacionHorario;
     }
 
     public Date getFecha() {
@@ -49,7 +54,5 @@ public class AsistenciaBE {
     public void setDia(ParametroBE dia) {
         this.dia = dia;
     }
-    
-    
 
 }

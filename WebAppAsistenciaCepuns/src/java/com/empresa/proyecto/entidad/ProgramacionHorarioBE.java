@@ -6,11 +6,16 @@ import java.sql.*;
 public class ProgramacionHorarioBE {
     
     private int identProgramacionHorario;
-    private MatriculaBE identMatricula;
+    private MatriculaBE matricula;
     private int unidad;
     private ParametroBE estadoUnidad;
     private Date fechaInicio;
     private Date fechaFin;
+
+    public ProgramacionHorarioBE() {
+        matricula = new MatriculaBE();
+        estadoUnidad = new ParametroBE();
+    }
 
     public int getIdentProgramacionHorario() {
         return identProgramacionHorario;
@@ -20,12 +25,12 @@ public class ProgramacionHorarioBE {
         this.identProgramacionHorario = identProgramacionHorario;
     }
 
-    public MatriculaBE getIdentMatricula() {
-        return identMatricula;
+    public MatriculaBE getMatricula() {
+        return matricula;
     }
 
-    public void setIdentMatricula(MatriculaBE identMatricula) {
-        this.identMatricula = identMatricula;
+    public void setMatricula(MatriculaBE matricula) {
+        this.matricula = matricula;
     }
 
     public int getUnidad() {
@@ -59,6 +64,9 @@ public class ProgramacionHorarioBE {
     public void setFechaFin(Date fechaFin) {
         this.fechaFin = fechaFin;
     }
+
+    
+    
     
     
 }

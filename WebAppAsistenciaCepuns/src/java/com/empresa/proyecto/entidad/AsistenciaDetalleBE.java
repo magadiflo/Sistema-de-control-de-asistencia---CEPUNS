@@ -3,10 +3,17 @@ package com.empresa.proyecto.entidad;
 public class AsistenciaDetalleBE {
 
     private int identAsistenciaDetalle;
-    private AsistenciaBE identAsistencia;
-    private AlumnoBE identAlumno;
+    private AsistenciaBE asistencia;
+    private AlumnoBE alumno;
     private ParametroBE estadoAsistencia;
     private String observacion;
+
+    public AsistenciaDetalleBE() {
+        asistencia = new AsistenciaBE();
+        alumno = new AlumnoBE();
+        estadoAsistencia = new ParametroBE();
+
+    }
 
     public int getIdentAsistenciaDetalle() {
         return identAsistenciaDetalle;
@@ -16,20 +23,20 @@ public class AsistenciaDetalleBE {
         this.identAsistenciaDetalle = identAsistenciaDetalle;
     }
 
-    public AsistenciaBE getIdentAsistencia() {
-        return identAsistencia;
+    public AsistenciaBE getAsistencia() {
+        return asistencia;
     }
 
-    public void setIdentAsistencia(AsistenciaBE identAsistencia) {
-        this.identAsistencia = identAsistencia;
+    public void setAsistencia(AsistenciaBE asistencia) {
+        this.asistencia = asistencia;
     }
 
-    public AlumnoBE getIdentAlumno() {
-        return identAlumno;
+    public AlumnoBE getAlumno() {
+        return alumno;
     }
 
-    public void setIdentAlumno(AlumnoBE identAlumno) {
-        this.identAlumno = identAlumno;
+    public void setAlumno(AlumnoBE alumno) {
+        this.alumno = alumno;
     }
 
     public ParametroBE getEstadoAsistencia() {
@@ -47,6 +54,5 @@ public class AsistenciaDetalleBE {
     public void setObservacion(String observacion) {
         this.observacion = observacion;
     }
-    
-    
+
 }

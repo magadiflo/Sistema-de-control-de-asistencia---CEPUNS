@@ -4,8 +4,13 @@ package com.empresa.proyecto.entidad;
 public class PermisoBE {
     
     private int identPermiso;
-    private RolBE identRol;
-    private EntidadBE identEntidad;
+    private RolBE rol;
+    private EntidadBE entidad;
+
+    public PermisoBE() {
+        rol = new RolBE();
+        entidad = new EntidadBE();
+    }
 
     public int getIdentPermiso() {
         return identPermiso;
@@ -15,21 +20,25 @@ public class PermisoBE {
         this.identPermiso = identPermiso;
     }
 
-    public RolBE getIdentRol() {
-        return identRol;
+    public RolBE getRol() {
+        return rol;
     }
 
-    public void setIdentRol(RolBE identRol) {
-        this.identRol = identRol;
+    public void setRol(RolBE rol) {
+        this.rol = rol;
     }
 
-    public EntidadBE getIdentEntidad() {
-        return identEntidad;
+    public EntidadBE getEntidad() {
+        return entidad;
     }
 
-    public void setIdentEntidad(EntidadBE identEntidad) {
-        this.identEntidad = identEntidad;
+    public void setEntidad(EntidadBE entidad) {
+        this.entidad = entidad;
     }
+    
+    
+
+    
     
     
     

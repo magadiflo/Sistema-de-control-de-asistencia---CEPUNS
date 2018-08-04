@@ -18,19 +18,20 @@ import java.util.logging.Logger;
  * @author VICTOR
  */
 public class MySQLConexion {
+
     private Connection cn = null;
     private String url = "";
     private String user = "";
     private String pass = "";
     private String jdbc = "jdbc:mysql://";
     private String driver = "com.mysql.jdbc.Driver";
-    
-    public void conectar()  {
-        url = jdbc + Util.propiedadesBaseDatos.getProperty(Constante.PARAM_SERVER) + "/" + 
-                Util.propiedadesBaseDatos.getProperty(Constante.PARAM_DATABASE);
+
+    public void conectar() {
+        url = jdbc + Util.propiedadesBaseDatos.getProperty(Constante.PARAM_SERVER) + "/"
+                + Util.propiedadesBaseDatos.getProperty(Constante.PARAM_DATABASE);
         user = Util.propiedadesBaseDatos.getProperty(Constante.PARAM_USER);
         pass = Util.propiedadesBaseDatos.getProperty(Constante.PARAM_PASSWORD);
-        
+
         try {
             Class.forName(driver);
             cn = DriverManager.getConnection(url, user, pass);
@@ -38,16 +39,15 @@ public class MySQLConexion {
             Logger.getLogger(MySQLConexion.class.getName()).log(Level.SEVERE, null, ex);
             ex.printStackTrace();
         }
-        
-        
+
     }
-    
-    public Connection getConnection(){
+
+    public Connection getConnection() {
         return cn;
     }
-    
-    public boolean isConnect(){
+
+    public boolean isConnect() {
         return cn != null;
     }
-    
+
 }

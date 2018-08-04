@@ -14,6 +14,10 @@ public class PersonaBE {
     private String telefono;
     private String email;
 
+    public PersonaBE() {
+        tipoDocumento = new ParametroTipoBE();
+    }         
+   
     public int getIdentPersona() {
         return identPersona;
     }

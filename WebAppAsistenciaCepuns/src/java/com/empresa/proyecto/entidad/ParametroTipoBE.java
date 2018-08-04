@@ -5,6 +5,9 @@ public class ParametroTipoBE {
     private int identParametroTipo;
     private String descripcion;
 
+    public ParametroTipoBE() {
+    }
+
     public int getIdentParametroTipo() {
         return identParametroTipo;
     }

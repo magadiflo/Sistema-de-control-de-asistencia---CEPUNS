@@ -5,9 +5,13 @@ import java.sql.*;
 public class TurnoBE {
 
     private int identTurno;
-    private MatriculaBE identMatricula;
+    private MatriculaBE matricula;
     private Date horaInicio;
     private Date horaFin;
+
+    public TurnoBE() {
+        matricula = new MatriculaBE();
+    }
 
     public int getIdentTurno() {
         return identTurno;
@@ -17,12 +21,12 @@ public class TurnoBE {
         this.identTurno = identTurno;
     }
 
-    public MatriculaBE getIdentMatricula() {
-        return identMatricula;
+    public MatriculaBE getMatricula() {
+        return matricula;
     }
 
-    public void setIdentMatricula(MatriculaBE identMatricula) {
-        this.identMatricula = identMatricula;
+    public void setMatricula(MatriculaBE matricula) {
+        this.matricula = matricula;
     }
 
     public Date getHoraInicio() {

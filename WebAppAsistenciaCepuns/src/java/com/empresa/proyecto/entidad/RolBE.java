@@ -5,6 +5,9 @@ public class RolBE {
     private int identRol;
     private String descripcion;
 
+    public RolBE() {
+    }
+
     public int getIdentRol() {
         return identRol;
     }

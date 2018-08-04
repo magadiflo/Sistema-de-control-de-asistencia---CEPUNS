@@ -6,6 +6,10 @@ public class ParametroBE {
     private ParametroTipoBE parametroTipo;
     private String descripcion;
 
+    public ParametroBE() {
+        parametroTipo = new ParametroTipoBE();
+    }
+
     public int getIdentParametro() {
         return identParametro;
     }

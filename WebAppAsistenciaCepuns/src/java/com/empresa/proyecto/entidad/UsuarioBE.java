@@ -3,11 +3,17 @@ package com.empresa.proyecto.entidad;
 public class UsuarioBE {
 
     private int identUsuario;
-    private PersonaBE identPersona;
-    private RolBE identRol;
+    private PersonaBE persona;
+    private RolBE rol;
     private String cuenta;
     private String password;
     private ParametroBE estado;
+
+    public UsuarioBE() {
+        persona = new PersonaBE();
+        rol = new RolBE();
+        estado = new ParametroBE();
+    }
 
     public int getIdentUsuario() {
         return identUsuario;
@@ -17,20 +23,20 @@ public class UsuarioBE {
         this.identUsuario = identUsuario;
     }
 
-    public PersonaBE getIdentPersona() {
-        return identPersona;
+    public PersonaBE getPersona() {
+        return persona;
     }
 
-    public void setIdentPersona(PersonaBE identPersona) {
-        this.identPersona = identPersona;
+    public void setPersona(PersonaBE persona) {
+        this.persona = persona;
     }
 
-    public RolBE getIdentRol() {
-        return identRol;
+    public RolBE getRol() {
+        return rol;
     }
 
-    public void setIdentRol(RolBE identRol) {
-        this.identRol = identRol;
+    public void setRol(RolBE rol) {
+        this.rol = rol;
     }
 
     public String getCuenta() {
@@ -56,6 +62,5 @@ public class UsuarioBE {
     public void setEstado(ParametroBE estado) {
         this.estado = estado;
     }
-    
-    
+
 }

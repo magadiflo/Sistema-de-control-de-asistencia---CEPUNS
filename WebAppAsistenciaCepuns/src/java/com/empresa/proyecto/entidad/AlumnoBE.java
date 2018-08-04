@@ -11,13 +11,13 @@ public class AlumnoBE {
     private String telefonoContacto;
     private ParametroBE estado;
 
-    public AlumnoBE(){
+    public AlumnoBE() {
         persona = new PersonaBE();
         matriculaEspecialidad = new MatriculaEspecialidadBE();
         estadoHabilitado = new ParametroBE();
         estado = new ParametroBE();
     }
-    
+
     public int getIdentAlumno() {
         return identAlumno;
     }
@@ -82,5 +82,4 @@ public class AlumnoBE {
         this.estado = estado;
     }
 
-    
 }
