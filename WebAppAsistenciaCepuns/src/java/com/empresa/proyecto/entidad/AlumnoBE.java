@@ -3,14 +3,21 @@ package com.empresa.proyecto.entidad;
 public class AlumnoBE {
 
     private int identAlumno;
-    private PersonaBE identPersona;
+    private PersonaBE persona;
     private String codigo;
-    private MatriculaEspecialidadBE identMatriculaEspecialidad;
+    private MatriculaEspecialidadBE matriculaEspecialidad;
     private ParametroBE estadoHabilitado;
     private String apoderado;
     private String telefonoContacto;
     private ParametroBE estado;
 
+    public AlumnoBE(){
+        persona = new PersonaBE();
+        matriculaEspecialidad = new MatriculaEspecialidadBE();
+        estadoHabilitado = new ParametroBE();
+        estado = new ParametroBE();
+    }
+    
     public int getIdentAlumno() {
         return identAlumno;
     }
@@ -19,12 +26,12 @@ public class AlumnoBE {
         this.identAlumno = identAlumno;
     }
 
-    public PersonaBE getIdentPersona() {
-        return identPersona;
+    public PersonaBE getPersona() {
+        return persona;
     }
 
-    public void setIdentPersona(PersonaBE identPersona) {
-        this.identPersona = identPersona;
+    public void setPersona(PersonaBE persona) {
+        this.persona = persona;
     }
 
     public String getCodigo() {
@@ -35,12 +42,12 @@ public class AlumnoBE {
         this.codigo = codigo;
     }
 
-    public MatriculaEspecialidadBE getIdentMatriculaEspecialidad() {
-        return identMatriculaEspecialidad;
+    public MatriculaEspecialidadBE getMatriculaEspecialidad() {
+        return matriculaEspecialidad;
     }
 
-    public void setIdentMatriculaEspecialidad(MatriculaEspecialidadBE identMatriculaEspecialidad) {
-        this.identMatriculaEspecialidad = identMatriculaEspecialidad;
+    public void setMatriculaEspecialidad(MatriculaEspecialidadBE matriculaEspecialidad) {
+        this.matriculaEspecialidad = matriculaEspecialidad;
     }
 
     public ParametroBE getEstadoHabilitado() {
@@ -74,6 +81,6 @@ public class AlumnoBE {
     public void setEstado(ParametroBE estado) {
         this.estado = estado;
     }
-    
+
     
 }
