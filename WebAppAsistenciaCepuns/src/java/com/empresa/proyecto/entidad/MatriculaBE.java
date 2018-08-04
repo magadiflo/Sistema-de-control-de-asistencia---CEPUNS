@@ -1,14 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.empresa.proyecto.entidad;
 
-/**
- *
- * @author PABLITO
- */
+import java.sql.*;
+
 public class MatriculaBE {
-    
+
+    private int IdentMatricula;
+    private int Anio;
+    private ParametroBE Ciclo;
+    private ParametroBE EstadoMatricula;
+    private int LimiteFaltasPorcentaje;
+    private Date FechaInicio;
+    private Date FechaFin;
+    private boolean AsignarPrimerTurnoDefecto;
+    private ParametroBE Estado;
 }

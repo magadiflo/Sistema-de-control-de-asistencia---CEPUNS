@@ -1,14 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.empresa.proyecto.entidad;
 
-/**
- *
- * @author PABLITO
- */
 public class AlumnoBE {
-    
+
+    private int IdentAlumno;
+    private PersonaBE IdentPersona;
+    private String Codigo;
+    private MatriculaEspecialidadBE IdentMatriculaEspecialidad;
+    private ParametroBE EstadoHabilitado;
+    private String Apoderado;
+    private String TelefonoContacto;
+    private ParametroBE Estado;
 }

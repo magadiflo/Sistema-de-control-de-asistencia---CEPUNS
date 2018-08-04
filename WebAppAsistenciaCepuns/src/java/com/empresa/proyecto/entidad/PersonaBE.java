@@ -1,14 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.empresa.proyecto.entidad;
 
-/**
- *
- * @author PABLITO
- */
+import java.sql.*;
+
 public class PersonaBE {
-    
+
+    private int IdentPersona;
+    private ParametroTipoBE TipoDocumento;
+    private String Documento;
+    private String Nombres;
+    private String Paterno;
+    private Date FechaNacimiento;
+    private String Direccion;
+    private String Telefono;
+    private String Email;
 }

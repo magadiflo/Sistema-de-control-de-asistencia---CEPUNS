@@ -1,14 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.empresa.proyecto.entidad;
 
-/**
- *
- * @author PABLITO
- */
+import java.sql.*;
+
+
 public class ProgramacionHorarioBE {
     
+    private int IdentProgramacionHorario;
+    private MatriculaBE IdentMatricula;
+    private int Unidad;
+    private ParametroBE EstadoUnidad;
+    private Date FechaInicio;
+    private Date FechaFin;
 }
