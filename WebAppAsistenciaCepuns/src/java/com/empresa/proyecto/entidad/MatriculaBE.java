@@ -3,6 +3,7 @@ package com.empresa.proyecto.entidad;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class MatriculaBE {
 
@@ -19,6 +20,7 @@ public class MatriculaBE {
     private List<MatriculaDiasBE> listMatriculaDia = null;
     private List<MatriculaEspecialidadBE> listMatriculaEspecialidad = null;
     private List<ProgramacionHorarioBE> listProgramacionHorario = null;
+    private List<TurnoBE> listTurno = null;
     
     public MatriculaBE() {
         ciclo = new ParametroBE();
@@ -27,6 +29,7 @@ public class MatriculaBE {
         listMatriculaDia = new ArrayList<MatriculaDiasBE>();
         listMatriculaEspecialidad = new ArrayList<MatriculaEspecialidadBE>();
         listProgramacionHorario = new ArrayList<ProgramacionHorarioBE>();
+        listTurno = new ArrayList<TurnoBE>();
     }
 
     public int getIdentMatricula() {
@@ -124,6 +127,14 @@ public class MatriculaBE {
     public void setListProgramacionHorario(List<ProgramacionHorarioBE> listProgramacionHorario) {
         this.listProgramacionHorario = listProgramacionHorario;
     }
+    
+    public List<TurnoBE> getListTurno() {
+        return listTurno;
+    }
+
+    public void setListTurno(List<TurnoBE> listTurno) {
+        this.listTurno = listTurno;
+    }
 
     public void addMatriculaDia(MatriculaDiasBE matriculaDia){
         listMatriculaDia.add(matriculaDia);
@@ -136,4 +147,27 @@ public class MatriculaBE {
     public void addProgramacionHorario(ProgramacionHorarioBE programacionHorario){
         listProgramacionHorario.add(programacionHorario);
     }
+
+    public void addTurno(TurnoBE turno){
+        listTurno.add(turno);
+    }
+    
+    public int getNumeroTurnos(){
+        return listTurno.size();
+    }
+    
+    public int getIdPrimerTurno(){
+        try {
+            int idTurno = listTurno.get(0).getIdentTurno();
+            return idTurno;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+    
+    public List<ParametroBE> obtenerListaDias(){
+        return listMatriculaDia.stream().map(x -> x.getDia()).collect(Collectors.toList());
+    }
+    
 }
