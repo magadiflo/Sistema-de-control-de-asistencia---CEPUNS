@@ -31,7 +31,11 @@ public class MySQLConexion {
                 + Util.propiedadesBaseDatos.getProperty(Constante.PARAM_DATABASE);
         user = Util.propiedadesBaseDatos.getProperty(Constante.PARAM_USER);
         pass = Util.propiedadesBaseDatos.getProperty(Constante.PARAM_PASSWORD);
-
+        
+        System.out.println("url: " + url );
+        System.out.println("user: " + user);
+        System.out.println("pass: " + pass);
+        
         try {
             Class.forName(driver);
             cn = DriverManager.getConnection(url, user, pass);

@@ -79,6 +79,7 @@ public class MatriculaEspecialidadDaoImpl implements MatriculaEspecialidadDao{
             ps = mysqlConexion.getConnection().prepareStatement(QUERY_REGISTRAR, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, matriculaEspecialidad.getMatricula().getIdentMatricula());
             ps.setInt(2, matriculaEspecialidad.getEspecialidad().getIdentEspecialidad());
+            System.out.println("********************id especialidad = " + matriculaEspecialidad.getEspecialidad().getIdentEspecialidad());
             if (ps.executeUpdate() == 0) {
                 throw new Exception("Error al registrar");
             }
@@ -93,6 +94,7 @@ public class MatriculaEspecialidadDaoImpl implements MatriculaEspecialidadDao{
             e.printStackTrace();
         } finally {
             //TODO:Cerrar recursos
+            System.out.println("***REGISTRO MATRICULA ESPECIALIDAD ***");
             return idMatriculaEspecialidad;
         }
     }

@@ -82,6 +82,7 @@ public class PersonaDaoImpl implements PersonaDao{
             e.printStackTrace();
         } finally{
             //TODO:Cerrar recursos
+            System.out.println("***********REGISTRO DE ALUMNO******");
             return idPersona;
         }
     }

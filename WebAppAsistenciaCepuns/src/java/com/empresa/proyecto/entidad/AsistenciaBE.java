@@ -1,6 +1,8 @@
 package com.empresa.proyecto.entidad;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AsistenciaBE {
 
@@ -11,10 +13,12 @@ public class AsistenciaBE {
     private ParametroBE dia;
     private TurnoBE turno;
 
+    private List<AsistenciaDetalleBE> listAsistenciaDetalle ;
     public AsistenciaBE() {
         programacionHorario = new ProgramacionHorarioBE();
         dia = new ParametroBE();
         turno = new TurnoBE();
+        listAsistenciaDetalle = new ArrayList<AsistenciaDetalleBE>();
     }
 
     public int getIdentAsistencia() {
@@ -65,5 +69,15 @@ public class AsistenciaBE {
         this.turno = turno;
     }
 
-    
+    public List<AsistenciaDetalleBE> getListAsistenciaDetalle() {
+        return listAsistenciaDetalle;
+    }
+
+    public void setListAsistenciaDetalle(List<AsistenciaDetalleBE> listAsistenciaDetalle) {
+        this.listAsistenciaDetalle = listAsistenciaDetalle;
+    }
+
+    public void addAsistenciaDetalle(AsistenciaDetalleBE detalle){
+        listAsistenciaDetalle.add(detalle);
+    }
 }

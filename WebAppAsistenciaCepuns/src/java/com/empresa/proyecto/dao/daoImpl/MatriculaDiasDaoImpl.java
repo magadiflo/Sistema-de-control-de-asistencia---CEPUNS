@@ -93,6 +93,7 @@ public class MatriculaDiasDaoImpl implements MatriculaDiasDao{
             e.printStackTrace();
         } finally {
             //TODO:Cerrar recursos
+            System.out.println("***REGISTRO MATRICULA DIAS ***");
             return idMatriculaDias;
         }
     }

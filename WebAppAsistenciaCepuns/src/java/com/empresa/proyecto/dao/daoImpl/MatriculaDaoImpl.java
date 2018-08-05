@@ -25,7 +25,7 @@ public class MatriculaDaoImpl implements MatriculaDao{
     private static final String QUERY_REGISTRAR = "insert into matricula\n"
             + "(anio,id_004_ciclo, id_006_estado_matricula,limite_faltas_porcentaje,fecha_inicio,fecha_fin,asignar_primer_turno_defecto,id_003_estado) \n"
             + "values\n"
-            + "(?,?,?,?,?,?,?,?,?)";
+            + "(?,?,?,?,?,?,?,?)";
     private static final String QUERY_ACTUALIZAR = "update matricula\n"
             + "set\n"
             + ",anio = IFNULL(?, anio)\n"
@@ -121,6 +121,7 @@ public class MatriculaDaoImpl implements MatriculaDao{
             e.printStackTrace();
         } finally {
             //TODO:Cerrar recursos
+            System.out.println("***Registro MATRICULA***");
             return idMatricula;
         }
     }

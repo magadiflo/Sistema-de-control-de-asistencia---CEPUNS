@@ -39,6 +39,7 @@ public class MatriculaManager {
     private ProgramacionHorarioDao programacionHorarioDao = null;
     private AsistenciaDao asistenciaDao = null;
     private TurnoDao turnoDao = null;
+    private AsistenciaManager asistenciaManager = null;
     
     public MatriculaManager(){
         matriculaDao = new MatriculaDaoImpl();
@@ -47,9 +48,10 @@ public class MatriculaManager {
         programacionHorarioDao = new ProgramacionHorarioDaoImpl();
         asistenciaDao = new AsistenciaDaoImpl();
         turnoDao = new TurnoDaoImpl();
+        asistenciaManager = new AsistenciaManager();
     }
     
-    public void registrar(MatriculaBE matricula){
+    public int registrar(MatriculaBE matricula){
         int idMatricula = 0;
         int idMatriculaDia = 0;
         int idMatriculaEspecialidad = 0;
@@ -61,10 +63,12 @@ public class MatriculaManager {
         
         asignarFechasMatricula(matricula);
         matricula.getEstadoMatricula().setIdentParametro(ParametroConstante.ESTADO_ABIERTO);
+        matricula.getEstado().setIdentParametro(ParametroConstante.ACTIVO);
         
         idMatricula = matriculaDao.registrar(matricula);
         matricula.setIdentMatricula(idMatricula);
         //TODO: VALIDAR ROLLBACK
+        if(idMatricula <= 0) return idMatricula;
         
         //Registrar cada dia que se estudiara en el ciclo
         for(MatriculaDiasBE dias : matricula.getListMatriculaDia()){
@@ -72,6 +76,7 @@ public class MatriculaManager {
             idMatriculaDia = matriculaDiasDao.registrar(dias);
             dias.setIdentMatriculaDias(idMatriculaDia);
             //TODO: VALIDAR ROLLBACK
+            if(idMatriculaDia<=0) return -1;
         }
         
         //Registrar cada especialidad que se abrira en el ciclo
@@ -80,6 +85,7 @@ public class MatriculaManager {
             idMatriculaEspecialidad = matriculaEspecialidadDao.registrar(especialidad);
             especialidad.setIdentMatriculaEspecialidad(idMatriculaEspecialidad);
             //TODO: VALIDAR ROLLBACK
+            if(idMatriculaEspecialidad <= 0) return -1;
         }
         
         //Registrar las unidades del ciclo
@@ -89,6 +95,7 @@ public class MatriculaManager {
             idProgramacionHorario = programacionHorarioDao.registrar(unidad);
             unidad.setIdentProgramacionHorario(idProgramacionHorario);
             //TODO: VALIDAR ROLLBACK
+            if(idProgramacionHorario <= 0) return -1;
         }
         
         //Registrar los turnos 
@@ -97,17 +104,21 @@ public class MatriculaManager {
             idTurno = turnoDao.registrar(turno);
             turno.setIdentTurno(idTurno);
             //TODO: VALIDAR ROLLBACK
+            if(idTurno <= 0) return -1;
         }
         
+        //Si solo hay un turno, o seleccionaron primer turno por defecto, generar asistencias
         if(matricula.getNumeroTurnos() == 1 || matricula.isAsignarPrimerTurnoDefecto()){
             for(ProgramacionHorarioBE unidad : matricula.getListProgramacionHorario()){
                 asistencia = new AsistenciaBE();
                 asistencia.getProgramacionHorario().setIdentProgramacionHorario(unidad.getIdentProgramacionHorario());
                 asistencia.getTurno().setIdentTurno(idTurno);
-                idAsistencia = new AsistenciaManager().registrarPorFecha(Util.dateToCalendar(matricula.getFechaInicio()), Util.dateToCalendar(matricula.getFechaFin()), asistencia, matricula.obtenerListaDias());
+                idAsistencia = asistenciaManager.registrarPorFecha(Util.dateToCalendar(unidad.getFechaInicio()), Util.dateToCalendar(unidad.getFechaFin()), asistencia, matricula.obtenerListaDias());
                 //TODO: VALIDAR ROLLBACK
+                if(idAsistencia <= 0) return -1;
             }
         }
+        return idMatricula;
     }
     
     private void asignarFechasMatricula(MatriculaBE matricula){

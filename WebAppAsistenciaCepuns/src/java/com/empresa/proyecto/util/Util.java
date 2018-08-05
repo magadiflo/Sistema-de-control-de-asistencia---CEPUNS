@@ -43,6 +43,13 @@ public class Util {
         return calendar;
     }
     
+    public static Date calendarToDate(Calendar calendar){
+        if(calendar == null){
+            return null;
+        }
+        return new Date(calendar.getTimeInMillis());
+    }
+    
     public static boolean esMismoDia(Calendar c1, Calendar c2){
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         return (sdf.format(c1.getTime()).equals(sdf.format(c2.getTime())));
@@ -50,19 +57,19 @@ public class Util {
     
     public static int diaSemanaToIdDia(int diaSemana){
         switch(diaSemana){
-            case 0:
-                return ParametroConstante.DOMINGO;
             case 1:
-                return ParametroConstante.LUNES;
+                return ParametroConstante.DOMINGO;
             case 2:
-                return ParametroConstante.MARTES;
+                return ParametroConstante.LUNES;
             case 3:
-                return ParametroConstante.MIERCOLES;
+                return ParametroConstante.MARTES;
             case 4:
-                return ParametroConstante.JUEVES;
+                return ParametroConstante.MIERCOLES;
             case 5:
-                return ParametroConstante.VIERNES;
+                return ParametroConstante.JUEVES;
             case 6:
+                return ParametroConstante.VIERNES;
+            case 7:
                 return ParametroConstante.SABADO;
             default:
                 return 0;
@@ -71,6 +78,15 @@ public class Util {
     
     public static boolean diaEnListaDias(int diaSemana, List<ParametroBE> listaDias){
         return listaDias.stream().filter(x -> x.getIdentParametro() == diaSemanaToIdDia(diaSemana)).collect(Collectors.toList()).size() > 0;
+    }
+    
+    public static Date obtenerDate(int dia, int mes, int anio){
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_MONTH, dia);
+        calendar.set(Calendar.MONTH, mes-1);
+        calendar.set(Calendar.YEAR, anio);
+        
+        return calendarToDate(calendar);
     }
     
 }

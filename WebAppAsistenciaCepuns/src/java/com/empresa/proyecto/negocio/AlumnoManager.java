@@ -11,6 +11,7 @@ import com.empresa.proyecto.dao.daoImpl.AlumnoDaoImpl;
 import com.empresa.proyecto.dao.daoImpl.PersonaDaoImpl;
 import com.empresa.proyecto.entidad.AlumnoBE;
 import com.empresa.proyecto.util.constante.Constante;
+import com.empresa.proyecto.util.constante.ParametroConstante;
 import java.util.List;
 
 /**
@@ -37,9 +38,11 @@ public class AlumnoManager {
         
         //Si no tiene registrado sus datos personales
         if(alumno.getPersona().getIdentPersona() == 0){
-            alumno.setIdentAlumno(personaDao.registrar(alumno.getPersona()));
+            alumno.getPersona().setIdentPersona(personaDao.registrar(alumno.getPersona()));
         }
         
+        alumno.getEstadoHabilitado().setIdentParametro(ParametroConstante.HABILITADO);
+        alumno.getEstado().setIdentParametro(ParametroConstante.ACTIVO);
         idAlumno = alumnoDao.registrar(alumno);
         
         //Validar si hubo algun error en el registro
@@ -62,6 +65,10 @@ public class AlumnoManager {
         }
         
         return Constante.VALOR_EXITO_TRANSACCION;
+    }
+    
+    public String generarCodigo(int idMatriculaEspecialidad){
+        return alumnoDao.generarCodigo(idMatriculaEspecialidad);
     }
     
 }

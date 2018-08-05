@@ -96,6 +96,7 @@ public class TurnoDaoImpl implements TurnoDao{
             e.printStackTrace();
         } finally {
             //TODO:Cerrar recursos
+            System.out.println("***REGISTRO TURNOS***");
             return idTurno;
         }
     }

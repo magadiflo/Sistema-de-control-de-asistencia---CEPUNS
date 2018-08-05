@@ -9,6 +9,10 @@ public class ParametroBE {
     public ParametroBE() {
         parametroTipo = new ParametroTipoBE();
     }
+    public ParametroBE(int identParametro){
+        parametroTipo = new ParametroTipoBE();
+        this.identParametro = identParametro;
+    }
 
     public int getIdentParametro() {
         return identParametro;

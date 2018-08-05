@@ -10,6 +10,12 @@ public class MatriculaEspecialidadBE {
         matricula = new MatriculaBE();
         especialidad = new EspecialidadBE();
     }
+    
+    public MatriculaEspecialidadBE(int idMatriculaEspecialidad){
+        matricula = new MatriculaBE();
+        especialidad = new EspecialidadBE();
+        this.identMatriculaEspecialidad = idMatriculaEspecialidad;
+    }
 
     public int getIdentMatriculaEspecialidad() {
         return identMatriculaEspecialidad;

@@ -19,5 +19,7 @@ public interface AlumnoDao {
     public int registrar(AlumnoBE alumno);
 
     public boolean actualizar(AlumnoBE alumno);
+    
+    public String generarCodigo(int idMatriculaEspecialidad);
 
 }

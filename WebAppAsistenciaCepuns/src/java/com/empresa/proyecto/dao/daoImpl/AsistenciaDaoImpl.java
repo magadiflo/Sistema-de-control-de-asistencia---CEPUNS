@@ -68,6 +68,7 @@ public class AsistenciaDaoImpl implements AsistenciaDao {
             e.printStackTrace();
         } finally {
             //TODO: Cerrar recursos
+            System.out.println("***registro asistencia***");
             return lista;
         }
 

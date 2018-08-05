@@ -9,6 +9,7 @@ import com.empresa.proyecto.dao.AlumnoDao;
 import com.empresa.proyecto.entidad.AlumnoBE;
 import com.empresa.proyecto.util.Util;
 import com.empresa.proyecto.util.conexion.MySQLConexion;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -37,6 +38,23 @@ public class AlumnoDaoImpl implements AlumnoDao{
             +",telefono_contacto = IFNULL(?, telefono_contacto)\n" 
             +",id_003_estado = IFNULL(?,id_003_estado)\n" 
             +"where id_alumno = ?";
+    /*
+    private static final String QUERY_GENERAR_CODIGO = "DELIMITER $$ \n"
+            + "BEGIN \n"
+            + "SET @ID_MATRICULA_ESPECIALIDAD = ?;\n" +
+"SET @CODIGO_INGRESO_DIRECTO = 1;\n" +
+"SET @ID_ESPECIALIDAD = (SELECT id_especialidad from matricula_especialidad where id_matricula_especialidad = @ID_MATRICULA_ESPECIALIDAD);\n" +
+"SET @ID_MATRICULA =(SELECT id_matricula from matricula_especialidad where id_matricula_especialidad = @ID_MATRICULA_ESPECIALIDAD);\n" +
+"SET @CODIGO = (SELECT CODIGO FROM especialidad WHERE id_especialidad = @ID_ESPECIALIDAD limit 1);\n" +
+"SET @ANIO = (SELECT anio from matricula where id_matricula = @ID_MATRICULA)-2000;\n" +
+"SET @CANTIDAD_ALUMNOS = (SELECT COUNT(*) FROM alumno where id_matricula_especialidad = @ID_MATRICULA_ESPECIALIDAD) + 1;\n" +
+"SET @CORRELATIVO = IF(@CANTIDAD_ALUMNOS < 10 , CONCAT('00',@CANTIDAD_ALUMNOS) , IF(@CANTIDAD_ALUMNOS < 100, CONCAT('0',@CANTIDAD_ALUMNOS) , @CANTIDAD_ALUMNOS));\n" +
+"SELECT CONCAT(@CODIGO,@ANIO,@CODIGO_INGRESO_DIRECTO,@CORRELATIVO) AS 'CODIGO'; \n"
+            + "END $$"
+            + "DELIMITER ;";
+*/
+    private static final String QUERY_GENERAR_CODIGO = "{call usp_generar_codigo_alumno(?)}";
+    
     private MySQLConexion mysqlConexion = new  MySQLConexion();
     
     private static final String ID_ALUMNO = "id_alumno";
@@ -121,6 +139,7 @@ public class AlumnoDaoImpl implements AlumnoDao{
             e.printStackTrace();
         } finally{
             //TODO:Cerrar recursos
+            System.out.println("*******REGISTRO DE ALUMNO*****");
             return idAlumno;
         }
     }
@@ -151,6 +170,32 @@ public class AlumnoDaoImpl implements AlumnoDao{
         } finally {
             //TODO:Cerrar recursos
             return actualizo;
+        }
+    }
+
+    @Override
+    public String generarCodigo(int idMatriculaEspecialidad) {
+        CallableStatement cs = null; 
+        ResultSet rs = null;
+        String codigo = "";
+        try {
+            cs = mysqlConexion.getConnection().prepareCall(QUERY_GENERAR_CODIGO);
+            cs.setInt(1, idMatriculaEspecialidad);
+            //TODO: Faltan pasar parametros
+            rs = cs.executeQuery();
+            
+            if(rs.next()){
+                codigo = rs.getString(1);
+            }
+            
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }finally{
+            //TODO: Cerrar recursos
+            return codigo;
         }
     }
 

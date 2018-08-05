@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class ParametroDaoImpl implements ParametroDao{
     
-     private static final String QUERY_OBTENER = "select id_parametro ,id_parametro_tipo,descripcion from parametro p";
+     private static final String QUERY_OBTENER = "select id_parametro ,id_parametro_tipo,descripcion from parametro p where id_parametro_tipo = ?";
      
      private MySQLConexion mysqlConexion = new MySQLConexion();
     private static final String ID_PARAMETRO = "id_parametro";
@@ -39,6 +39,7 @@ public class ParametroDaoImpl implements ParametroDao{
          ParametroBE item = null;
         try {
             ps = mysqlConexion.getConnection().prepareCall(QUERY_OBTENER);
+            ps.setInt(1, parametro.getParametroTipo().getIdentParametroTipo());
             //TODO: Faltan pasar parametros
             rs = ps.executeQuery();
 

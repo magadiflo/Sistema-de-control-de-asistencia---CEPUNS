@@ -10,6 +10,11 @@ public class MatriculaDiasBE {
         matricula = new MatriculaBE();
         dia = new ParametroBE();
     }
+    
+    public MatriculaDiasBE(int idDia){
+        matricula = new MatriculaBE();
+        dia = new ParametroBE(idDia);
+    }
 
     public int getIdentMatriculaDias() {
         return identMatriculaDias;

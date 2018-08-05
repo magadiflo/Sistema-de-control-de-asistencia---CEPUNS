@@ -91,8 +91,8 @@ public class ProgramacionHorarioDaoImpl implements ProgramacionHorarioDao{
             ps.setInt(1, programacionHorario.getMatricula().getIdentMatricula());
             ps.setInt(2, programacionHorario.getUnidad());
             ps.setInt(3, programacionHorario.getEstadoUnidad().getIdentParametro());
-            ps.setDate(5, programacionHorario.getFechaInicio());
-            ps.setDate(6, programacionHorario.getFechaFin());
+            ps.setDate(4, programacionHorario.getFechaInicio());
+            ps.setDate(5, programacionHorario.getFechaFin());
 
             if (ps.executeUpdate() == 0) {
                 throw new Exception("Error al registrar");
@@ -108,6 +108,7 @@ public class ProgramacionHorarioDaoImpl implements ProgramacionHorarioDao{
             e.printStackTrace();
         } finally {
             //TODO:Cerrar recursos
+            System.out.println("***REGISTRO UNIDADES****");
             return idProgramacionHorario;
         }
     }
