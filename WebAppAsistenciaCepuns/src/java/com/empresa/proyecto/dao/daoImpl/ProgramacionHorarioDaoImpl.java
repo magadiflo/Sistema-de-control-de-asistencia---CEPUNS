@@ -5,6 +5,7 @@
  */
 package com.empresa.proyecto.dao.daoImpl;
 
+import com.empresa.proyecto.dao.ProgramacionHorarioDao;
 import com.empresa.proyecto.entidad.ProgramacionHorarioBE;
 import com.empresa.proyecto.util.Util;
 import com.empresa.proyecto.util.conexion.MySQLConexion;
@@ -18,7 +19,7 @@ import java.util.List;
  *
  * @author JOSDY
  */
-public class ProgramacionHorarioDaoImpl {
+public class ProgramacionHorarioDaoImpl implements ProgramacionHorarioDao{
 
     private static final String QUERY_OBTENER = "select id_programacion_horario ,id_matricula,unidad, id_006_estado_unidad,fecha_inicio,fecha_fin from programacion_horario ph";
     private static final String QUERY_REGISTRAR = "insert into programacion_horario\n"

@@ -5,6 +5,7 @@
  */
 package com.empresa.proyecto.dao.daoImpl;
 
+import com.empresa.proyecto.dao.MatriculaDao;
 import com.empresa.proyecto.entidad.MatriculaBE;
 import com.empresa.proyecto.util.Util;
 import com.empresa.proyecto.util.conexion.MySQLConexion;
@@ -18,7 +19,7 @@ import java.util.List;
  *
  * @author JOSDY
  */
-public class MatriculaDaoImpl {
+public class MatriculaDaoImpl implements MatriculaDao{
 
     private static final String QUERY_OBTENER = "select id_matricula ,anio,id_004_ciclo, id_006_estado_matricula,limite_faltas_porcentaje,fecha_inicio,fecha_fin,asignar_primer_turno_defecto,id_003_estado from matricula m";
     private static final String QUERY_REGISTRAR = "insert into matricula\n"

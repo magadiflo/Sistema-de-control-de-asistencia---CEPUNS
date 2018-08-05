@@ -1,6 +1,8 @@
 package com.empresa.proyecto.entidad;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MatriculaBE {
 
@@ -14,10 +16,17 @@ public class MatriculaBE {
     private boolean asignarPrimerTurnoDefecto;
     private ParametroBE estado;
 
+    private List<MatriculaDiasBE> listMatriculaDia = null;
+    private List<MatriculaEspecialidadBE> listMatriculaEspecialidad = null;
+    private List<ProgramacionHorarioBE> listProgramacionHorario = null;
+    
     public MatriculaBE() {
         ciclo = new ParametroBE();
         estadoMatricula = new ParametroBE();
         estado = new ParametroBE();
+        listMatriculaDia = new ArrayList<MatriculaDiasBE>();
+        listMatriculaEspecialidad = new ArrayList<MatriculaEspecialidadBE>();
+        listProgramacionHorario = new ArrayList<ProgramacionHorarioBE>();
     }
 
     public int getIdentMatricula() {
@@ -92,4 +101,39 @@ public class MatriculaBE {
         this.estado = estado;
     }
 
+    public List<MatriculaDiasBE> getListMatriculaDia() {
+        return listMatriculaDia;
+    }
+
+    public void setListMatriculaDia(List<MatriculaDiasBE> listMatriculaDia) {
+        this.listMatriculaDia = listMatriculaDia;
+    }
+
+    public List<MatriculaEspecialidadBE> getListMatriculaEspecialidad() {
+        return listMatriculaEspecialidad;
+    }
+
+    public void setListMatriculaEspecialidad(List<MatriculaEspecialidadBE> listMatriculaEspecialidad) {
+        this.listMatriculaEspecialidad = listMatriculaEspecialidad;
+    }
+
+    public List<ProgramacionHorarioBE> getListProgramacionHorario() {
+        return listProgramacionHorario;
+    }
+
+    public void setListProgramacionHorario(List<ProgramacionHorarioBE> listProgramacionHorario) {
+        this.listProgramacionHorario = listProgramacionHorario;
+    }
+
+    public void addMatriculaDia(MatriculaDiasBE matriculaDia){
+        listMatriculaDia.add(matriculaDia);
+    }
+    
+    public void addMatriculaEspecialidad(MatriculaEspecialidadBE matriculaEspecialidad){
+        listMatriculaEspecialidad.add(matriculaEspecialidad);
+    }
+    
+    public void addProgramacionHorario(ProgramacionHorarioBE programacionHorario){
+        listProgramacionHorario.add(programacionHorario);
+    }
 }

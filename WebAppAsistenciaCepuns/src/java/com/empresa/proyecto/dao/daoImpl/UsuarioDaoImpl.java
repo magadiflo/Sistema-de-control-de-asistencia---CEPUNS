@@ -5,6 +5,7 @@
  */
 package com.empresa.proyecto.dao.daoImpl;
 
+import com.empresa.proyecto.dao.UsuarioDao;
 import com.empresa.proyecto.entidad.UsuarioBE;
 import com.empresa.proyecto.util.Util;
 import com.empresa.proyecto.util.conexion.MySQLConexion;
@@ -18,7 +19,7 @@ import java.util.List;
  *
  * @author JOSDY
  */
-public class UsuarioDaoImpl {
+public class UsuarioDaoImpl implements UsuarioDao{
 
     private static final String QUERY_OBTENER = "select id_usuario ,id_persona,id_rol, cuenta,password,id_003_estado from usuario u";
     private static final String QUERY_REGISTRAR = "insert into usuario\n"

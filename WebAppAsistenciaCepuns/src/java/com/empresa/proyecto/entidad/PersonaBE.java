@@ -9,6 +9,7 @@ public class PersonaBE {
     private String documento;
     private String nombres;
     private String paterno;
+    private String materno;
     private Date fechaNacimiento;
     private String direccion;
     private String telefono;
@@ -88,6 +89,14 @@ public class PersonaBE {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getMaterno() {
+        return materno;
+    }
+
+    public void setMaterno(String materno) {
+        this.materno = materno;
     }
     
     

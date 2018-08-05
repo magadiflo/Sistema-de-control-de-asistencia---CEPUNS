@@ -20,25 +20,25 @@ import java.util.List;
  *
  * @author VICTOR
  */
-public class AlumnoDaoImpl implements AlumnoDao {
+public class AlumnoDaoImpl implements AlumnoDao{
 
     private static final String QUERY_OBTENER = "select id_alumno ,id_persona ,codigo, id_matricula_especialidad,id_002_estado_habilitado,apoderado,telefono_contacto,id_003_estado from alumno a";
-    private static final String QUERY_REGISTRAR = "insert into alumno\n"
-            + "(id_persona,codigo,id_matricula_especialidad,id_002_estado_habilitado,apoderado,telefono_contacto,id_003_estado) \n"
-            + "values\n"
-            + "(?,?,?,?,?,?,?)";
-    private static final String QUERY_ACTUALIZAR = "update alumno\n"
-            + "set\n"
-            + "id_persona = IFNULL(?,id_persona)\n"
-            + ",codigo = IFNULL(?, codigo)\n"
-            + ",id_matricula_especialidad = IFNULL(?,id_matricula_especialidad)\n"
-            + ",id_002_estado_habilitado = IFNULL(?, id_002_estado_habilitado)\n"
-            + ",apoderado = IFNULL(?,apoderado)\n"
-            + ",telefono_contacto = IFNULL(?, telefono_contacto)\n"
-            + ",id_003_estado = IFNULL(?,id_003_estado)\n"
-            + "where id_alumno = ?";
-    private MySQLConexion mysqlConexion = new MySQLConexion();
-
+    private static final String QUERY_REGISTRAR = "insert into alumno\n" 
+            +"(id_persona,codigo,id_matricula_especialidad,id_002_estado_habilitado,apoderado,telefono_contacto,id_003_estado) \n" 
+            +"values\n" 
+            +"(?,?,?,?,?,?,?)";
+    private static final String QUERY_ACTUALIZAR = "update alumno\n" 
+            +"set\n" 
+            +"id_persona = IFNULL(?,id_persona)\n" 
+            +",codigo = IFNULL(?, codigo)\n" 
+            +",id_matricula_especialidad = IFNULL(?,id_matricula_especialidad)\n" 
+            +",id_002_estado_habilitado = IFNULL(?, id_002_estado_habilitado)\n" 
+            +",apoderado = IFNULL(?,apoderado)\n" 
+            +",telefono_contacto = IFNULL(?, telefono_contacto)\n" 
+            +",id_003_estado = IFNULL(?,id_003_estado)\n" 
+            +"where id_alumno = ?";
+    private MySQLConexion mysqlConexion = new  MySQLConexion();
+    
     private static final String ID_ALUMNO = "id_alumno";
     private static final String ID_PERSONA = "id_persona";
     private static final String CODIGO = "codigo";
@@ -47,25 +47,25 @@ public class AlumnoDaoImpl implements AlumnoDao {
     private static final String APODERADO = "apoderado";
     private static final String TELEFONO_CONTACTO = "telefono_contacto";
     private static final String ID_003_ESTADO = "id_003_estado";
-
-    public AlumnoDaoImpl() {
-        if (!mysqlConexion.isConnect()) {
+    
+    public AlumnoDaoImpl(){
+        if(!mysqlConexion.isConnect()){
             mysqlConexion.conectar();
         }
     }
-
+    
     @Override
     public List<AlumnoBE> obtener(AlumnoBE alumno) {
         List<AlumnoBE> lista = null;
-        PreparedStatement ps = null;
+        PreparedStatement ps = null; 
         ResultSet rs = null;
         AlumnoBE item = null;
         try {
             ps = mysqlConexion.getConnection().prepareCall(QUERY_OBTENER);
             //TODO: Faltan pasar parametros
             rs = ps.executeQuery();
-
-            while (rs.next()) {
+            
+            while(rs.next()){
                 item = new AlumnoBE();
                 item.setIdentAlumno(rs.getInt(ID_ALUMNO));
                 item.getPersona().setIdentPersona(rs.getInt(ID_PERSONA));
@@ -75,19 +75,20 @@ public class AlumnoDaoImpl implements AlumnoDao {
                 item.setApoderado(rs.getString(APODERADO));
                 item.setTelefonoContacto(rs.getString(TELEFONO_CONTACTO));
                 item.getEstado().setIdentParametro(rs.getInt(ID_003_ESTADO));
-
+                
                 lista.add(item);
             }
-
-        } catch (SQLException e) {
+            
+        }catch(SQLException e){
             e.printStackTrace();
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
-        } finally {
+        }finally{
             //TODO: Cerrar recursos
             return lista;
         }
-
+        
     }
 
     @Override
@@ -104,20 +105,21 @@ public class AlumnoDaoImpl implements AlumnoDao {
             ps.setString(5, alumno.getApoderado());
             ps.setString(6, alumno.getTelefonoContacto());
             ps.setInt(7, alumno.getEstado().getIdentParametro());
-
-            if (ps.executeUpdate() == 0) {
+            
+            if(ps.executeUpdate() == 0){
                 throw new Exception("Error al registrar");
             }
             rs = ps.getGeneratedKeys();
-            if (rs.next()) {
+            if(rs.next()){
                 idAlumno = rs.getInt(1);
             }
-
-        } catch (SQLException e) {
+            
+        }catch(SQLException e){
             e.printStackTrace();
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
-        } finally {
+        } finally{
             //TODO:Cerrar recursos
             return idAlumno;
         }
@@ -152,4 +154,6 @@ public class AlumnoDaoImpl implements AlumnoDao {
         }
     }
 
+    
+    
 }

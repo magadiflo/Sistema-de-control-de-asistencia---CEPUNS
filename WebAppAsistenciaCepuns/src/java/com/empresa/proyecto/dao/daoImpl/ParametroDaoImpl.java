@@ -5,6 +5,7 @@
  */
 package com.empresa.proyecto.dao.daoImpl;
 
+import com.empresa.proyecto.dao.ParametroDao;
 import com.empresa.proyecto.entidad.ParametroBE;
 import com.empresa.proyecto.util.conexion.MySQLConexion;
 import java.sql.PreparedStatement;
@@ -16,7 +17,7 @@ import java.util.List;
  *
  * @author JOSDY
  */
-public class ParametroDaoImpl {
+public class ParametroDaoImpl implements ParametroDao{
     
      private static final String QUERY_OBTENER = "select id_parametro ,id_parametro_tipo,descripcion from parametro p";
      

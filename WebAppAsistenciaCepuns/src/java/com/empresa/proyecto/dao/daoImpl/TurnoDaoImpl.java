@@ -5,6 +5,7 @@
  */
 package com.empresa.proyecto.dao.daoImpl;
 
+import com.empresa.proyecto.dao.TurnoDao;
 import com.empresa.proyecto.entidad.TurnoBE;
 import com.empresa.proyecto.util.Util;
 import com.empresa.proyecto.util.conexion.MySQLConexion;
@@ -18,7 +19,7 @@ import java.util.List;
  *
  * @author JOSDY
  */
-public class TurnoDaoImpl {
+public class TurnoDaoImpl implements TurnoDao{
         private static final String QUERY_OBTENER = "select id_turno ,id_matricula,hora_inicio,hora_fin from turno t";
     private static final String QUERY_REGISTRAR = "insert into turno\n"
             + "(id_matricula,hora_inicio,hora_fin) \n"

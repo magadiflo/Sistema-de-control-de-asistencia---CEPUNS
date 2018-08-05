@@ -5,6 +5,7 @@
  */
 package com.empresa.proyecto.dao.daoImpl;
 
+import com.empresa.proyecto.dao.MatriculaEspecialidadDao;
 import com.empresa.proyecto.entidad.MatriculaEspecialidadBE;
 import com.empresa.proyecto.util.Util;
 import com.empresa.proyecto.util.conexion.MySQLConexion;
@@ -18,7 +19,7 @@ import java.util.List;
  *
  * @author JOSDY
  */
-public class MatriculaEspecialidadDaoImpl {
+public class MatriculaEspecialidadDaoImpl implements MatriculaEspecialidadDao{
 
     private static final String QUERY_OBTENER = "select id_matricula_especialidad ,id_matricula,id_especialidad from matricula_especialidad me";
     private static final String QUERY_REGISTRAR = "insert into matricula_especialidad\n"
