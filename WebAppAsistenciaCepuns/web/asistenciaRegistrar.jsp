@@ -122,17 +122,6 @@
         <jsp:include page="WEB-INF/layout/header.jsp"/>
         <jsp:include page="WEB-INF/layout/menu.jsp"/>
 
-<<<<<<< HEAD
-            <!--Contenido-->
-            <!-- Content Wrapper. Contains page content -->
-            <div class="content-wrapper">
-=======
-
-
-
-
->>>>>>> origin/master
-
         <!--Contenido-->
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
