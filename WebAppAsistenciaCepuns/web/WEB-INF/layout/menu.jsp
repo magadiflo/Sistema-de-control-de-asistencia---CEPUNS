@@ -17,13 +17,27 @@
             <li class="treeview">
                 <a href="#">
                     <i class="fa fa-laptop"></i>
-                    <span>Venta</span>
+                    <span>Registros</span>
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="evento"><i class="fa fa-circle-o"></i>Eventos</a></li>
+                    <li>
+                        <a href="especialidad.jsp">
+                            <i class="fa fa-circle-o"></i>Especialidad
+                        </a>
+                    </li>
+                </ul>
+                <ul class="treeview-menu">
+                    <li>
+                        <a href="matricula.jsp">
+                            <i class="fa fa-circle-o"></i>Matrícula
+                        </a>
+                    </li>
                 </ul>
             </li>
+            
+            
+            
             <li>
                 <a href="#">
                     <i class="fa fa-plus-square"></i> <span>Ayuda</span>
