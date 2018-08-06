@@ -21,7 +21,7 @@ import java.util.List;
  */
 public class MatriculaEspecialidadDaoImpl implements MatriculaEspecialidadDao{
 
-    private static final String QUERY_OBTENER = "select id_matricula_especialidad ,id_matricula,id_especialidad from matricula_especialidad me";
+    private static final String QUERY_OBTENER = "select id_matricula_especialidad ,id_matricula,me.id_especialidad, e.descripcion from matricula_especialidad me join especialidad e on e.id_especialidad = me.id_especialidad  where id_matricula = ?";
     private static final String QUERY_REGISTRAR = "insert into matricula_especialidad\n"
             + "(id_matricula,id_especialidad) \n"
             + "values\n"
@@ -49,6 +49,7 @@ public class MatriculaEspecialidadDaoImpl implements MatriculaEspecialidadDao{
         MatriculaEspecialidadBE item = null;
         try {
             ps = mysqlConexion.getConnection().prepareCall(QUERY_OBTENER);
+            ps.setInt(1, matriculaEspecialidad.getMatricula().getIdentMatricula());
             //TODO: Faltan pasar parametros
             rs = ps.executeQuery();
 
@@ -57,6 +58,7 @@ public class MatriculaEspecialidadDaoImpl implements MatriculaEspecialidadDao{
                 item.setIdentMatriculaEspecialidad(rs.getInt(ID_MATRICULA_ESPECIALIDAD));
                 item.getMatricula().setIdentMatricula(rs.getInt(ID_MATRICULA));
                 item.getEspecialidad().setIdentEspecialidad(rs.getInt(ID_ESPECIALIDAD));
+                item.getEspecialidad().setDescripcion(rs.getString("descripcion"));
                 lista.add(item);
             }
 
