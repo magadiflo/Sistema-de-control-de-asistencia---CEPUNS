@@ -22,7 +22,7 @@
                 </a>
                 <ul class="treeview-menu">
                     <li>
-                        <a href="especialidad.jsp">
+                        <a href="registroEspecialidad.jsp">
                             <i class="fa fa-circle-o"></i>Especialidad
                         </a>
                     </li>

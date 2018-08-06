@@ -52,7 +52,7 @@ public class EspecialidadDaoImpl implements EspecialidadDao {
                 item = new EspecialidadBE();
                 item.setIdentEspecialidad(rs.getInt(ID_ESPECIALIDAD));
                 item.setDescripcion(rs.getString(DESCRIPCION));
-                item.setCodigo(rs.getInt(CODIGO));
+                item.setCodigo(rs.getString(CODIGO));
                 item.getEstado().setIdentParametro(rs.getInt(ID_003_ESTADO));
                 lista.add(item);
             }
@@ -75,7 +75,7 @@ public class EspecialidadDaoImpl implements EspecialidadDao {
         try {
             ps = mysqlConexion.getConnection().prepareStatement(QUERY_REGISTRAR, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, especialidad.getDescripcion());
-            ps.setInt(2, especialidad.getCodigo());
+            ps.setString(2, especialidad.getCodigo());
             ps.setInt(3, especialidad.getEstado().getIdentParametro());
             if (ps.executeUpdate() == 0) {
                 throw new Exception("Error al registrar");

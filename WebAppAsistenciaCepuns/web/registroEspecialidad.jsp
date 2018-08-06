@@ -24,7 +24,7 @@
              folder instead of downloading all of them to reduce the load. -->
         <link rel="stylesheet" href="css/_all-skins.min.css">
         <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
-        <link rel="shortcut icon" href="img/favicon.ico">
+        <link rel="shortcut icon" href="img/favicon.ico">  
     </head>
     
     <body class="hold-transition skin-blue sidebar-mini">
@@ -61,7 +61,6 @@
                                     </div>
                                     <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                         <label>Especialidad: </label>
-                                        <input type="hidden" name="idEspecialidad" id="idEspecialidad">
                                         <input type="text" class="form-control" name="especialidad" id="especialidad" maxlength="100" placeholder="Descripción" required>
                                     </div>
                                     <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -77,13 +76,13 @@
                                     </div>
                                     <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <button class="btn btn-primary" type="submit" id="btnGuardar"><i class="fa fa-save"></i> Guardar</button>
-                                        <button class="btn btn-danger" onclick="cancelarForm()" type="button"><i class="fa fa-arrow-circle-left"></i> Cancelar</button>
+                                        <!--<button class="btn btn-primary" onclick="agregarEspecialidad()" type="button"><i class="fa fa-arrow-circle-left"></i>Agregar</button>-->
                                     </div>
                                 </form>
                             </div>
                             <!-- Listado de todas las especialidades-->
                             <div class="panel-body table-responsive" id="listadoRegistros">
-                                <table id="tblListado" class="table table-striped table-bordered table-condensed table-hover">
+                                <table id="tblEspecialidad" class="table table-striped table-bordered table-condensed table-hover">
                                     <thead>
                                         <th>#</th>
                                         <th>Facultad</th>
