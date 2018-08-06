@@ -29,7 +29,7 @@
                 </ul>
                 <ul class="treeview-menu">
                     <li>
-                        <a href="matricula.jsp">
+                        <a href="registroMatricula.jsp">
                             <i class="fa fa-circle-o"></i>Matrícula
                         </a>
                     </li>
