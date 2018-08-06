@@ -36,6 +36,8 @@ public class EspecialidadBE {
         this.codigo = codigo;
     }
 
+    
+
     public ParametroBE getEstado() {
         return estado;
     }

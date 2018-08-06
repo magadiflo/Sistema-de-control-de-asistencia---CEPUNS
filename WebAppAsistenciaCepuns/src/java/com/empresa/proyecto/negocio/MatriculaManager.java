@@ -134,4 +134,8 @@ public class MatriculaManager {
         
     }
     
+    public MatriculaBE obtenerCicloActual(){
+        return matriculaDao.obtenerCicloActual();
+    }
+    
 }

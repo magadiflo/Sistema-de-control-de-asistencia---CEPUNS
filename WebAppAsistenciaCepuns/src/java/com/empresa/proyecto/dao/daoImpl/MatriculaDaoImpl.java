@@ -38,6 +38,26 @@ public class MatriculaDaoImpl implements MatriculaDao{
             + ",asignar_primer_turno_defecto = IFNULL(?, asignar_primer_turno_defecto)\n"
             + ",id_003_estado = IFNULL(?,id_003_estado)\n"
             + "where id_matricula = ?";
+    
+    private static final String QUERY_OBTENER_CICLO_ABIERTO = "select \n" +
+"id_matricula\n" +
+", anio\n" +
+", m.id_004_ciclo\n" +
+", m.id_006_estado_matricula\n" +
+", limite_faltas_porcentaje\n" +
+", fecha_inicio\n" +
+", fecha_fin\n" +
+", asignar_primer_turno_defecto\n" +
+", id_003_estado\n" +
+", p1.descripcion ciclo\n" +
+", p2.descripcion estado_matricula\n" +
+", p3.descripcion estado\n" +
+"from matricula m\n" +
+"join parametro p1 on p1.id_parametro = m.id_004_ciclo\n" +
+"join parametro p2 on p2.id_parametro = m.id_006_estado_matricula\n" +
+"join parametro p3 on p3.id_parametro = m.id_003_estado\n" +
+"where m.id_006_estado_matricula = 19";
+    
     private MySQLConexion mysqlConexion = new MySQLConexion();
 
     private static final String ID_MATRICULA = "id_matricula";
@@ -152,6 +172,43 @@ public class MatriculaDaoImpl implements MatriculaDao{
             //TODO:Cerrar recursos
             return actualizo;
         }
+    }
+
+    @Override
+    public MatriculaBE obtenerCicloActual() {
+        MatriculaBE matricula = new MatriculaBE();
+        ResultSet rs = null;
+        PreparedStatement ps = null;
+        
+        try {
+            ps = mysqlConexion.getConnection().prepareCall(QUERY_OBTENER_CICLO_ABIERTO);
+            rs = ps.executeQuery();
+            
+            if(rs.next()){
+                matricula.setIdentMatricula(rs.getInt("id_matricula"));
+                matricula.setAnio(rs.getInt("anio"));
+                matricula.getCiclo().setIdentParametro(rs.getInt("id_004_ciclo"));
+                matricula.getEstadoMatricula().setIdentParametro(rs.getInt("id_006_estado_matricula"));
+                matricula.setLimiteFaltasPorcentaje(rs.getInt("limite_faltas_porcentaje"));
+                matricula.setFechaInicio(rs.getDate("fecha_inicio"));
+                matricula.setFechaFin(rs.getDate("fecha_fin"));
+                matricula.setAsignarPrimerTurnoDefecto(rs.getBoolean("asignar_primer_turno_defecto"));
+                matricula.getEstado().setIdentParametro(rs.getInt("id_003_estado"));
+                matricula.getCiclo().setDescripcion(rs.getString("ciclo"));
+                matricula.getEstadoMatricula().setDescripcion(rs.getString("estado_matricula"));
+                matricula.getEstado().setDescripcion(rs.getString("estado"));
+            }
+            
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        } finally{
+            
+            return matricula;
+        }
+        
     }
 
 }

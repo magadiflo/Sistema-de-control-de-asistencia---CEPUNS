@@ -17,4 +17,5 @@ public interface MatriculaDao {
     public List<MatriculaBE> obtener(MatriculaBE matricula);
     public int registrar(MatriculaBE matricula);
     public boolean actualizar(MatriculaBE matricula);
+    public MatriculaBE obtenerCicloActual();
 }
