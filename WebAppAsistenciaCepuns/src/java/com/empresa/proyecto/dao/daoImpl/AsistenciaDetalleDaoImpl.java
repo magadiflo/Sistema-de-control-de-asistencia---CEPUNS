@@ -32,6 +32,7 @@ public class AsistenciaDetalleDaoImpl implements AsistenciaDetalleDao {
 ",p.materno\n" +
 ",pa.id_parametro\n" +
 ",pa.descripcion estado_asistencia\n" +
+",a.codigo "+
 "from asistencia_detalle d\n" +
 "join alumno a on a.id_alumno = d.id_alumno\n" +
 "join persona p on p.id_persona = a.id_persona\n" +
@@ -99,6 +100,7 @@ public class AsistenciaDetalleDaoImpl implements AsistenciaDetalleDao {
                 item.getEstadoAsistencia().setIdentParametro(rs.getInt("id_007_estado_asistencia"));
                 item.setObservacion(rs.getString("observacion"));
                 item.getAlumno().getPersona().setNombres(rs.getString("nombres"));
+                item.getAlumno().setCodigo(rs.getString("codigo"));
                 item.getAlumno().getPersona().setPaterno(rs.getString("paterno"));
                 item.getAlumno().getPersona().setMaterno(rs.getString("materno"));
                 item.getEstadoAsistencia().setDescripcion(rs.getString("estado_asistencia"));

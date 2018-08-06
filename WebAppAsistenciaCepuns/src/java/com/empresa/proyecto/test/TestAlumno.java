@@ -24,7 +24,7 @@ public class TestAlumno {
         //Registrar alumno que ya tiene id dePersona
         AlumnoBE alumno = new AlumnoBE();
         alumno.setCodigo(alumnoManager.generarCodigo(idMatriculaEspecialidad));
-        alumno.getPersona().setIdentPersona(2);
+        alumno.getPersona().setIdentPersona(4);
         alumno.getMatriculaEspecialidad().setIdentMatriculaEspecialidad(idMatriculaEspecialidad);
         alumno.setApoderado("Juan Robles");
         alumno.setTelefonoContacto("912345678");
@@ -38,13 +38,13 @@ public class TestAlumno {
         alumno2.getPersona().setIdentPersona(0);
         alumno2.getPersona().getTipoDocumento().setIdentParametroTipo(ParametroConstante.DNI);
         alumno2.getPersona().setDocumento("10203040");
-        alumno2.getPersona().setNombres("Juan Mario");
-        alumno2.getPersona().setPaterno("Ramirez");
-        alumno2.getPersona().setMaterno("Sanchez");
+        alumno2.getPersona().setNombres("Fatima ");
+        alumno2.getPersona().setPaterno("Lopez");
+        alumno2.getPersona().setMaterno("Ramirez");
         alumno2.getPersona().setFechaNacimiento(Util.obtenerDate(10, 12, 1999));
         alumno2.getPersona().setDireccion("Av Peru 123 Chimbote");
         alumno2.getPersona().setTelefono("954123568");
-        alumno2.getPersona().setEmail("juan@gmail.com");
+        alumno2.getPersona().setEmail("fatima@gmail.com");
         alumno2.getMatriculaEspecialidad().setIdentMatriculaEspecialidad(idMatriculaEspecialidad);
         alumno2.setApoderado("Joaquin Munoz");
         alumno2.setTelefonoContacto("912345678");
