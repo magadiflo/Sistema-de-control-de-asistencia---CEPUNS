@@ -1,12 +1,15 @@
 package com.empresa.proyecto.dao.daoImpl;
 
 import com.empresa.proyecto.dao.AsistenciaDetalleDao;
+import com.empresa.proyecto.entidad.AsistenciaBE;
 import com.empresa.proyecto.entidad.AsistenciaDetalleBE;
 import com.empresa.proyecto.util.conexion.MySQLConexion;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AsistenciaDetalleDaoImpl implements AsistenciaDetalleDao {
 
@@ -15,15 +18,26 @@ public class AsistenciaDetalleDaoImpl implements AsistenciaDetalleDao {
             + "(id_asistencia, id_alumno, id_007_estado_asistencia, observacion)\n"
             + "values\n"
             + "(?,?,?,?)";
-//    private static final String QUERY_ACTUALIZAR = "update asistencia_detalle set\n"
-//            + "id_asistencia = IFNULL(?, id_asistencia),\n"
-//            + "id_alumno = IFNULL(?, id_alumno),\n"
-//            + "id_007_estado_asistencia = IFNULL(?, id_007_estado_asistencia),\n"
-//            + "observacion = IFNULL(?, observacion)\n"
-//            + "where id_asistencia_detalle = ?";
 
     private MySQLConexion mysqlConexion = new MySQLConexion();
 
+    private static final String QUERY_OBTENER = "select\n" +
+"d.id_asistencia_detalle\n" +
+",d.id_asistencia\n" +
+",d.id_alumno\n" +
+",d.id_007_estado_asistencia\n" +
+",ifnull(d.observacion,'') as observacion\n" +
+",p.nombres \n" +
+",p.paterno\n" +
+",p.materno\n" +
+",pa.id_parametro\n" +
+",pa.descripcion estado_asistencia\n" +
+"from asistencia_detalle d\n" +
+"join alumno a on a.id_alumno = d.id_alumno\n" +
+"join persona p on p.id_persona = a.id_persona\n" +
+"join parametro pa on pa.id_parametro = d.id_007_estado_asistencia "+
+"where d.id_asistencia = ?";
+    
 //    private static final String ID_ASISTENCIA_DETALLE = "id_asistencia_detalle";
 //    private static final String ID_ASISTENCIA = "id_asistencia";
 //    private static final String ID_ALUMNO = "id_alumno";
@@ -60,7 +74,44 @@ public class AsistenciaDetalleDaoImpl implements AsistenciaDetalleDao {
             e.printStackTrace();
         } finally {
             //TODO:Cerrar recursos
+            System.out.println("**********REGISTRO ASISTENCIA DETALLE ****");
             return idAsistenciaDetalle;
+        }
+    }
+
+    @Override
+    public List<AsistenciaDetalleBE> obtener(AsistenciaBE asistencia) {
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        List<AsistenciaDetalleBE> listDetalle = null;
+        AsistenciaDetalleBE item = null;
+        try {
+            ps = mysqlConexion.getConnection().prepareCall(QUERY_OBTENER);
+            ps.setInt(1, asistencia.getIdentAsistencia());
+            
+            rs = ps.executeQuery();
+            listDetalle = new ArrayList<AsistenciaDetalleBE>();
+            while(rs.next()){
+                item = new AsistenciaDetalleBE();
+                item.setIdentAsistenciaDetalle(rs.getInt("id_asistencia_detalle"));
+                item.getAsistencia().setIdentAsistencia(rs.getInt("id_asistencia"));
+                item.getAlumno().setIdentAlumno(rs.getInt("id_alumno"));
+                item.getEstadoAsistencia().setIdentParametro(rs.getInt("id_007_estado_asistencia"));
+                item.setObservacion(rs.getString("observacion"));
+                item.getAlumno().getPersona().setNombres(rs.getString("nombres"));
+                item.getAlumno().getPersona().setPaterno(rs.getString("paterno"));
+                item.getAlumno().getPersona().setMaterno(rs.getString("materno"));
+                item.getEstadoAsistencia().setDescripcion(rs.getString("estado_asistencia"));
+                listDetalle.add(item);
+            }
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        } finally{
+            
+            return listDetalle;
         }
     }
 

@@ -9,6 +9,7 @@ import com.empresa.proyecto.dao.AsistenciaDetalleDao;
 import com.empresa.proyecto.dao.daoImpl.AsistenciaDetalleDaoImpl;
 import com.empresa.proyecto.entidad.AsistenciaBE;
 import com.empresa.proyecto.entidad.AsistenciaDetalleBE;
+import java.util.List;
 
 /**
  *
@@ -26,11 +27,16 @@ public class AsistenciaDetalleManager {
         int idAsistenciaDetalle = 0;
         
         for(AsistenciaDetalleBE detalle : asistencia.getListAsistenciaDetalle()){
+            detalle.getAsistencia().setIdentAsistencia(asistencia.getIdentAsistencia());
             idAsistenciaDetalle = asistenciaDetalleDao.registrar(detalle);
             //TODO: VALIDAR ROLLBACK
         }
         
         return idAsistenciaDetalle;
+    }
+    
+    public List<AsistenciaDetalleBE> obtener(AsistenciaBE asistencia){
+        return asistenciaDetalleDao.obtener(asistencia);
     }
     
 }

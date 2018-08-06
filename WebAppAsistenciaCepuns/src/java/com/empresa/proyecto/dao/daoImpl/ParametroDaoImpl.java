@@ -11,6 +11,7 @@ import com.empresa.proyecto.util.conexion.MySQLConexion;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -42,7 +43,7 @@ public class ParametroDaoImpl implements ParametroDao{
             ps.setInt(1, parametro.getParametroTipo().getIdentParametroTipo());
             //TODO: Faltan pasar parametros
             rs = ps.executeQuery();
-
+            lista = new ArrayList<ParametroBE>();
             while (rs.next()) {
                 item = new ParametroBE();
                 item.setIdentParametro(rs.getInt(ID_PARAMETRO));

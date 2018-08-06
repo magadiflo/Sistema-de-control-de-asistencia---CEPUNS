@@ -25,6 +25,12 @@ public class AsistenciaDaoImpl implements AsistenciaDao {
             + "id_turno = IFNULL(?, id_turno)\n"
             + "where id_asistencia = ?";
 
+    private static final String QUERY_OBTENER_ASISTENCIA_POR_FECHA = "select\n" +
+"a.id_asistencia\n" +
+"from asistencia a \n" +
+"join programacion_horario p on a.id_programacion_horario = p.id_programacion_horario\n" +
+"where a.fecha = ?";
+    
     private MySQLConexion mysqlConexion = new MySQLConexion();
 
     private static final String ID_ASISTENCIA = "id_asistencia";
@@ -126,6 +132,30 @@ public class AsistenciaDaoImpl implements AsistenciaDao {
         } finally {
             //TODO:Cerrar recursos
             return actualizo;
+        }
+    }
+
+    @Override
+    public int obtenerIdAsistenciaPorFecha(String fecha) {
+        int idAsistencia = 0;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            ps = mysqlConexion.getConnection().prepareCall(QUERY_OBTENER_ASISTENCIA_POR_FECHA);
+            ps.setString(1, fecha);
+            rs = ps.executeQuery();
+            
+            if(rs.next()){
+                idAsistencia = rs.getInt("id_asistencia");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            //TODO:Cerrar recursos
+            return idAsistencia;
         }
     }
 

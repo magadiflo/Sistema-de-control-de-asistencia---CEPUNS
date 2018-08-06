@@ -22,6 +22,13 @@ import java.util.stream.Collectors;
 public class Util {
     public static Properties propiedadesBaseDatos = null;
     
+    public static int obtenerValorEntero(String valor){
+        if(esVacio(valor)){
+            return 0;
+        }
+        return Integer.parseInt(valor);
+    }
+    
     public static boolean esVacio(String text){
         return text == null || Constante.VACIO.equals(text);
     }

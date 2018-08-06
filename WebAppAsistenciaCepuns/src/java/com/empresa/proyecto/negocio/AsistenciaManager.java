@@ -50,4 +50,8 @@ public class AsistenciaManager {
         return asistenciaDao.registrar(asistencia);
     }
     
+    public int obtenerAsistenciaPorFecha(String fecha){
+        return asistenciaDao.obtenerIdAsistenciaPorFecha(fecha);
+    }
+    
 }

@@ -10,4 +10,6 @@ public interface AsistenciaDao {
     public int registrar(AsistenciaBE asistencia);
 
     public boolean actualizar(AsistenciaBE asistencia);
+    
+    public int obtenerIdAsistenciaPorFecha(String fecha);
 }

@@ -99,5 +99,8 @@ public class PersonaBE {
         this.materno = materno;
     }
     
+    public String getNombreCompleto(){
+        return nombres  + " " + paterno + " " + materno;
+    }
     
 }
