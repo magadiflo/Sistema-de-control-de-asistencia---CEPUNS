@@ -8,12 +8,16 @@ package com.empresa.proyecto.util;
 import com.empresa.proyecto.entidad.ParametroBE;
 import com.empresa.proyecto.util.constante.Constante;
 import com.empresa.proyecto.util.constante.ParametroConstante;
+import com.google.gson.Gson;
+import java.io.IOException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Properties;
 import java.util.stream.Collectors;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  *
@@ -94,6 +98,13 @@ public class Util {
         calendar.set(Calendar.YEAR, anio);
         
         return calendarToDate(calendar);
+    }
+    
+    public static void retornarJson(Object object, HttpServletRequest request, HttpServletResponse response) throws IOException{
+        Gson gson = new Gson();
+            String jsonString = gson.toJson(object);
+            response.setContentType("application/json");
+            response.getWriter().write(jsonString);
     }
     
 }

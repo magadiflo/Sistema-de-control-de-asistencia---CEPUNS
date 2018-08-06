@@ -91,6 +91,25 @@ public class AsistenciaRegistrarServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        int idAsistenciaDetalle  = 0;
+        AsistenciaBE asistencia = new AsistenciaBE();
+        AsistenciaDetalleBE asistenciaDetalle = new AsistenciaDetalleBE();
+        int numeroRegistros = Util.obtenerValorEntero(request.getParameter("numeroAgregados"));
+        int idAsistencia = Util.obtenerValorEntero(request.getParameter("idAsistencia"));
+        
+        
+        asistencia.setIdentAsistencia(idAsistencia);
+        for (int i = 1; i <= numeroRegistros ; i++) {
+            asistenciaDetalle = new AsistenciaDetalleBE();
+            asistenciaDetalle.getAlumno().setIdentAlumno(Util.obtenerValorEntero(request.getParameter("idalumno"+i)));
+            asistenciaDetalle.getEstadoAsistencia().setIdentParametro(Util.obtenerValorEntero(request.getParameter("idestadoasistencia"+i)));
+            asistenciaDetalle.setObservacion(request.getParameter("observaciones" + i));
+            asistencia.addAsistenciaDetalle(asistenciaDetalle);
+        }
+        
+        idAsistenciaDetalle = new AsistenciaDetalleManager().registrar(asistencia);
+        
+        response.sendRedirect(request.getContextPath() + "/asistenciaRegistrar");
         
     }
 
