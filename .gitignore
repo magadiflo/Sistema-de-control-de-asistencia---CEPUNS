@@ -1,3 +1,5 @@
 #Los archivos o carpetas que se señalan aquí no se subirán al REMOTO
 #####################################################################
 WebAppAsistenciaCepuns/build/
+WebAppAsistenciaCepuns/dist/WebAppAsistenciaCepuns.war
+WebAppAsistenciaCepuns/nbproject/private/private.xml
