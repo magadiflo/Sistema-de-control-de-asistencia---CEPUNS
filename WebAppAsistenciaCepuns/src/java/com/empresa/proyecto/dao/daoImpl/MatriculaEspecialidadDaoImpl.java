@@ -13,6 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -52,7 +53,7 @@ public class MatriculaEspecialidadDaoImpl implements MatriculaEspecialidadDao{
             ps.setInt(1, matriculaEspecialidad.getMatricula().getIdentMatricula());
             //TODO: Faltan pasar parametros
             rs = ps.executeQuery();
-
+            lista = new ArrayList<MatriculaEspecialidadBE>();
             while (rs.next()) {
                 item = new MatriculaEspecialidadBE();
                 item.setIdentMatriculaEspecialidad(rs.getInt(ID_MATRICULA_ESPECIALIDAD));

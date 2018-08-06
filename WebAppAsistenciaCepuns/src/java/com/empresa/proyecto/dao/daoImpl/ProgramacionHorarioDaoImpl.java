@@ -13,6 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -58,7 +59,7 @@ public class ProgramacionHorarioDaoImpl implements ProgramacionHorarioDao{
             ps = mysqlConexion.getConnection().prepareCall(QUERY_OBTENER);
             //TODO: Faltan pasar parametros
             rs = ps.executeQuery();
-
+            lista = new ArrayList<ProgramacionHorarioBE>();
             while (rs.next()) {
                 item = new ProgramacionHorarioBE();
                 item.setIdentProgramacionHorario(rs.getInt(ID_PROGRAMACION_HORARIO));

@@ -6,12 +6,15 @@
 package com.empresa.proyecto.controlador.alumno;
 
 import com.empresa.proyecto.dao.daoImpl.MatriculaEspecialidadDaoImpl;
+import com.empresa.proyecto.entidad.AlumnoBE;
 import com.empresa.proyecto.entidad.MatriculaBE;
 import com.empresa.proyecto.entidad.MatriculaEspecialidadBE;
 import com.empresa.proyecto.entidad.ParametroBE;
+import com.empresa.proyecto.negocio.AlumnoManager;
 import com.empresa.proyecto.negocio.MatriculaEspecialidadManager;
 import com.empresa.proyecto.negocio.MatriculaManager;
 import com.empresa.proyecto.negocio.ParametroManager;
+import com.empresa.proyecto.util.Util;
 import com.empresa.proyecto.util.constante.ParametroTipoConstante;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -79,6 +82,7 @@ public class AlumnoRegistrarServlet extends HttpServlet {
         
         request.setAttribute("tiposDocumento", tiposDocumento);
         request.setAttribute("matriculaActual", matriculaActual);
+        request.setAttribute("listEspecialidades", listEspecialidades);
         
         request.getRequestDispatcher("alumnoRegistrar.jsp").forward(request, response);
     }
@@ -94,6 +98,27 @@ public class AlumnoRegistrarServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        int idAlumno = 0;
+        AlumnoManager alumnoManager = new AlumnoManager();
+        AlumnoBE alumno = new AlumnoBE();
+        alumno.getPersona().setIdentPersona(Util.obtenerValorEntero(request.getParameter("idPersona")));
+        alumno.getPersona().getTipoDocumento().setIdentParametroTipo(Util.obtenerValorEntero(request.getParameter("tipo_documento")));
+        alumno.getPersona().setDocumento(request.getParameter("documento"));
+        alumno.getPersona().setPaterno(request.getParameter("paterno"));
+        alumno.getPersona().setMaterno(request.getParameter("materno"));
+        alumno.getPersona().setNombres(request.getParameter("nombres"));
+        alumno.getPersona().setFechaNacimiento(Util.obtenerDate(8, 11, 1999));
+        alumno.getPersona().setDireccion(request.getParameter("direccion"));
+        alumno.getPersona().setTelefono(request.getParameter("telefono"));
+        alumno.getPersona().setEmail(request.getParameter("email"));
+        alumno.getMatriculaEspecialidad().setIdentMatriculaEspecialidad(Util.obtenerValorEntero(request.getParameter("especialidad")));
+        System.out.println("*************MATRICULA ESPECIALIDAD ************ :"  + alumno.getMatriculaEspecialidad().getIdentMatriculaEspecialidad());
+        alumno.setApoderado(request.getParameter("apoderado"));
+        alumno.setTelefonoContacto(request.getParameter("telefono_contacto"));
+        alumno.setCodigo(alumnoManager.generarCodigo(alumno.getMatriculaEspecialidad().getIdentMatriculaEspecialidad()));
+        idAlumno = alumnoManager.registrar(alumno);
+        
+        response.sendRedirect(request.getContextPath() + "/alumnoRegistrar");
         
     }
 

@@ -7,6 +7,7 @@ import com.empresa.proyecto.util.conexion.MySQLConexion;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class EntidadDaoImpl implements EntidadDao {
@@ -45,7 +46,7 @@ public class EntidadDaoImpl implements EntidadDao {
             ps = mysqlConexion.getConnection().prepareCall(QUERY_OBTENER);
             //TODO: Faltan pasar parametros
             rs = ps.executeQuery();
-
+            lista = new ArrayList<EntidadBE>();
             while (rs.next()) {
                 item = new EntidadBE();
                 item.setIdentEntidad(rs.getInt(ID_ENTIDAD));

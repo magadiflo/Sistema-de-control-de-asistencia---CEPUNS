@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 public class EspecialidadDaoImpl implements EspecialidadDao {
@@ -47,7 +48,7 @@ public class EspecialidadDaoImpl implements EspecialidadDao {
             ps = mysqlConexion.getConnection().prepareCall(QUERY_OBTENER);
             //TODO: Faltan pasar parametros
             rs = ps.executeQuery();
-
+            lista = new ArrayList<EspecialidadBE>();
             while (rs.next()) {
                 item = new EspecialidadBE();
                 item.setIdentEspecialidad(rs.getInt(ID_ESPECIALIDAD));

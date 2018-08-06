@@ -24,7 +24,7 @@ import java.util.List;
  */
 public class AlumnoDaoImpl implements AlumnoDao{
 
-    private static final String QUERY_OBTENER = "select id_alumno ,a.id_persona, ifnull(p.nombres,'') nombres, ifnull(p.paterno,'') paterno, ifnull(p.materno,'') materno ,codigo, id_matricula_especialidad,id_002_estado_habilitado,apoderado,telefono_contacto,id_003_estado from alumno a join persona p on p.id_persona = a.id_persona where ? is null or ? = '' or ? = a.codigo";
+    private static final String QUERY_OBTENER = "select id_alumno ,a.id_persona, ifnull(p.nombres,'') nombres, ifnull(p.paterno,'') paterno, ifnull(p.materno,'') materno ,codigo, id_matricula_especialidad,id_002_estado_habilitado,apoderado,telefono_contacto,id_003_estado, p.id_001_tipo_documento, p.email, p.direccion, p.telefono from alumno a join persona p on p.id_persona = a.id_persona where (? is null or ? = '' or ? = a.codigo) and (? is null or ? = '' or ? = p.documento)";
     private static final String QUERY_REGISTRAR = "insert into alumno\n" 
             +"(id_persona,codigo,id_matricula_especialidad,id_002_estado_habilitado,apoderado,telefono_contacto,id_003_estado) \n" 
             +"values\n" 
@@ -84,6 +84,9 @@ public class AlumnoDaoImpl implements AlumnoDao{
             ps.setString(1, alumno.getCodigo());
             ps.setString(2, alumno.getCodigo());
             ps.setString(3, alumno.getCodigo());
+            ps.setString(4, alumno.getPersona().getDocumento());
+            ps.setString(5, alumno.getPersona().getDocumento());
+            ps.setString(6, alumno.getPersona().getDocumento());
             //TODO: Faltan pasar parametros
             rs = ps.executeQuery();
             lista = new ArrayList<AlumnoBE>();
@@ -94,6 +97,10 @@ public class AlumnoDaoImpl implements AlumnoDao{
                 item.getPersona().setNombres(rs.getString("nombres"));
                 item.getPersona().setPaterno(rs.getString("paterno"));
                 item.getPersona().setMaterno(rs.getString("materno"));
+                item.getPersona().getTipoDocumento().setIdentParametroTipo(rs.getInt("id_001_tipo_documento"));
+                item.getPersona().setEmail(rs.getString("email"));
+                item.getPersona().setDireccion(rs.getString("direccion"));
+                item.getPersona().setTelefono(rs.getString("telefono"));
                 item.setCodigo(rs.getString(CODIGO));
                 item.getMatriculaEspecialidad().setIdentMatriculaEspecialidad(rs.getInt(ID_MATRICULA_ESPECIALIDAD));
                 item.getEstadoHabilitado().setIdentParametro(rs.getInt(ID_002_ESTADO_HABILITADO));

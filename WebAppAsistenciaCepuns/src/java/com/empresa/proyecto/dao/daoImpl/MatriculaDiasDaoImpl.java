@@ -13,6 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -51,7 +52,7 @@ public class MatriculaDiasDaoImpl implements MatriculaDiasDao{
             ps = mysqlConexion.getConnection().prepareCall(QUERY_OBTENER);
             //TODO: Faltan pasar parametros
             rs = ps.executeQuery();
-
+            lista = new ArrayList<MatriculaDiasBE>();
             while (rs.next()) {
                 item = new MatriculaDiasBE();
                 item.setIdentMatriculaDias(rs.getInt(ID_MATRICULA_DIAS));

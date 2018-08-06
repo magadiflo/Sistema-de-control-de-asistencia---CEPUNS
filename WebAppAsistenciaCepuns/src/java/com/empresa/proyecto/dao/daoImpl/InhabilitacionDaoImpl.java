@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 public class InhabilitacionDaoImpl implements InhabilitacionDao {
@@ -49,7 +50,7 @@ public class InhabilitacionDaoImpl implements InhabilitacionDao {
             ps = mysqlConexion.getConnection().prepareCall(QUERY_OBTENER);
             //TODO: Faltan pasar parametros
             rs = ps.executeQuery();
-
+            lista = new ArrayList<InhabilitacionBE>();
             while (rs.next()) {
                 item = new InhabilitacionBE();
                 item.setIdentInhabilitacion(rs.getInt(ID_INHABILITACION));

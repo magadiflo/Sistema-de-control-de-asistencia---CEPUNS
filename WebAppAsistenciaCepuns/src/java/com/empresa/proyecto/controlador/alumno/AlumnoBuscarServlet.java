@@ -62,9 +62,11 @@ public class AlumnoBuscarServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String codigo = request.getParameter("codigo");
+        String documento = request.getParameter("documento");
         AlumnoBE alumno = new AlumnoBE();
         try {
             alumno.setCodigo(codigo);
+            alumno.getPersona().setDocumento(documento);
             alumno = new AlumnoManager().obtener(alumno).get(0);
         } catch (Exception e) {
             e.printStackTrace();
