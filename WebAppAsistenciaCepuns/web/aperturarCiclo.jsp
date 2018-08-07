@@ -109,7 +109,7 @@
                                             <h3 class="panel-title">Configuración de Faltas</h3>
                                         </div>
                                         <div class="panel-body">
-                                            <div class="form-group col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                                            <div id="div-limite" class="form-group col-lg-2 col-md-2 col-sm-2 col-xs-12">
                                                 <label>Límite de faltas: </label>
                                                 <input type="number" class="form-control" name="limite_faltas_porcentaje" maxlength="3" 
                                                        id="limite_faltas_porcentaje" value="30" 
@@ -118,7 +118,7 @@
                                             <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                 <div class="progress">
                                                     <div id="bar" class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
-                                                        <span class="sr-only">0% Complete</span>
+                                                        <p id="limite-valor"></p>
                                                     </div>
                                                 </div>                                                
                                             </div>
@@ -198,7 +198,7 @@
                                                 <tbody>
                                                     <%
                                                         int i = 0;
-                                                        for(EspecialidadBE item : especialidades){
+                                                        for (EspecialidadBE item : especialidades) {
                                                     %>
                                                     <tr>
                                                         <td><%=++i%></td>
@@ -210,9 +210,9 @@
                                                     <%
                                                         }
                                                     %>
-                                                    
+
                                                 </tbody>
-                                                                                       
+
                                             </table>
                                         </div>
                                     </div>
@@ -256,14 +256,7 @@
                                                         <td></td>
                                                         <td></td>
                                                     </tr>
-                                                </tbody>
-                                                <tfoot>
-                                                <th>Unidad</th>
-                                                <th>Fecha inicio</th>
-                                                <th>Fecha fin</th>
-                                                <th>Estado</th>
-                                                <th>Opciones</th>
-                                                </tfoot>                                        
+                                                </tbody>                                      
                                             </table>
                                         </div>
                                     </div>
@@ -313,10 +306,6 @@
         <script src="datatables/vfs_fonts.js"></script>
 
         <script>
-                                                /*$(document).ready(function () {
-                                                 $('#tblEspecialidad').DataTable();
-                                                 });*/
-
                                                 $(document).ready(function () {
                                                     $('#tblEspecialidad').DataTable({
                                                         "paging": true,
@@ -332,19 +321,30 @@
                                                     });
                                                 });
 
+                                                //Detectar el valor inicial del Limite de faltas
+                                                //Solo se usa una vez al cargar la página.
+                                                var limite = $("#limite_faltas_porcentaje").val();
+                                                mover(limite);
 
-                                                var progreso = $("#limite_faltas_porcentaje").val();
-                                                var idIterval = setInterval(function () {
-                                                    $('#bar').css('width', progreso + '%');
-                                                    //Si llegó a 100 elimino el interval
-                                                    if (progreso == 100) {
-                                                        clearInterval(idIterval);
+                                                //Detecta cambio del Límite de faltas
+                                                $('#div-limite').on('input', ':input', function () {
+                                                    var value = $(this).val();//Obtiene el valor actual del input
+                                                    var name = $(this).prop('name');
+                                                    if (value.length > 0) {
+                                                        console.log(name + ": " + value);
+                                                        mover(value);
                                                     }
-                                                }, 1000);
+                                                });
+
+                                                function mover(value) {
+                                                    var elem = document.getElementById("bar");
+                                                    var width = value;
+                                                    elem.style.width = width + '%';
+                                                    $('#limite-valor').text(width + '%');
+                                                }
 
                                                 var cont = 0;
                                                 var iniciar = true;
-
                                                 function agregarUnidad() {
                                                     var inicio_unidad = $("#fecha_inicio_unidad").val();
                                                     var fin_unidad = $("#fecha_fin_unidad").val();
@@ -360,13 +360,14 @@
                                                     $('#tblUnidades').append(fila);
                                                     inicializarTablaUnidad(iniciar);
                                                 }
+
                                                 function inicializarTablaUnidad(flag) {
                                                     if (flag) {
                                                         $(document).ready(function () {
                                                             $('#tblUnidades').DataTable({
                                                                 "paging": false,
                                                                 "ordering": true,
-                                                                "info": true
+                                                                "info": false
                                                             });
                                                         });
                                                         iniciar = false;
@@ -375,8 +376,6 @@
                                                 function eliminarFila(indice) {
                                                     $("#fila" + indice).remove();
                                                 }
-
-
         </script>
 
     </body>
