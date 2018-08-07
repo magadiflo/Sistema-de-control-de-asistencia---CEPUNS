@@ -138,4 +138,8 @@ public class MatriculaManager {
         return matriculaDao.obtenerCicloActual();
     }
     
+    public List<MatriculaBE> obtener(MatriculaBE matricula){
+        return matriculaDao.obtener(matricula);
+    }
+    
 }

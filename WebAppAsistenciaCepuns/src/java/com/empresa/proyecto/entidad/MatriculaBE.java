@@ -31,6 +31,17 @@ public class MatriculaBE {
         listProgramacionHorario = new ArrayList<ProgramacionHorarioBE>();
         listTurno = new ArrayList<TurnoBE>();
     }
+    
+    public MatriculaBE(int identMatricula){
+        this.identMatricula = identMatricula;
+        ciclo = new ParametroBE();
+        estadoMatricula = new ParametroBE();
+        estado = new ParametroBE();
+        listMatriculaDia = new ArrayList<MatriculaDiasBE>();
+        listMatriculaEspecialidad = new ArrayList<MatriculaEspecialidadBE>();
+        listProgramacionHorario = new ArrayList<ProgramacionHorarioBE>();
+        listTurno = new ArrayList<TurnoBE>();
+    }
 
     public int getIdentMatricula() {
         return identMatricula;

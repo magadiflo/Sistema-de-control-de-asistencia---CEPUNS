@@ -8,11 +8,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 public class AsistenciaDaoImpl implements AsistenciaDao {
 
-    private static final String QUERY_OBTENER = "select id_asistencia, id_programacion_horario, fecha, numero_semana, id_005_dia, id_turno from asistencia as";
+    private static final String QUERY_OBTENER = "select id_asistencia, a.id_programacion_horario, fecha, numero_semana, id_005_dia, id_turno, p.descripcion dia_descripcion, m.anio, p3.descripcion ciclo, ph.unidad from asistencia a join parametro p on p.id_parametro = a.id_005_dia join programacion_horario ph on ph.id_programacion_horario = a.id_programacion_horario join matricula m on m.id_matricula = ph.id_matricula join parametro p3 on p3.id_parametro = m.id_004_ciclo where (? is null or ? = 0 or a.id_asistencia = ?) and (? is null or ? = 0 or m.id_matricula = ?) ";
     private static final String QUERY_REGISTRAR = "insert into asistencia\n"
             + "(id_programacion_horario, fecha, numero_semana, id_005_dia, id_turno)\n"
             + "values\n"
@@ -54,17 +55,28 @@ public class AsistenciaDaoImpl implements AsistenciaDao {
         AsistenciaBE item = null;
         try {
             ps = mysqlConexion.getConnection().prepareCall(QUERY_OBTENER);
+            ps.setInt(1, asistencia.getIdentAsistencia());
+            ps.setInt(2, asistencia.getIdentAsistencia());
+            ps.setInt(3, asistencia.getIdentAsistencia());
+            ps.setInt(4, asistencia.getProgramacionHorario().getMatricula().getIdentMatricula());
+            ps.setInt(5, asistencia.getProgramacionHorario().getMatricula().getIdentMatricula());
+            ps.setInt(6, asistencia.getProgramacionHorario().getMatricula().getIdentMatricula());
             //TODO: Faltan pasar parametros
             rs = ps.executeQuery();
-
+            
+            lista = new ArrayList<AsistenciaBE>();
             while (rs.next()) {
                 item = new AsistenciaBE();
                 item.setIdentAsistencia(rs.getInt(ID_ASISTENCIA));
                 item.getProgramacionHorario().setIdentProgramacionHorario(rs.getInt(ID_PROGRAMACION_HORARIO));
+                item.getProgramacionHorario().setUnidad(rs.getInt("unidad"));
                 item.setFecha(rs.getDate(FECHA));
                 item.setNumeroSemana(rs.getInt(NUMERO_SEMANA));
                 item.getDia().setIdentParametro(rs.getInt(ID_005_DIA));
+                item.getDia().setDescripcion(rs.getString("dia_descripcion"));
                 item.getTurno().setIdentTurno(rs.getInt(ID_TURNO));
+                item.getProgramacionHorario().getMatricula().getCiclo().setDescripcion(rs.getString("ciclo"));
+                item.getProgramacionHorario().getMatricula().setAnio(rs.getInt("anio"));
                 lista.add(item);
             }
 

@@ -5,9 +5,17 @@
  */
 package com.empresa.proyecto.controlador.asistencia;
 
+import com.empresa.proyecto.entidad.AsistenciaBE;
+import com.empresa.proyecto.entidad.AsistenciaDetalleBE;
+import com.empresa.proyecto.entidad.MatriculaBE;
+import com.empresa.proyecto.negocio.AsistenciaDetalleManager;
 import com.empresa.proyecto.negocio.AsistenciaManager;
+import com.empresa.proyecto.negocio.MatriculaManager;
+import com.empresa.proyecto.util.Util;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -64,6 +72,19 @@ public class AsistenciaFechaServlet extends HttpServlet {
             request.getSession().setAttribute("mensaje", null);
             request.setAttribute("mensaje", mensaje);
         }
+        int idMatricula = Util.obtenerValorEntero(request.getParameter("idMatricula"));
+        MatriculaBE matricula = new MatriculaBE();
+        AsistenciaBE asistencia = new AsistenciaBE();
+        asistencia.getProgramacionHorario().getMatricula().setIdentMatricula(idMatricula);
+        List<AsistenciaBE> listaAsistencia = new ArrayList<AsistenciaBE>();
+        if(idMatricula != 0){
+            matricula = new MatriculaManager().obtener(new MatriculaBE(idMatricula)).get(0);
+            listaAsistencia = new AsistenciaManager().obtener(asistencia);
+        }
+            
+        
+        request.setAttribute("matricula", matricula);
+        request.setAttribute("listaAsistencia", listaAsistencia);
         request.getRequestDispatcher("asistenciaSeleccionarFecha.jsp").forward(request, response);
     }
 

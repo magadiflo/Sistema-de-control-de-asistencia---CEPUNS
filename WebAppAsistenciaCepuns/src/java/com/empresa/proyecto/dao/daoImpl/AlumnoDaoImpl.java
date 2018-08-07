@@ -24,7 +24,7 @@ import java.util.List;
  */
 public class AlumnoDaoImpl implements AlumnoDao{
 
-    private static final String QUERY_OBTENER = "select id_alumno ,a.id_persona, ifnull(p.nombres,'') nombres, ifnull(p.paterno,'') paterno, ifnull(p.materno,'') materno ,codigo, id_matricula_especialidad,id_002_estado_habilitado,apoderado,telefono_contacto,id_003_estado, p.id_001_tipo_documento, p.email, p.direccion, p.telefono from alumno a join persona p on p.id_persona = a.id_persona where (? is null or ? = '' or ? = a.codigo) and (? is null or ? = '' or ? = p.documento)";
+    private static final String QUERY_OBTENER = "{call usp_alumno_obtener(?,?,?,?,?,?)}";
     private static final String QUERY_REGISTRAR = "insert into alumno\n" 
             +"(id_persona,codigo,id_matricula_especialidad,id_002_estado_habilitado,apoderado,telefono_contacto,id_003_estado) \n" 
             +"values\n" 
@@ -76,19 +76,19 @@ public class AlumnoDaoImpl implements AlumnoDao{
     @Override
     public List<AlumnoBE> obtener(AlumnoBE alumno) {
         List<AlumnoBE> lista = null;
-        PreparedStatement ps = null; 
+        CallableStatement cs = null; 
         ResultSet rs = null;
         AlumnoBE item = null;
         try {
-            ps = mysqlConexion.getConnection().prepareCall(QUERY_OBTENER);
-            ps.setString(1, alumno.getCodigo());
-            ps.setString(2, alumno.getCodigo());
-            ps.setString(3, alumno.getCodigo());
-            ps.setString(4, alumno.getPersona().getDocumento());
-            ps.setString(5, alumno.getPersona().getDocumento());
-            ps.setString(6, alumno.getPersona().getDocumento());
+            cs = mysqlConexion.getConnection().prepareCall(QUERY_OBTENER);
+            cs.setString(1, alumno.getPersona().getDocumento());
+            cs.setString(2, alumno.getCodigo());
+            cs.setInt(3, alumno.getMatriculaEspecialidad().getMatricula().getIdentMatricula());
+            cs.setInt(4, alumno.getMatriculaEspecialidad().getIdentMatriculaEspecialidad());
+            cs.setString(5, alumno.getPersona().getNombres());
+            cs.setInt(6, alumno.getIdentAlumno());
             //TODO: Faltan pasar parametros
-            rs = ps.executeQuery();
+            rs = cs.executeQuery();
             lista = new ArrayList<AlumnoBE>();
             while(rs.next()){
                 item = new AlumnoBE();
@@ -101,13 +101,14 @@ public class AlumnoDaoImpl implements AlumnoDao{
                 item.getPersona().setEmail(rs.getString("email"));
                 item.getPersona().setDireccion(rs.getString("direccion"));
                 item.getPersona().setTelefono(rs.getString("telefono"));
+                item.getPersona().setDocumento(rs.getString("documento"));
                 item.setCodigo(rs.getString(CODIGO));
                 item.getMatriculaEspecialidad().setIdentMatriculaEspecialidad(rs.getInt(ID_MATRICULA_ESPECIALIDAD));
                 item.getEstadoHabilitado().setIdentParametro(rs.getInt(ID_002_ESTADO_HABILITADO));
                 item.setApoderado(rs.getString(APODERADO));
                 item.setTelefonoContacto(rs.getString(TELEFONO_CONTACTO));
                 item.getEstado().setIdentParametro(rs.getInt(ID_003_ESTADO));
-                
+                item.getMatriculaEspecialidad().getEspecialidad().setDescripcion(rs.getString("especialidad"));
                 lista.add(item);
             }
             

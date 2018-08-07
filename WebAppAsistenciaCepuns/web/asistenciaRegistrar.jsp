@@ -1,10 +1,11 @@
+<%@page import="com.empresa.proyecto.entidad.AsistenciaBE"%>
 <%@page import="com.empresa.proyecto.entidad.AsistenciaDetalleBE"%>
 <%@page import="com.empresa.proyecto.entidad.ParametroBE"%>
 <%@page import="java.util.List"%>
 <!DOCTYPE html>
 <%
     String mensaje = (String) request.getAttribute("mensaje");
-    Integer idAsistencia = (Integer) request.getAttribute("idAsistencia");
+    AsistenciaBE asistencia = (AsistenciaBE) request.getAttribute("asistencia");
     List<ParametroBE> estadosAsistencia = (List<ParametroBE>) request.getAttribute("estadosAsistencia");
     List<AsistenciaDetalleBE> listaDetalle = (List<AsistenciaDetalleBE>) request.getAttribute("listDetalle");
 
@@ -40,7 +41,8 @@
                     $.ajax({
                         url: 'alumnobuscar',
                         data: {
-                            codigo: codigo
+                            codigo: codigo,
+                            busqueda: 1
                         },
                         type: 'GET',
                         dataType: 'json',
@@ -146,10 +148,11 @@
                                     <div class="col-md-12">
                                         <!--Contenido-->
 
-                                        <h4>Registrar Asistencia</h4>
+                                        <h4>Asistencia Ciclo <%=asistencia.getProgramacionHorario().getMatricula().getAnio() + "  " +asistencia.getProgramacionHorario().getMatricula().getCiclo().getDescripcion()%></h4>
+                                        <h5>Semana <%=asistencia.getNumeroSemana()%> Dia <%=asistencia.getDia().getDescripcion()%></h5>
                                         <form action="asistenciaRegistrar" method="POST">
                                             <div class="form-group">
-                                                <input type="hidden" name="idAsistencia" value="<%=idAsistencia%>">
+                                                <input type="hidden" name="idAsistencia" value="<%=asistencia.getIdentAsistencia()%>">
                                                 <input type="hidden" id="numeroAgregados" name="numeroAgregados" value="0">
                                                 <label for="codigo">Codigo del alumno</label>
                                                 <input type="text" class="form-control" id="codigo" name="codigo" >

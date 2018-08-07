@@ -1,12 +1,8 @@
-<%@page import="com.empresa.proyecto.entidad.AsistenciaBE"%>
-<%@page import="java.util.List"%>
-<%@page import="com.empresa.proyecto.entidad.AsistenciaDetalleBE"%>
 <%@page import="com.empresa.proyecto.entidad.MatriculaBE"%>
+<%@page import="java.util.List"%>
 <!DOCTYPE html>
 <%
-    String mensaje = (String) request.getAttribute("mensaje");
-    MatriculaBE matricula = (MatriculaBE) request.getAttribute("matricula");
-    List<AsistenciaBE> listaAsistencia = (List<AsistenciaBE>) request.getAttribute("listaAsistencia");
+    List<MatriculaBE> listaMatricula = (List<MatriculaBE>) request.getAttribute("listaMatricula");
 %>
 <html>
     <head>
@@ -64,42 +60,39 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <!--Contenido-->
-
-                                        <h4>Asistencia <%=matricula.getIdentMatricula() != 0? matricula.getAnio() + "  " + matricula.getCiclo().getDescripcion(): ""%> </h4>
-                                        <form action="asistenciaFecha" method="POST">
-                                            <div class="form-group">
-                                                <label for="fecha">Seleccione la fecha</label>
-                                                <input type="date" class="form-control" id="fecha" name="fecha" value="2018-09-10" >
+                                        <div class="row">
+                                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                                <h3>Historial de Ciclos Aperturados</h3>
+                                                <h2><a href="<%=request.getContextPath()%>/matriculanuevo"> <button class="btn btn-success">Aperturar Nuevo Ciclo</button> </a></h2>
                                             </div>
-                                            <div class="form-group">
-                                                <button class="btn btn-primary" type="submit" value="">Aceptar</button>
-                                            </div>
-                                        </form>
+                                        </div>
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <div class="table-responsive">
 
                                                 <table class="table table-striped table-bordered table-condensed table-hover" id="tableasistencia">
                                                     <thead>
                                                     <th>#</th>
-                                                    <th>Fecha</th>
-                                                    <th>Semana</th>
-                                                    <th>Dia</th>
+                                                    <th>Año</th>
+                                                    <th>Ciclo</th>
+                                                    <th>Estado</th>
                                                     <th>Accion</th>
                                                     </thead>
                                                     <tbody>
                                                         <%
                                                             int i = 0;
-                                                            if (!listaAsistencia.isEmpty()) {
-                                                                for (AsistenciaBE item : listaAsistencia) {
+                                                            if (!listaMatricula.isEmpty()) {
+                                                                for (MatriculaBE item : listaMatricula) {
                                                         %>
 
                                                         <tr>
                                                             <td><%= ++i%></td>
-                                                            <td><%= item.getFecha()%></td>
-                                                            <td><%=item.getNumeroSemana()%></td>
-                                                            <td><%= item.getDia().getDescripcion()%></td>
+                                                            <td><%=item.getAnio()%></td>
+                                                            <td><%= item.getCiclo().getDescripcion()%></td>
+                                                            <td><%= item.getEstadoMatricula().getDescripcion()%></td>
                                                             <td>
-                                                                <a href="<%=request.getContextPath()%>/asistenciaRegistrar?idasistencia=<%=item.getIdentAsistencia()%>"><button class="btn btn-info">Ver </button></a>
+                                                                <a href="?idMatricula=<%=item.getIdentMatricula()%>"><button class="btn btn-info">Ver Matricula</button></a>
+                                                                <a href="<%=request.getContextPath()%>/alumnolistar?idMatricula=<%=item.getIdentMatricula()%>"><button class="btn btn-info">Ver Alumnos</button></a>
+                                                                <a href="<%=request.getContextPath()%>/asistenciaFecha?idMatricula=<%=item.getIdentMatricula()%>"><button class="btn btn-info">Ver Asistencia</button></a>
                                                             </td>
                                                         </tr>
 
@@ -112,6 +105,8 @@
 
                                             </div>
                                         </div>
+
+
                                         <!--Fin Contenido-->
                                     </div>
                                 </div>
@@ -124,14 +119,8 @@
             </section><!-- /.content -->
         </div><!-- /.content-wrapper -->
         <!--Fin-Contenido-->
-        <script type="text/javascript">
-            <%
-                if (mensaje != null) {
-            %>
-                alert("<%=mensaje%>");
-            <%
-                }
-            %>
+        <script>
+
         </script>
         <footer class="main-footer">
             <div class="pull-right hidden-xs">

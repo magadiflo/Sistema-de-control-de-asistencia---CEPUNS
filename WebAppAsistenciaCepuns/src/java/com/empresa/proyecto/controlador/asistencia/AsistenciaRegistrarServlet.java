@@ -9,6 +9,7 @@ import com.empresa.proyecto.entidad.AsistenciaBE;
 import com.empresa.proyecto.entidad.AsistenciaDetalleBE;
 import com.empresa.proyecto.entidad.ParametroBE;
 import com.empresa.proyecto.negocio.AsistenciaDetalleManager;
+import com.empresa.proyecto.negocio.AsistenciaManager;
 import com.empresa.proyecto.negocio.ParametroManager;
 import com.empresa.proyecto.util.Util;
 import com.empresa.proyecto.util.constante.ParametroTipoConstante;
@@ -69,12 +70,13 @@ public class AsistenciaRegistrarServlet extends HttpServlet {
         int idAsistencia = Util.obtenerValorEntero(request.getParameter("idasistencia"));
         AsistenciaBE asistencia = new AsistenciaBE();
         asistencia.setIdentAsistencia(idAsistencia);
+        asistencia = new AsistenciaManager().obtener(asistencia).get(0);
         List<AsistenciaDetalleBE> listDetalle = new AsistenciaDetalleManager().obtener(asistencia);
         ParametroBE parametroAsistencia = new ParametroBE();
         parametroAsistencia.getParametroTipo().setIdentParametroTipo(ParametroTipoConstante.ESTADO_ASISTENCIA);
         List<ParametroBE> estadosAsistencia = new ParametroManager().obtener(parametroAsistencia);
         request.setAttribute("listDetalle",listDetalle );
-        request.setAttribute("idAsistencia",idAsistencia );
+        request.setAttribute("asistencia",asistencia );
         request.setAttribute("estadosAsistencia",estadosAsistencia );
         
         request.getRequestDispatcher("asistenciaRegistrar.jsp").forward(request, response);

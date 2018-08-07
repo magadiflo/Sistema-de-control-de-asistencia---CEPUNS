@@ -13,6 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,7 +22,7 @@ import java.util.List;
  */
 public class MatriculaDaoImpl implements MatriculaDao{
 
-    private static final String QUERY_OBTENER = "select id_matricula ,anio,id_004_ciclo, id_006_estado_matricula,limite_faltas_porcentaje,fecha_inicio,fecha_fin,asignar_primer_turno_defecto,id_003_estado from matricula m";
+    private static final String QUERY_OBTENER = "select id_matricula ,anio,id_004_ciclo, id_006_estado_matricula,limite_faltas_porcentaje,fecha_inicio,fecha_fin,asignar_primer_turno_defecto,id_003_estado, p.descripcion ciclo, p2.descripcion estado_matricula from matricula m join parametro p on p.id_parametro = m.id_004_ciclo join parametro p2 on p2.id_parametro = m.id_006_estado_matricula ";
     private static final String QUERY_REGISTRAR = "insert into matricula\n"
             + "(anio,id_004_ciclo, id_006_estado_matricula,limite_faltas_porcentaje,fecha_inicio,fecha_fin,asignar_primer_turno_defecto,id_003_estado) \n"
             + "values\n"
@@ -85,7 +86,7 @@ public class MatriculaDaoImpl implements MatriculaDao{
             ps = mysqlConexion.getConnection().prepareCall(QUERY_OBTENER);
             //TODO: Faltan pasar parametros
             rs = ps.executeQuery();
-
+            lista = new ArrayList<MatriculaBE>();
             while (rs.next()) {
                 item = new MatriculaBE();
                 item.setIdentMatricula(rs.getInt(ID_MATRICULA));
@@ -97,7 +98,9 @@ public class MatriculaDaoImpl implements MatriculaDao{
                 item.setFechaFin(rs.getDate(FECHA_FIN));
                 item.setAsignarPrimerTurnoDefecto(rs.getBoolean(ASIGNAR_PRIMER_TURNO_DEFECTO));
                 item.getEstado().setIdentParametro(rs.getInt(ID_003_ESTADO));
-
+                item.getCiclo().setDescripcion(rs.getString("ciclo"));
+                item.getEstadoMatricula().setDescripcion(rs.getString("estado_matricula"));
+                
                 lista.add(item);
             }
 

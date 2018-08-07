@@ -37,7 +37,8 @@ public class AsistenciaDetalleDaoImpl implements AsistenciaDetalleDao {
 "join alumno a on a.id_alumno = d.id_alumno\n" +
 "join persona p on p.id_persona = a.id_persona\n" +
 "join parametro pa on pa.id_parametro = d.id_007_estado_asistencia "+
-"where d.id_asistencia = ?";
+"where d.id_asistencia = ? ";
+//"where d.id_asistencia = ? or ph.id_matricula = ?";
     
 //    private static final String ID_ASISTENCIA_DETALLE = "id_asistencia_detalle";
 //    private static final String ID_ASISTENCIA = "id_asistencia";
@@ -89,6 +90,7 @@ public class AsistenciaDetalleDaoImpl implements AsistenciaDetalleDao {
         try {
             ps = mysqlConexion.getConnection().prepareCall(QUERY_OBTENER);
             ps.setInt(1, asistencia.getIdentAsistencia());
+            //ps.setInt(2, asistencia.getProgramacionHorario().getMatricula().getIdentMatricula());
             
             rs = ps.executeQuery();
             listDetalle = new ArrayList<AsistenciaDetalleBE>();

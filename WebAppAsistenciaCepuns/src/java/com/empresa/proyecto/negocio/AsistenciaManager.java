@@ -54,4 +54,8 @@ public class AsistenciaManager {
         return asistenciaDao.obtenerIdAsistenciaPorFecha(fecha);
     }
     
+    public List<AsistenciaBE> obtener(AsistenciaBE asistencia){
+        return asistenciaDao.obtener(asistencia);
+    }
+    
 }

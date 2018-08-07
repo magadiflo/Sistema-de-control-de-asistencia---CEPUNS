@@ -6,11 +6,17 @@
 package com.empresa.proyecto.controlador.alumno;
 
 import com.empresa.proyecto.entidad.AlumnoBE;
+import com.empresa.proyecto.entidad.MatriculaBE;
+import com.empresa.proyecto.entidad.MatriculaEspecialidadBE;
+import com.empresa.proyecto.entidad.ParametroBE;
 import com.empresa.proyecto.negocio.AlumnoManager;
+import com.empresa.proyecto.negocio.MatriculaEspecialidadManager;
+import com.empresa.proyecto.negocio.MatriculaManager;
+import com.empresa.proyecto.negocio.ParametroManager;
 import com.empresa.proyecto.util.Util;
+import com.empresa.proyecto.util.constante.ParametroTipoConstante;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,8 +28,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author VICTOR
  */
-@WebServlet(name = "AlumnoBuscarServlet", urlPatterns = {"/alumnobuscar"})
-public class AlumnoBuscarServlet extends HttpServlet {
+@WebServlet(name = "AlumnoEditarServlet", urlPatterns = {"/alumnover"})
+public class AlumnoEditarServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,10 +48,10 @@ public class AlumnoBuscarServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AlumnoBuscarServlet</title>");            
+            out.println("<title>Servlet AlumnoEditarServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AlumnoBuscarServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet AlumnoEditarServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -63,42 +69,29 @@ public class AlumnoBuscarServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String codigo = request.getParameter("codigo");
-        String documento = request.getParameter("documento");
-        int idMatricula = Util.obtenerValorEntero(request.getParameter("idMatricula"));
-        int idMatriculaEspecialidad = Util.obtenerValorEntero(request.getParameter("idMatriculaEspecialidad"));
-        int busqueda = Util.obtenerValorEntero(request.getParameter("busqueda"));
-        String nombre = request.getParameter("nombre");
-        System.out.println("codigo: " + codigo);
-        System.out.println("documento: " + documento);
-        System.out.println("idMatricula: " + idMatricula);
-        System.out.println("idMatriculaEspecialidad: " + idMatriculaEspecialidad);
-        System.out.println("nombre: " + nombre);
+        
+        int idAlumno = Util.obtenerValorEntero(request.getParameter("idAlumno"));
+        
+        ParametroBE parametro = new ParametroBE();
+        parametro.getParametroTipo().setIdentParametroTipo(ParametroTipoConstante.TIPO_DOCUMENTO);
+        List<ParametroBE> tiposDocumento =  new ParametroManager().obtener(parametro);
+        
+        MatriculaBE matriculaActual = new MatriculaManager().obtenerCicloActual();
+        
+        MatriculaEspecialidadBE matriculaEspecialidad = new MatriculaEspecialidadBE();
+        matriculaEspecialidad.getMatricula().setIdentMatricula(matriculaActual.getIdentMatricula());
+        List<MatriculaEspecialidadBE> listEspecialidades = new MatriculaEspecialidadManager().obtener(matriculaEspecialidad);
+        
         AlumnoBE alumno = new AlumnoBE();
-        List<AlumnoBE> listaAlumno = null;
-        try {
-            alumno.setCodigo(codigo);
-            alumno.getPersona().setDocumento(documento);
-            alumno.getMatriculaEspecialidad().getMatricula().setIdentMatricula(idMatricula);
-            alumno.getMatriculaEspecialidad().setIdentMatriculaEspecialidad(idMatriculaEspecialidad);
-            alumno.getPersona().setNombres(nombre);
-            listaAlumno = new AlumnoManager().obtener(alumno);
-            if(listaAlumno.size() > 0)
-                alumno = listaAlumno.get(0);
-        } catch (Exception e) {
-            e.printStackTrace();
-            alumno = new AlumnoBE();
-            listaAlumno = new ArrayList<AlumnoBE>();
-        } finally{
-            if(busqueda == 1){
-                Util.retornarJson(alumno, request, response);
-            }else{
-                Util.retornarJson(listaAlumno, request, response);
-            }
-            
-        }
+        alumno.setIdentAlumno(idAlumno);
+        alumno = new AlumnoManager().obtener(alumno).get(0);
         
+        request.setAttribute("tiposDocumento", tiposDocumento);
+        request.setAttribute("matriculaActual", matriculaActual);
+        request.setAttribute("listEspecialidades", listEspecialidades);
+        request.setAttribute("alumno", alumno);
         
+        request.getRequestDispatcher("alumnoVer.jsp").forward(request, response);
     }
 
     /**

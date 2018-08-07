@@ -64,15 +64,16 @@
                                         <!-- Inicio del cuerpo - panel Configuración General -->
                                         <div class="panel-body">
                                             <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                                <label>Año: </label>
+                                                <label>Año: </label><!--
                                                 <%
                                                     java.util.Calendar fecha = java.util.Calendar.getInstance();
                                                     Object anio_actual = fecha.get(java.util.Calendar.YEAR);
                                                 %>
                                                 <input type="number" class="form-control" name="anio" id="anio" maxlength="4" 
-                                                       value= <% out.println(anio_actual); %> 
-                                                       min=<% out.println(anio_actual); %> 
-                                                       max=<% out.println((int) anio_actual + 1);%> required>
+                                                       value=  
+                                                       min=
+                                                       max= required>
+                                                                    -->
                                             </div>
                                             <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                                 <label>Ciclo: </label>
