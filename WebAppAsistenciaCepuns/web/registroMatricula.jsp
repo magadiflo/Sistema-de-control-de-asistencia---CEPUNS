@@ -24,9 +24,15 @@
         <link rel="stylesheet" href="css/_all-skins.min.css">
         <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
         <link rel="shortcut icon" href="img/favicon.ico">  
+
+        <!-- DATATABLES -->
+        <link rel="stylesheet" type="text/css" href="datatables/jquery.dataTables.min.css"/>
+        <link rel="stylesheet" type="text/css" href="datatables/buttons.dataTables.min.css"/>
+        <link rel="stylesheet" type="text/css" href="datatables/responsive.dataTables.min.css"/>
+
     </head>
 
-    <body class="hold-transition skin-blue sidebar-mini">
+    <body class="hold-transition skin-blue sidebar-mini" style="background: #222D32; ">
         <!-- <div class="wrapper">  -->
 
 
@@ -44,104 +50,271 @@
                     <div class="col-md-12">
                         <div class="box">
                             <div class="box-header with-border">
-                                <h1 class="box-title"><label>REGISTRO DE MATRÍCULA - CEPUNS</label></h1>
+                                <h1 class="box-title"><label>APERTURAR CICLO ACADÉMICO</label></h1>
                             </div>
                             <!-- /.box-header -->
                             <!-- centro -->
                             <div class="panel-body " id="formularioRegistros">
-                                <form action="#" name="formulario" id="formulario" method="POST">
-                                    <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                        <label>Año: </label>
-                                        <%
-                                            java.util.Calendar fecha = java.util.Calendar.getInstance();
-                                        %>
-                                        <input type="number" class="form-control" name="anio" id="anio" maxlength="4" 
-                                               value=<% out.println(fecha.get(java.util.Calendar.YEAR)); %>required>
-                                    </div>
-                                    <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                        <label>Ciclo: </label>
-                                        <select id="ciclo" class="form-control selectpicker" data-live-search="true" name="ciclo" required>
-                                            <option value=8>I</option>
-                                            <option value=9>II</option>
-                                            <option value=10>III</option>                                            
-                                            <!--<option value=11>IV</option>-->
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                        <label>Fecha Inicio: </label>
-                                        <input type="date" class="form-control" name="fechainicio" id="fechainicio" required>
-                                    </div>
-                                    <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                        <label>Fecha Inicio: </label>
-                                        <input type="date" class="form-control" name="fechafin" id="fechafin" required>
-                                    </div>
-                                    <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                        <label>Estado: </label>
-                                        <div>
-                                            <input type="radio" value="activo" name="estado" checked>Activo
-                                            <input type="radio" value="inactivo" name="estado"> Inactivo
+                                <form action="#" name="formularioApertura" id="formularioApertura" method="POST">
+                                    <!-- Inicio Panel - Configuración General -->
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title">Configuración General</h3>
                                         </div>
+                                        <!-- Inicio del cuerpo - panel Configuración General -->
+                                        <div class="panel-body">
+                                            <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                <label>Año: </label>
+                                                <%
+                                                    java.util.Calendar fecha = java.util.Calendar.getInstance();
+                                                    Object anio_actual = fecha.get(java.util.Calendar.YEAR);
+                                                %>
+                                                <input type="number" class="form-control" name="anio" id="anio" maxlength="4" 
+                                                       value= <% out.println(anio_actual); %> 
+                                                       min=<% out.println(anio_actual); %> 
+                                                       max=<% out.println((int) anio_actual + 1);%> required>
+                                            </div>
+                                            <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                <label>Ciclo: </label>
+                                                <select id="id_004_ciclo" name="id_004_ciclo" class="form-control selectpicker" data-live-search="true" required>
+                                                    <option value=8>I</option>
+                                                    <option value=9>II</option>
+                                                    <option value=10>III</option>                                            
+                                                    <!--<option value=11>IV</option>-->
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                <label>Fecha de apertura: </label>
+                                                <input type="date" class="form-control" name="fecha_inicio" id="fecha_inicio" required>
+                                            </div>
+                                            <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                <label>Fecha de finalización: </label>
+                                                <input type="date" class="form-control" name="fecha_fin" id="fecha_fin" required>
+                                            </div>
+                                        </div>
+                                        <!-- Fin del cuerpo - panel Configuración General -->
                                     </div>
-                                    <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                        <label>Límite de faltas: </label>
-                                        <input type="number" class="form-control" name="limite" maxlength="3" id="limite" value="30" required>
-                                        <div class="progress">
-                                            <div class="progress-bar progress-bar-striped active" role="progressbar"
-                                                 aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:30%">
-                                                30%
+                                    <!-- Fin Panel - Configuración General -->
+                                    <!-- Inicio Panel - Configuración de Faltas -->
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title">Configuración de Faltas</h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="form-group col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                                                <label>Límite de faltas: </label>
+                                                <input type="number" class="form-control" name="limite_faltas_porcentaje" maxlength="3" 
+                                                       id="limite_faltas_porcentaje" value="30" 
+                                                       min="0" max="100" required>
+                                            </div>
+                                            <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="progress">
+                                                    <div id="bar" class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+                                                        <span class="sr-only">0% Complete</span>
+                                                    </div>
+                                                </div>                                                
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group col-lg-2 col-md-2 col-sm-2 col-xs-12">
-                                        <label>Turno: </label>
-                                        <input type="number" class="form-control" name="turno" id="turno" min="1" max="2" value="1" required>
+                                    <!-- Fin Panel - Configuración de Faltas -->
+                                    <!-- Inicio Panel - Configuración de Turnos -->
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title">Configuración de Turnos</h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <label>Turno: </label>
+                                                <input type="number" class="form-control" name="asignar_primer_turno_defecto"  
+                                                       id="asignar_primer_turno_defecto" value="1" min="1" max="3" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                    <label>Hola inicio: </label>
+                                                    <input type="time" class="form-control" name="hora_inicio" id="hora_inicio" value="07:00:00" required>
+                                                </div>
+                                                <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                    <label>Hora fin: </label>
+                                                    <input type="time" class="form-control" name="hora_fin" id="hora_fin" value="13:00:00" required>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    
-                                    <!-- De tabla Turno -->
-                                    
-                                    <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                        <label>Seleccione los días para su matrícula: </label><br>
-                                        <input type="checkBox" name="dias" value="12"> Lunes &nbsp;&nbsp;
-                                        <input type="checkBox" name="dias" value="13"> Martes&nbsp;&nbsp;
-                                        <input type="checkBox" name="dias" value="14"> Miércoles&nbsp;&nbsp;
-                                        <input type="checkBox" name="dias" value="15"> Jueves&nbsp;&nbsp;
-                                        <input type="checkBox" name="dias" value="16"> Viernes&nbsp;&nbsp;
-                                        <input type="checkBox" name="dias" value="17"> Sábado&nbsp;&nbsp;
-                                        <input type="checkBox" name="dias" value="18"> Domingo&nbsp;&nbsp;
+                                    <!-- Fin Panel - Configuración de Turnos -->
+                                    <!-- Inicio Panel - Configuración de Días a Estudiar -->
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title">Configuración de Días Académicos</h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                <ul style="list-style: none;">
+                                                    <li><input type="checkBox" name="dias" value="12" checked> Lunes</li>
+                                                    <li><input type="checkBox" name="dias" value="13" checked> Martes</li>
+                                                </ul>
+                                            </div>
+                                            <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                <ul style="list-style: none;">
+                                                    <li><input type="checkBox" name="dias" value="14" checked> Miércoles</li>
+                                                    <li><input type="checkBox" name="dias" value="15" checked> Jueves</li>
+                                                </ul>
+                                            </div>
+                                            <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                <ul style="list-style: none;">
+                                                    <li><input type="checkBox" name="dias" value="16" checked> Viernes</li>
+                                                    <li><input type="checkBox" name="dias" value="17"> Sábado</li>
+                                                </ul>
+                                            </div>
+                                            <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                <ul style="list-style: none;">
+                                                    <li><input type="checkBox" name="dias" value="18"> Domingo</li>
+                                                </ul>
+                                            </div>
+                                        </div>
                                     </div>
-                                    
+                                    <!-- Fin Panel - Configuración de Días a Enseñar -->
+                                    <!-- Inicio Panel - Configuración de Especialidades -->
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title">Configuración de Especialidades</h3>
+                                        </div>
+                                        <div class="panel-body table-responsive" id="listadoRegistros">
+                                            <table id="tblEspecialidad" class="table table-striped table-bordered table-condensed table-hover">
+                                                <thead>
+                                                <th>Id</th>
+                                                <th>Facultad</th>
+                                                <th>Especialidad</th>
+                                                <th>Código</th>
+                                                <th>Estado</th>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>01</td>
+                                                        <td>Ingeniería</td>
+                                                        <td>Sistemas</td>
+                                                        <td>0140</td>
+                                                        <td><input type="checkbox" checked> Activo</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>02</td>
+                                                        <td>Ingeniería</td>
+                                                        <td>Civil</td>
+                                                        <td>0120</td>
+                                                        <td><input type="checkbox" checked> Activo</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>03</td>
+                                                        <td>Ingeniería</td>
+                                                        <td>Agroindustrial</td>
+                                                        <td>0150</td>
+                                                        <td><input type="checkbox" checked> Activo</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>01</td>
+                                                        <td>Ingeniería</td>
+                                                        <td>Sistemas</td>
+                                                        <td>0140</td>
+                                                        <td><input type="checkbox" checked> Activo</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>02</td>
+                                                        <td>Ingeniería</td>
+                                                        <td>Civil</td>
+                                                        <td>0120</td>
+                                                        <td><input type="checkbox" checked> Activo</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>03</td>
+                                                        <td>Ingeniería</td>
+                                                        <td>Agroindustrial</td>
+                                                        <td>0150</td>
+                                                        <td><input type="checkbox" checked> Activo</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>01</td>
+                                                        <td>Ingeniería</td>
+                                                        <td>Sistemas</td>
+                                                        <td>0140</td>
+                                                        <td><input type="checkbox" checked> Activo</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>02</td>
+                                                        <td>Ingeniería</td>
+                                                        <td>Civil</td>
+                                                        <td>0120</td>
+                                                        <td><input type="checkbox" checked> Activo</td>
+                                                    </tr>
+                                                </tbody>
+                                                <tfoot>
+                                                <th>Id</th>
+                                                <th>Facultad</th>
+                                                <th>Especialidad</th>
+                                                <th>Código</th>
+                                                <th>Estado</th>
+                                                </tfoot>                                        
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <!-- Fin Panel - Configuración de Especialidades -->
+                                    <!-- Inicio Panel - Configuración de Unidades -->
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title">Configuración de Unidades (Semanas)</h3>
+                                        </div>
+                                        <br>
+                                        <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <label>Unidad: </label>
+                                            <input type="number" class="form-control" name="numero_unidad"  
+                                                   id="numero_unidad" value="1" min="1" required>
+                                        </div>
+                                        <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                            <label>Inicio de la unidad: </label>
+                                            <input type="date" class="form-control" name="fecha_inicio_unidad" id="fecha_inicio_unidad" required>
+                                        </div>
+                                        <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                            <label>Fin de la unidad: </label>
+                                            <input type="date" class="form-control" name="fecha_fin_unidad" id="fecha_fin_unidad" required>
+                                        </div>
+                                        <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <button class="btn btn-primary" type="button" id="btnAgregar" name="btnAgregar" onclick="agregarUnidad()"><i class="fa fa-plus-circle"></i> Agregar</button>
+                                        </div>
+                                        <div class="panel-body table-responsive" id="listadoRegistros">
+                                            <table id="tblUnidades" class="table table-striped table-bordered table-condensed table-hover">
+                                                <thead>
+                                                <th>Opciones</th>
+                                                <th>Unidad</th>
+                                                <th>Fecha inicio</th>
+                                                <th>Fecha fin</th>
+                                                <th>Estado</th>
+                                                </thead>
+                                                <tbody>
+                                                    <tr style="display: none;">
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                    </tr>
+                                                </tbody>
+                                                <tfoot>
+                                                <th>Unidad</th>
+                                                <th>Fecha inicio</th>
+                                                <th>Fecha fin</th>
+                                                <th>Estado</th>
+                                                <th>Opciones</th>
+                                                </tfoot>                                        
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <!-- Fin Panel - Configuración de Unidades -->
+
                                     <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <button class="btn btn-primary" type="submit" id="btnGuardar"><i class="fa fa-save"></i> Guardar</button>
+                                        <button class="btn btn-success" type="submit" id="btnGuardar"><i class="fa fa-save"></i> Iniciar ciclo académico</button>
                                         <!--<button class="btn btn-primary" onclick="agregarEspecialidad()" type="button"><i class="fa fa-arrow-circle-left"></i>Agregar</button>-->
                                     </div>
                                 </form>
                             </div>
-                                    
-                            
-                                    <!--
-                            <div class="panel-body table-responsive" id="listadoRegistros">
-                                <h4 class="box-title"><label>LISTADO DE MATRICULADOS</label></h4>
-                                <table id="tblEspecialidad" class="table table-striped table-bordered table-condensed table-hover">
-                                    <thead>
-                                    <th>#</th>
-                                    <th>Facultad</th>
-                                    <th>Especialidad</th>
-                                    <th>Código</th>
-                                    <th>Estado</th>
-                                    </thead>
-                                    <tbody>
-                                        
-                                    </tbody>
-                                    <tfoot>
-                                    <th>#</th>
-                                    <th>Facultad</th>
-                                    <th>Especialidad</th>
-                                    <th>Código</th>
-                                    <th>Estado</th>
-                                    </tfoot>
-                                </table>
-                            </div>
-                                   --> 
+
                             <!--Fin centro -->
                         </div><!-- /.box -->
                     </div><!-- /.col -->
@@ -152,17 +325,12 @@
         <!--Fin-Contenido-->
 
 
-
-        <script type="text/javascript">
-
-        </script>
         <footer class="main-footer">
             <div class="pull-right hidden-xs">
                 <b>Version</b> 2.3.0
             </div>
             <strong>Copyright &copy; 2015-2020 <a href="#">Company</a>.</strong> All rights reserved.
         </footer>
-
 
         <!-- jQuery 2.1.4 -->
         <script src="js/jQuery-2.1.4.min.js"></script>
@@ -172,6 +340,83 @@
         <script src="js/bootstrap-select.min.js"></script>
         <!-- AdminLTE App -->
         <script src="js/app.min.js"></script>
+
+        <!-- Librerías del DATATABLES -->
+        <script src="datatables/jquery.dataTables.min.js"></script>
+        <script src="datatables/dataTables.buttons.min.js"></script>
+        <script src="datatables/buttons.html5.min.js"></script>
+        <script src="datatables/buttons.colVis.min.js"></script>
+
+        <script src="datatables/jszip.min.js"></script>
+        <script src="datatables/pdfmake.min.js"></script>
+        <script src="datatables/vfs_fonts.js"></script>
+
+        <script>
+                                                /*$(document).ready(function () {
+                                                 $('#tblEspecialidad').DataTable();
+                                                 });*/
+
+                                                $(document).ready(function () {
+                                                    $('#tblEspecialidad').DataTable({
+                                                        "paging": true,
+                                                        "ordering": true,
+                                                        "info": true,
+                                                        "language": {
+                                                            "lengthMenu": "Mostrar _MENU_ registros por página",
+                                                            "zeroRecords": "Registro no encontrado - ¡Lo siento!",
+                                                            "info": "Mostrando página _PAGE_ de _PAGES_",
+                                                            "infoEmpty": "No hay registros disponibles",
+                                                            "infoFiltered": "(filtrado de los registros totales de _MAX_ )"
+                                                        }
+                                                    });
+                                                });
+
+                                                
+                                                var progreso = $("#limite_faltas_porcentaje").val();
+                                                var idIterval = setInterval(function () {
+                                                    $('#bar').css('width', progreso + '%');
+                                                    //Si llegó a 100 elimino el interval
+                                                    if (progreso == 100) {
+                                                        clearInterval(idIterval);
+                                                    }
+                                                }, 1000);
+
+                                                var cont = 0;
+                                                var iniciar = true;
+
+                                                function agregarUnidad() {
+                                                    var inicio_unidad = $("#fecha_inicio_unidad").val();
+                                                    var fin_unidad = $("#fecha_fin_unidad").val();
+                                                    var num_unidad = $("#numero_unidad").val();
+                                                    var fila = '<tr class="filas" id="fila' + cont + '">' +
+                                                            '<td><button type="button" class="btn btn-danger" onClick=eliminarFila(' + cont + ')>X</button></td>' +
+                                                            '<td>' + num_unidad + '</td>' +
+                                                            '<td>' + inicio_unidad + '</td>' +
+                                                            '<td>' + fin_unidad + '</td>' +
+                                                            '<td>Abierto</td>' +
+                                                            '</tr>';
+                                                    cont++;
+                                                    $('#tblUnidades').append(fila);
+                                                    inicializarTablaUnidad(iniciar);
+                                                }
+                                                function inicializarTablaUnidad(flag) {
+                                                    if (flag) {
+                                                        $(document).ready(function () {
+                                                            $('#tblUnidades').DataTable({
+                                                                "paging": false,
+                                                                "ordering": true,
+                                                                "info": true
+                                                            });
+                                                        });
+                                                        iniciar = false;
+                                                    }
+                                                }
+                                                function eliminarFila(indice) {
+                                                    $("#fila" + indice).remove();
+                                                }
+
+
+        </script>
 
     </body>
 </html>

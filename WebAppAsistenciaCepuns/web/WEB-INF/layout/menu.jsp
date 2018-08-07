@@ -17,20 +17,13 @@
             <li class="treeview">
                 <a href="#">
                     <i class="fa fa-laptop"></i>
-                    <span>Registros</span>
+                    <span>Apertura</span>
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
                     <li>
-                        <a href="registroEspecialidad.jsp">
-                            <i class="fa fa-circle-o"></i>Especialidad
-                        </a>
-                    </li>
-                </ul>
-                <ul class="treeview-menu">
-                    <li>
                         <a href="registroMatricula.jsp">
-                            <i class="fa fa-circle-o"></i>Matrícula
+                            <i class="fa fa-circle-o"></i>Nuevo Ciclo
                         </a>
                     </li>
                 </ul>
