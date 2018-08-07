@@ -17,20 +17,38 @@
             <li class="treeview">
                 <a href="#">
                     <i class="fa fa-laptop"></i>
-                    <span>Apertura</span>
+                    <span>Matricula</span>
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li>
-                        <a href="registroMatricula.jsp">
-                            <i class="fa fa-circle-o"></i>Nuevo Ciclo
-                        </a>
-                    </li>
+                    <li><a href="#"><i class="fa fa-circle-o"></i>Aperturar Ciclo</a></li>
+                    <li><a href="#"><i class="fa fa-circle-o"></i>Alumnos</a></li>
                 </ul>
             </li>
-            
-            
-            
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-laptop"></i>
+                    <span>Asistencia</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="#"><i class="fa fa-circle-o"></i>Historial Asistencia</a></li>
+                    <li><a href="#"><i class="fa fa-circle-o"></i>Registrar Asistencia</a></li>
+                    <li><a href="#"><i class="fa fa-circle-o"></i>Alumnos Inhabilitados</a></li>
+                </ul>
+            </li>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-laptop"></i>
+                    <span>Reposrtes</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="#"><i class="fa fa-circle-o"></i>Reporte de </a></li>
+                    <li><a href="#"><i class="fa fa-circle-o"></i>Reporte de </a></li>
+                    <li><a href="#"><i class="fa fa-circle-o"></i>Reporte de </a></li>
+                </ul>
+            </li>
             <li>
                 <a href="#">
                     <i class="fa fa-plus-square"></i> <span>Ayuda</span>
