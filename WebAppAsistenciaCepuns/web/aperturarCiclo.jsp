@@ -64,16 +64,16 @@
                                         <!-- Inicio del cuerpo - panel Configuración General -->
                                         <div class="panel-body">
                                             <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                                <label>Año: </label><!--
+                                                <label>Año: </label>
                                                 <%
                                                     java.util.Calendar fecha = java.util.Calendar.getInstance();
-                                                    Object anio_actual = fecha.get(java.util.Calendar.YEAR);
+                                                    int anio = fecha.get(Integer.parseInt(java.util.Calendar.YEAR + ""));
+
                                                 %>
                                                 <input type="number" class="form-control" name="anio" id="anio" maxlength="4" 
-                                                       value=  
-                                                       min=
-                                                       max= required>
-                                                                    -->
+                                                       value=  <% out.print(anio); %>
+                                                       min= <% out.print(anio); %>
+                                                       max= <% out.print(anio + 1);%>  required>
                                             </div>
                                             <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                                 <label>Ciclo: </label>
@@ -127,7 +127,7 @@
                                             <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                 <label>Turno: </label>
                                                 <input type="number" class="form-control" name="asignar_primer_turno_defecto"  
-                                                       id="asignar_primer_turno_defecto" value="1" min="1" max="3" required>
+                                                       id="asignar_primer_turno_defecto" value="1" min="1" max="2" required>
                                             </div>
                                             <div class="form-group">
                                                 <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -372,7 +372,7 @@
                                                     });
                                                 });
 
-                                                
+
                                                 var progreso = $("#limite_faltas_porcentaje").val();
                                                 var idIterval = setInterval(function () {
                                                     $('#bar').css('width', progreso + '%');
