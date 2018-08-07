@@ -76,7 +76,7 @@ public class UsuarioDaoImpl implements UsuarioDao{
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            //TODO: Cerrar recursos
+            mysqlConexion.cerrarRecursos(ps, rs);
             return lista;
         }
 
@@ -107,7 +107,7 @@ public class UsuarioDaoImpl implements UsuarioDao{
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            //TODO:Cerrar recursos
+            mysqlConexion.cerrarRecursos(ps, rs);
             return idUsuario;
         }
     }
@@ -132,7 +132,7 @@ public class UsuarioDaoImpl implements UsuarioDao{
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            //TODO:Cerrar recursos
+            mysqlConexion.cerrarRecursos(ps, rs);
             return actualizo;
         }
     }

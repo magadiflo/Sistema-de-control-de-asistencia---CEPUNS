@@ -61,7 +61,6 @@ public class AsistenciaDaoImpl implements AsistenciaDao {
             ps.setInt(4, asistencia.getProgramacionHorario().getMatricula().getIdentMatricula());
             ps.setInt(5, asistencia.getProgramacionHorario().getMatricula().getIdentMatricula());
             ps.setInt(6, asistencia.getProgramacionHorario().getMatricula().getIdentMatricula());
-            //TODO: Faltan pasar parametros
             rs = ps.executeQuery();
             
             lista = new ArrayList<AsistenciaBE>();
@@ -85,7 +84,7 @@ public class AsistenciaDaoImpl implements AsistenciaDao {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            //TODO: Cerrar recursos
+            mysqlConexion.cerrarRecursos(ps, rs);
             System.out.println("***registro asistencia***");
             return lista;
         }
@@ -117,7 +116,7 @@ public class AsistenciaDaoImpl implements AsistenciaDao {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            //TODO:Cerrar recursos
+            mysqlConexion.cerrarRecursos(ps, rs);
             return idAsistencia;
         }
     }
@@ -142,7 +141,7 @@ public class AsistenciaDaoImpl implements AsistenciaDao {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            //TODO:Cerrar recursos
+            mysqlConexion.cerrarRecursos(ps, rs);
             return actualizo;
         }
     }
@@ -166,7 +165,7 @@ public class AsistenciaDaoImpl implements AsistenciaDao {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            //TODO:Cerrar recursos
+            mysqlConexion.cerrarRecursos(ps, rs);
             return idAsistencia;
         }
     }

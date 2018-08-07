@@ -14,7 +14,7 @@ import java.util.List;
 
 public class EspecialidadDaoImpl implements EspecialidadDao {
 
-    private static final String QUERY_OBTENER = "select id_especialidad, descripcion, codigo, id_003_estado from especialidad es";
+    private static final String QUERY_OBTENER = "select id_especialidad, es.descripcion especialidad, codigo, id_003_estado, es.id_facultad, f.descripcion facultad from especialidad es join facultad f on f.id_facultad = es.id_facultad";
     private static final String QUERY_REGISTRAR = "insert into especialidad\n"
             + "(descripcion, codigo, id_003_estado)\n"
             + "values\n"
@@ -28,7 +28,7 @@ public class EspecialidadDaoImpl implements EspecialidadDao {
     private MySQLConexion mysqlConexion = new MySQLConexion();
 
     private static final String ID_ESPECIALIDAD = "id_especialidad";
-    private static final String DESCRIPCION = "descripcion";
+    private static final String DESCRIPCION = "especialidad";
     private static final String CODIGO = "codigo";
     private static final String ID_003_ESTADO = "id_003_estado";
 
@@ -46,7 +46,7 @@ public class EspecialidadDaoImpl implements EspecialidadDao {
         EspecialidadBE item = null;
         try {
             ps = mysqlConexion.getConnection().prepareCall(QUERY_OBTENER);
-            //TODO: Faltan pasar parametros
+            
             rs = ps.executeQuery();
             lista = new ArrayList<EspecialidadBE>();
             while (rs.next()) {
@@ -55,6 +55,8 @@ public class EspecialidadDaoImpl implements EspecialidadDao {
                 item.setDescripcion(rs.getString(DESCRIPCION));
                 item.setCodigo(rs.getString(CODIGO));
                 item.getEstado().setIdentParametro(rs.getInt(ID_003_ESTADO));
+                item.getFacultad().setIdentFacultad(rs.getInt("id_facultad"));
+                item.getFacultad().setDescripcion(rs.getString("facultad"));
                 lista.add(item);
             }
 
@@ -63,7 +65,7 @@ public class EspecialidadDaoImpl implements EspecialidadDao {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            //TODO: Cerrar recursos
+            mysqlConexion.cerrarRecursos(ps, rs);
             return lista;
         }
     }
@@ -91,7 +93,7 @@ public class EspecialidadDaoImpl implements EspecialidadDao {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            //TODO:Cerrar recursos
+            mysqlConexion.cerrarRecursos(ps, rs);
             return idEspecialidad;
         }
     }
@@ -113,7 +115,7 @@ public class EspecialidadDaoImpl implements EspecialidadDao {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            //TODO:Cerrar recursos
+            mysqlConexion.cerrarRecursos(ps, rs);
             return actualizo;
         }
     }

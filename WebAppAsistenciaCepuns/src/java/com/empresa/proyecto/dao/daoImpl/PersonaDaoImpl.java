@@ -81,7 +81,7 @@ public class PersonaDaoImpl implements PersonaDao{
         catch (Exception e) {
             e.printStackTrace();
         } finally{
-            //TODO:Cerrar recursos
+            mysqlConexion.cerrarRecursos(ps, rs);
             System.out.println("***********REGISTRO DE ALUMNO******");
             return idPersona;
         }
@@ -114,7 +114,7 @@ public class PersonaDaoImpl implements PersonaDao{
         catch (Exception e) {
             e.printStackTrace();
         } finally{
-            //TODO:Cerrar recursos
+            mysqlConexion.cerrarRecursos(ps, rs);
             return actualizo;
         }
     }

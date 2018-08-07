@@ -66,7 +66,7 @@ public class InhabilitacionDaoImpl implements InhabilitacionDao {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            //TODO: Cerrar recursos
+            mysqlConexion.cerrarRecursos(ps, rs);
             return lista;
         }
     }
@@ -95,7 +95,7 @@ public class InhabilitacionDaoImpl implements InhabilitacionDao {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            //TODO:Cerrar recursos
+            mysqlConexion.cerrarRecursos(ps, rs);
             return idInhabilitacion;
         }
     }
@@ -119,7 +119,7 @@ public class InhabilitacionDaoImpl implements InhabilitacionDao {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            //TODO:Cerrar recursos
+            mysqlConexion.cerrarRecursos(ps, rs);
             return actualizo;
         }
     }

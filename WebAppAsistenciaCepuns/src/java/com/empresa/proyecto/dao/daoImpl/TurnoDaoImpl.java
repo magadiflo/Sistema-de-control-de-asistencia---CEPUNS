@@ -68,7 +68,7 @@ public class TurnoDaoImpl implements TurnoDao{
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            //TODO: Cerrar recursos
+            mysqlConexion.cerrarRecursos(ps, rs);
             return lista;
         }
 
@@ -96,7 +96,7 @@ public class TurnoDaoImpl implements TurnoDao{
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            //TODO:Cerrar recursos
+            mysqlConexion.cerrarRecursos(ps, rs);
             System.out.println("***REGISTRO TURNOS***");
             return idTurno;
         }
@@ -120,7 +120,7 @@ public class TurnoDaoImpl implements TurnoDao{
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            //TODO:Cerrar recursos
+            mysqlConexion.cerrarRecursos(ps, rs);
             return actualizo;
         }
     }

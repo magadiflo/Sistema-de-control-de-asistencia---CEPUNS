@@ -5,11 +5,12 @@ public class EspecialidadBE {
     private int identEspecialidad;
     private String descripcion;
     private String codigo;
-    private String facultad;
+    private FacultadBE facultad;
     private ParametroBE estado;
 
     public EspecialidadBE() {
         estado = new ParametroBE();
+        facultad = new FacultadBE();
     }
     
     public int getIdentEspecialidad() {
@@ -46,12 +47,13 @@ public class EspecialidadBE {
         this.estado = estado;
     }
 
-    public String getFacultad() {
+    public FacultadBE getFacultad() {
         return facultad;
     }
 
-    public void setFacultad(String facultad) {
+    public void setFacultad(FacultadBE facultad) {
         this.facultad = facultad;
     }
+
     
 }

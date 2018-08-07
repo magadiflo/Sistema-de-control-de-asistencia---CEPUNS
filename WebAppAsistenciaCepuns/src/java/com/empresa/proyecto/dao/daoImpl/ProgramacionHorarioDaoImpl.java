@@ -77,7 +77,7 @@ public class ProgramacionHorarioDaoImpl implements ProgramacionHorarioDao{
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            //TODO: Cerrar recursos
+            mysqlConexion.cerrarRecursos(ps, rs);
             return lista;
         }
 
@@ -108,7 +108,7 @@ public class ProgramacionHorarioDaoImpl implements ProgramacionHorarioDao{
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            //TODO:Cerrar recursos
+            mysqlConexion.cerrarRecursos(ps, rs);
             System.out.println("***REGISTRO UNIDADES****");
             return idProgramacionHorario;
         }
@@ -134,7 +134,7 @@ public class ProgramacionHorarioDaoImpl implements ProgramacionHorarioDao{
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            //TODO:Cerrar recursos
+            mysqlConexion.cerrarRecursos(ps, rs);
             return actualizo;
         }
     }

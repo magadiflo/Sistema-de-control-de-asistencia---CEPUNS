@@ -109,7 +109,7 @@ public class MatriculaDaoImpl implements MatriculaDao{
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            //TODO: Cerrar recursos
+            mysqlConexion.cerrarRecursos(ps, rs);
             return lista;
         }
 
@@ -143,7 +143,7 @@ public class MatriculaDaoImpl implements MatriculaDao{
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            //TODO:Cerrar recursos
+            mysqlConexion.cerrarRecursos(ps, rs);
             System.out.println("***Registro MATRICULA***");
             return idMatricula;
         }
@@ -172,7 +172,7 @@ public class MatriculaDaoImpl implements MatriculaDao{
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            //TODO:Cerrar recursos
+            mysqlConexion.cerrarRecursos(ps, rs);
             return actualizo;
         }
     }
@@ -208,7 +208,7 @@ public class MatriculaDaoImpl implements MatriculaDao{
         catch (Exception e) {
             e.printStackTrace();
         } finally{
-            
+            mysqlConexion.cerrarRecursos(ps, rs);
             return matricula;
         }
         

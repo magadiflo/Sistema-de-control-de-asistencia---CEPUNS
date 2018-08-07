@@ -57,7 +57,7 @@ public class ParametroDaoImpl implements ParametroDao{
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            //TODO: Cerrar recursos
+            mysqlConexion.cerrarRecursos(ps, rs);
             return lista;
         }
 

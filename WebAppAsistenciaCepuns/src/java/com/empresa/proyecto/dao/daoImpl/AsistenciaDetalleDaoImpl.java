@@ -75,7 +75,7 @@ public class AsistenciaDetalleDaoImpl implements AsistenciaDetalleDao {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            //TODO:Cerrar recursos
+            mysqlConexion.cerrarRecursos(ps, rs);
             System.out.println("**********REGISTRO ASISTENCIA DETALLE ****");
             return idAsistenciaDetalle;
         }
@@ -90,7 +90,7 @@ public class AsistenciaDetalleDaoImpl implements AsistenciaDetalleDao {
         try {
             ps = mysqlConexion.getConnection().prepareCall(QUERY_OBTENER);
             ps.setInt(1, asistencia.getIdentAsistencia());
-            //ps.setInt(2, asistencia.getProgramacionHorario().getMatricula().getIdentMatricula());
+            
             
             rs = ps.executeQuery();
             listDetalle = new ArrayList<AsistenciaDetalleBE>();
@@ -114,7 +114,7 @@ public class AsistenciaDetalleDaoImpl implements AsistenciaDetalleDao {
         catch (Exception e) {
             e.printStackTrace();
         } finally{
-            
+            mysqlConexion.cerrarRecursos(ps, rs);
             return listDetalle;
         }
     }

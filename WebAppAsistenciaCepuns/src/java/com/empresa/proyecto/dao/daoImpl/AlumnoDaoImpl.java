@@ -118,7 +118,7 @@ public class AlumnoDaoImpl implements AlumnoDao{
         catch (Exception e) {
             e.printStackTrace();
         }finally{
-            //TODO: Cerrar recursos
+            mysqlConexion.cerrarRecursos(cs, rs);
             return lista;
         }
         
@@ -153,7 +153,7 @@ public class AlumnoDaoImpl implements AlumnoDao{
         catch (Exception e) {
             e.printStackTrace();
         } finally{
-            //TODO:Cerrar recursos
+            mysqlConexion.cerrarRecursos(ps, rs);
             System.out.println("*******REGISTRO DE ALUMNO*****");
             return idAlumno;
         }
@@ -183,7 +183,7 @@ public class AlumnoDaoImpl implements AlumnoDao{
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            //TODO:Cerrar recursos
+            mysqlConexion.cerrarRecursos(ps, rs);
             return actualizo;
         }
     }
@@ -196,7 +196,7 @@ public class AlumnoDaoImpl implements AlumnoDao{
         try {
             cs = mysqlConexion.getConnection().prepareCall(QUERY_GENERAR_CODIGO);
             cs.setInt(1, idMatriculaEspecialidad);
-            //TODO: Faltan pasar parametros
+            
             rs = cs.executeQuery();
             
             if(rs.next()){
@@ -209,7 +209,7 @@ public class AlumnoDaoImpl implements AlumnoDao{
         catch (Exception e) {
             e.printStackTrace();
         }finally{
-            //TODO: Cerrar recursos
+            mysqlConexion.cerrarRecursos(cs, rs);
             return codigo;
         }
     }

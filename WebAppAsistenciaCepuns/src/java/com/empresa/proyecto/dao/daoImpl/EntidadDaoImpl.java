@@ -44,7 +44,6 @@ public class EntidadDaoImpl implements EntidadDao {
         EntidadBE item = null;
         try {
             ps = mysqlConexion.getConnection().prepareCall(QUERY_OBTENER);
-            //TODO: Faltan pasar parametros
             rs = ps.executeQuery();
             lista = new ArrayList<EntidadBE>();
             while (rs.next()) {
@@ -60,7 +59,7 @@ public class EntidadDaoImpl implements EntidadDao {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            //TODO: Cerrar recursos
+            mysqlConexion.cerrarRecursos(ps, rs);
             return lista;
         }
     }

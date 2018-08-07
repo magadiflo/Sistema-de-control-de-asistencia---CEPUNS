@@ -3,7 +3,14 @@
     Created on : 05/08/2018, 10:11:26 PM
     Author     : Martín
 --%>
+<%@page import="com.empresa.proyecto.entidad.EspecialidadBE"%>
+<%@page import="java.util.List"%>
+<%@page import="com.empresa.proyecto.entidad.ParametroBE"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+    List<ParametroBE> ciclos = (List<ParametroBE>) request.getAttribute("ciclos");
+    List<EspecialidadBE> especialidades = (List<EspecialidadBE>) request.getAttribute("especialidades");
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -182,77 +189,30 @@
                                         <div class="panel-body table-responsive" id="listadoRegistros">
                                             <table id="tblEspecialidad" class="table table-striped table-bordered table-condensed table-hover">
                                                 <thead>
-                                                <th>Id</th>
+                                                <th>#</th>
                                                 <th>Facultad</th>
                                                 <th>Especialidad</th>
                                                 <th>Código</th>
                                                 <th>Estado</th>
                                                 </thead>
                                                 <tbody>
+                                                    <%
+                                                        int i = 0;
+                                                        for(EspecialidadBE item : especialidades){
+                                                    %>
                                                     <tr>
-                                                        <td>01</td>
-                                                        <td>Ingeniería</td>
-                                                        <td>Sistemas</td>
-                                                        <td>0140</td>
+                                                        <td><%=++i%></td>
+                                                        <td><%=item.getFacultad().getDescripcion()%></td>
+                                                        <td><%=item.getDescripcion()%></td>
+                                                        <td><%=item.getCodigo()%></td>
                                                         <td><input type="checkbox" checked> Activo</td>
                                                     </tr>
-                                                    <tr>
-                                                        <td>02</td>
-                                                        <td>Ingeniería</td>
-                                                        <td>Civil</td>
-                                                        <td>0120</td>
-                                                        <td><input type="checkbox" checked> Activo</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>03</td>
-                                                        <td>Ingeniería</td>
-                                                        <td>Agroindustrial</td>
-                                                        <td>0150</td>
-                                                        <td><input type="checkbox" checked> Activo</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>01</td>
-                                                        <td>Ingeniería</td>
-                                                        <td>Sistemas</td>
-                                                        <td>0140</td>
-                                                        <td><input type="checkbox" checked> Activo</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>02</td>
-                                                        <td>Ingeniería</td>
-                                                        <td>Civil</td>
-                                                        <td>0120</td>
-                                                        <td><input type="checkbox" checked> Activo</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>03</td>
-                                                        <td>Ingeniería</td>
-                                                        <td>Agroindustrial</td>
-                                                        <td>0150</td>
-                                                        <td><input type="checkbox" checked> Activo</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>01</td>
-                                                        <td>Ingeniería</td>
-                                                        <td>Sistemas</td>
-                                                        <td>0140</td>
-                                                        <td><input type="checkbox" checked> Activo</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>02</td>
-                                                        <td>Ingeniería</td>
-                                                        <td>Civil</td>
-                                                        <td>0120</td>
-                                                        <td><input type="checkbox" checked> Activo</td>
-                                                    </tr>
+                                                    <%
+                                                        }
+                                                    %>
+                                                    
                                                 </tbody>
-                                                <tfoot>
-                                                <th>Id</th>
-                                                <th>Facultad</th>
-                                                <th>Especialidad</th>
-                                                <th>Código</th>
-                                                <th>Estado</th>
-                                                </tfoot>                                        
+                                                                                       
                                             </table>
                                         </div>
                                     </div>
