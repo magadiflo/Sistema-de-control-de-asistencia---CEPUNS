@@ -93,7 +93,8 @@
                                 limpiar();
 
                             } else {
-                                alert('No hay un alumno con dicho filtro');
+                                
+                                swal('No hay un alumno con dicho filtro', "",  "warning");
                             }
 
                         }, error: function (jqXHR, exception) {
@@ -126,11 +127,13 @@
                 var especialidad = $("#especialidad").val();
 
                 if ((buscar == '') && (especialidad == 0)) {
-                    alert('Debe realizar al menos un filtro');
+                    
+                     swal('Debe realizar al menos un filtro', "",  "error");
                     return false;
                 } else {
                     if ((buscar != '') && filtro == 0) {
-                        alert('Debe seleccionar el filtro');
+                        
+                        swal('Debe seleccionar el filtro', "",  "error");
                         return false;
                     }
                 }
