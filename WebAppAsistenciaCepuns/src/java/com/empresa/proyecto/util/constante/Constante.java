@@ -19,4 +19,8 @@ public class Constante {
     public static final int VALOR_ERROR_TRANSACCION = -101;
     public static final int VALOR_EXITO_TRANSACCION = 1;
     public static final String CHECKED_ON = "on";
+    public static final String COOKIE_DE_ESPERA = "cookieDeEspera";
+    public static final String MENSAJE_ESPERA_COOKIE = "Debe esperar 5 minutos para volver a intentar";
+    public static final String MENSAJE_LOGIN_FALLIDO = "Credenciales incorrectas";
+    public static final String USUARIO_LOGUEADO = "usuarioLogueado";
 }

@@ -4,6 +4,9 @@
     Author     : Martín
 --%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+    String mensaje = (String)request.getAttribute("mensaje");
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -34,7 +37,7 @@
             <!-- /.login-logo -->
             <div class="login-box-body">
                 <p class="login-box-msg">Ingrese sus datos de Acceso</p>
-                <form id="frmAcceso" method="post">
+                <form id="frmAcceso" action="login" method="post">
                     <div class="form-group has-feedback">
                         <input type="text" class="form-control" id="cuenta" name="cuenta" placeholder="Usuario">
                         <span class="fa fa-user form-control-feedback"></span>
@@ -70,5 +73,15 @@
         <!-- Bootbox -->
         <script src="js/bootbox.min.js"></script>
 
+		<script type="text/javascript">
+            $(document).ready(function () {
+                var mensaje = "<%=mensaje%>";
+                if(mensaje !== null && mensaje !== ''){
+                    alert(mensaje);
+                }
+            });
+        </script>
+		
+		
     </body>
 </html>

@@ -21,8 +21,8 @@
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="aperturarCiclo.jsp"><i class="fa fa-circle-o"></i>Aperturar Ciclo</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i>Alumnos</a></li>
+                    <li><a href="aperturarCiclo"><i class="fa fa-circle-o"></i>Aperturar Ciclo</a></li>
+                    <li><a href="matricula"><i class="fa fa-circle-o"></i>Alumnos</a></li>
                 </ul>
             </li>
             <li class="treeview">

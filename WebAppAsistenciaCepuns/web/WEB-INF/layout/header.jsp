@@ -3,6 +3,15 @@
     Created on : 04/08/2018, 12:26:29 PM
     Author     : VICTOR
 --%>
+<%@page import="com.empresa.proyecto.util.constante.Constante"%>
+<%@page import="com.empresa.proyecto.entidad.UsuarioBE"%>
+<%
+    UsuarioBE usuario = (UsuarioBE) request.getSession().getAttribute(Constante.USUARIO_LOGUEADO);
+    if(usuario == null){
+        response.sendRedirect(request.getContextPath() + "/login");
+    }
+%>
+
 <header class="main-header">
 
     <!-- Logo -->
@@ -28,7 +37,7 @@
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <small class="bg-red">Online</small>
-                        <span class="hidden-xs">Rol</span>
+                        <span class="hidden-xs"><%=usuario != null ? usuario.getPersona().getNombreCompleto() + " - " + usuario.getRol().getDescripcion() : "" %></span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->

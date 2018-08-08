@@ -63,7 +63,7 @@
                                         <div class="row">
                                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                                                 <h3>Historial de Ciclos Aperturados</h3>
-                                                <h2><a href="<%=request.getContextPath()%>/matriculanuevo"> <button class="btn btn-success">Aperturar Nuevo Ciclo</button> </a></h2>
+                                                <h2><a href="<%=request.getContextPath()%>/aperturarCiclo"> <button class="btn btn-success">Aperturar Nuevo Ciclo</button> </a></h2>
                                             </div>
                                         </div>
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
