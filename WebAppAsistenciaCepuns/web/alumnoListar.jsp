@@ -26,6 +26,12 @@
         <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
         <link rel="shortcut icon" href="img/favicon.ico">
 
+        <!-- DATATABLES -->
+        <link rel="stylesheet" type="text/css" href="datatables/jquery.dataTables.min.css"/>
+        <link rel="stylesheet" type="text/css" href="datatables/buttons.dataTables.min.css"/>
+        <link rel="stylesheet" type="text/css" href="datatables/responsive.dataTables.min.css"/>
+
+
         <script type="text/javascript">
             var numero_fila = 0;
             function buscar() {
@@ -72,16 +78,16 @@
                                     console.log(alumno);
 
                                     $("#tablaalumnos tbody").append("<tr>" +
-                                            "<td>" + numero_fila +"</td>" +
+                                            "<td>" + numero_fila + "</td>" +
                                             "<td>" + alumno.codigo + "</td>" +
                                             "<td>" + alumno.persona.documento + "</td>" +
                                             "<td>" + alumno.persona.nombres + ' ' + alumno.persona.paterno + ' ' + alumno.persona.materno + "</td>" +
                                             "<td>" + alumno.matriculaEspecialidad.especialidad.descripcion + "</td>" +
-                                            "<td>" + "<a href=\"<%=request.getContextPath()%>/alumnover?idAlumno="+alumno.identAlumno+"\"><button class=\"btn btn-info\">Ver</button></a>" + "</td>" +
+                                            "<td>" + "<a href=\"<%=request.getContextPath()%>/alumnover?idAlumno=" + alumno.identAlumno + "\"><button class=\"btn btn-info\">Ver</button></a>" + "</td>" +
                                             "</tr>"
                                             );
 
-                                    
+
                                 }
                                 limpiar();
 
@@ -130,8 +136,8 @@
                 return true;
 
             }
-            
-            function limpiar(){
+
+            function limpiar() {
                 numero_fila = 0;
                 $("#especialidad").val(0);
                 $("#buscar").val('');
@@ -141,17 +147,12 @@
         </script>
 
     </head>
-    <body class="hold-transition skin-blue sidebar-mini">
+    <body class="hold-transition skin-blue sidebar-mini" style="background: #222D32;">
         <!-- <div class="wrapper">  -->
 
 
         <jsp:include page="WEB-INF/layout/header.jsp"/>
         <jsp:include page="WEB-INF/layout/menu.jsp"/>
-
-
-
-
-
 
         <!--Contenido-->
         <!-- Content Wrapper. Contains page content -->
@@ -164,12 +165,7 @@
                     <div class="col-md-12">
                         <div class="box">
                             <div class="box-header with-border">
-                                <h3 class="box-title">Sistema de Asistencia</h3>
-                                <div class="box-tools pull-right">
-                                    <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-
-                                    <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                                </div>
+                                <h1 class="box-title"><label>SISTEMA DE ASISTENCIA</label></h1>
                             </div>
                             <!-- /.box-header -->
                             <div class="box-body">
@@ -177,40 +173,78 @@
                                     <div class="col-md-12">
                                         <!--Contenido-->
                                         <div class="row">
-                                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                                                <h3>Alumnos  <%=matricula.getIdentMatricula() != 0 ? "del Ciclo " + matricula.getAnio() + " " + matricula.getCiclo().getDescripcion() : ""%></h3>
-                                                <h2><a href="<%=request.getContextPath()%>/alumnoRegistrar"> <button class="btn btn-primary">Nuevo Alumno</button> </a></h2>
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <h3 class="list-group-item list-group-item-success">Alumnos  <%=matricula.getIdentMatricula() != 0 ? "del Ciclo " + matricula.getAnio() + " " + matricula.getCiclo().getDescripcion() : ""%></h3>
                                             </div>
                                         </div>
+                                        <div class="box-header with-border">
+                                            <h1 class="box-title">
+                                                <button class="btn btn-success" id="btnAgregar">
+                                                    <a href="<%=request.getContextPath()%>/alumnoRegistrar">
+                                                        <span style="color:white;">
+                                                            <i class="fa fa-plus-circle"></i> 
+                                                            Nuevo Alumno
+                                                        </span>
+                                                    </a>
+                                                </button>
+                                                <button class="btn btn-primary" type="button" onclick="buscar()"> 
+                                                    <i class="fa fa-search"></i>
+                                                    Buscar
+                                                </button>
+                                            </h1>
+                                        </div>
+
+                                        <!-- Inicio Panel - Filtrado -->
+                                        <div class="panel panel-primary">
+                                            <div class="panel-heading">
+                                                <h3 class="panel-title">Configuración de Turnos</h3>
+                                            </div>
+                                            <div class="panel-body">
+                                                <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <label for="fecha">Especialidad</label>
+                                                    <select id="especialidad" name="especialidad" class="form-control selectpicker" data-live-search="true">
+                                                        <option value="0">Seleccionar</option>
+                                                        <%
+                                                            for (MatriculaEspecialidadBE item : listaEspecialidad) {
+                                                        %>
+                                                        <option value="<%=item.getIdentMatriculaEspecialidad()%>"><%=item.getEspecialidad().getDescripcion()%></option>    
+                                                        <%
+                                                            }
+                                                        %>
+                                                    </select>   
+                                                </div>
+                                                <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                    <label for="fecha">Filtro</label>
+                                                    <select id="filtro" name="filtro" class="form-control selectpicker" data-live-search="true">
+                                                        <option value="0">Seleccionar</option>
+                                                        <option value="1">Codigo</option>
+                                                        <option value="2">Documento</option>
+                                                        <option value="3">Nombre</option>
+                                                    </select> 
+                                                </div>
+                                                <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                    <label>&nbsp;</label>
+                                                    <input type="hidden" id="idMatricula" name="idMatricula" class="form-control" value="<%=matricula.getIdentMatricula()%>">
+                                                    <input type="text" id="buscar" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Fin Panel - Filtrado-->
+
+
+
                                         <div class="row">
                                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                                                <label for="fecha">Filtro</label>
-                                                <select id="filtro" name="filtro">
-                                                    <option value="0">Seleccionar</option>
-                                                    <option value="1">Codigo</option>
-                                                    <option value="2">Documento</option>
-                                                    <option value="3">Nombre</option>
-                                                </select>
-                                                <input type="text" id="buscar">
-                                                <input type="hidden" id="idMatricula" name="idMatricula" value="<%=matricula.getIdentMatricula()%>">
+
                                             </div>
                                             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                                                <label for="fecha">Especialidad</label>
-                                                <select id="especialidad" name="especialidad">
-                                                    <option value="0">Seleccionar</option>
-                                                    <%
-                                                        for (MatriculaEspecialidadBE item : listaEspecialidad) {
-                                                    %>
-                                                    <option value="<%=item.getIdentMatriculaEspecialidad()%>"><%=item.getEspecialidad().getDescripcion()%></option>    
-                                                    <%
-                                                        }
-                                                    %>
-                                                </select>     
+
                                             </div>
-                                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                                                <button class="btn btn-primary" type="button" onclick="buscar()">Buscar</button>
-                                            </div>   
+
                                         </div>  
+
+
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <div class="table-responsive">
 
@@ -263,6 +297,34 @@
         <script src="js/bootstrap-select.min.js"></script>
         <!-- AdminLTE App -->
         <script src="js/app.min.js"></script>
+
+        <!-- Librerías del DATATABLES -->
+        <script src="datatables/jquery.dataTables.min.js"></script>
+        <script src="datatables/dataTables.buttons.min.js"></script>
+        <script src="datatables/buttons.html5.min.js"></script>
+        <script src="datatables/buttons.colVis.min.js"></script>
+
+        <script src="datatables/jszip.min.js"></script>
+        <script src="datatables/pdfmake.min.js"></script>
+        <script src="datatables/vfs_fonts.js"></script>
+
+        <script>
+            $(document).ready(function () {
+                $('#tablaalumnos').DataTable({
+                    "paging": false,
+                    "ordering": true,
+                    "info": false,
+                    "language": {
+                        "lengthMenu": "Mostrar _MENU_ registros por página",
+                        "zeroRecords": "Registro no encontrado - ¡Lo siento!",
+                        "info": "Mostrando página _PAGE_ de _PAGES_",
+                        "infoEmpty": "No hay registros disponibles",
+                        "infoFiltered": "(filtrado de los registros totales de _MAX_ )"
+                    },
+                    dom: '<"row" lr> <"row" <"col-xs-12" t >> <"row" <"col-sm-6" i> < "col-sm-6" p >> '
+                });
+            });
+        </script>
 
     </body>
 </html>
