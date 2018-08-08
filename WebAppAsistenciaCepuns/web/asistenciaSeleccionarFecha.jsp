@@ -26,6 +26,8 @@
         <link rel="stylesheet" href="css/_all-skins.min.css">
         <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
         <link rel="shortcut icon" href="img/favicon.ico">
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        
 
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
@@ -148,7 +150,8 @@
             $(document).ready(function () {
                         var mensaje = "<%=mensaje%>";
                 if (mensaje !== "null" && mensaje !== '') {
-                    alert(mensaje);
+                    
+        swal(mensaje, "",  "success");
                 }
             });
         </script>

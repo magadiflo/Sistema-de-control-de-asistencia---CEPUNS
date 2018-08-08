@@ -28,6 +28,8 @@
         <link rel="stylesheet" href="css/_all-skins.min.css">
         <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
         <link rel="shortcut icon" href="img/favicon.ico">
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 
         <script type="text/javascript">
             var numeroagregados = 0;
@@ -51,14 +53,14 @@
                                 console.log(alumno);
 
                                 $("#tableasistencia tbody").append("<tr>" +
-                                        "<td><input type=\"hidden\" name=\"idalumno"+numeroagregados+"\" value=\""+alumno.identAlumno+"\" >" + "<input type=\"hidden\" name=\"idestadoasistencia"+numeroagregados+"\" value=\""+id_estado_asistencia+"\" >"+ "<input type=\"hidden\" name=\"observaciones"+numeroagregados+"\" value=\""+observaciones+"\" >" + 0 + "</td>" +
+                                        "<td><input type=\"hidden\" name=\"idalumno" + numeroagregados + "\" value=\"" + alumno.identAlumno + "\" >" + "<input type=\"hidden\" name=\"idestadoasistencia" + numeroagregados + "\" value=\"" + id_estado_asistencia + "\" >" + "<input type=\"hidden\" name=\"observaciones" + numeroagregados + "\" value=\"" + observaciones + "\" >" + 0 + "</td>" +
                                         "<td>" + alumno.codigo + "</td>" +
                                         "<td>" + alumno.persona.nombres + ' ' + alumno.persona.paterno + ' ' + alumno.persona.materno + "</td>" +
                                         "<td>" + estado_asistencia + "</td>" +
                                         "<td>" + observaciones + "</td>" +
                                         "</tr>"
                                         );
-                                
+
                                 limpiar();
                                 $("#numeroAgregados").val(numeroagregados);
 
@@ -92,24 +94,24 @@
             function validarCampos() {
                 var codigo = $("#codigo").val();
                 var id_estado_asistencia = $("#estado_asistencia").val();
-                
-                if(codigo == null || codigo == ''){
+
+                if (codigo == null || codigo == '') {
                     alert('Debe colocar el codigo del alumno');
                     return false;
                 }
-                if(id_estado_asistencia == 0){
+                if (id_estado_asistencia == 0) {
                     alert('Debe seleccionar el estado de la asistencia');
                     return false;
                 }
                 return true;
             }
-            
-            function limpiar(){
+
+            function limpiar() {
                 $("#codigo").val('');
                 $("#estado_asistencia").val(0);
                 $("#observaciones").val('');
             }
-            
+
 
         </script>
 
@@ -147,7 +149,7 @@
                                     <div class="col-md-12">
                                         <!--Contenido-->
 
-                                        <h4>Asistencia Ciclo <%=asistencia.getProgramacionHorario().getMatricula().getAnio() + "  " +asistencia.getProgramacionHorario().getMatricula().getCiclo().getDescripcion()%></h4>
+                                        <h4>Asistencia Ciclo <%=asistencia.getProgramacionHorario().getMatricula().getAnio() + "  " + asistencia.getProgramacionHorario().getMatricula().getCiclo().getDescripcion()%></h4>
                                         <h5>Semana <%=asistencia.getNumeroSemana()%> Dia <%=asistencia.getDia().getDescripcion()%></h5>
                                         <form action="asistenciaRegistrar" method="POST">
                                             <div class="form-group">
@@ -188,11 +190,11 @@
                                                         <th>Observaciones</th>
                                                         </thead>
                                                         <tbody>
-                                                        <%
-                                                            int i = 0;
-                                                            for (AsistenciaDetalleBE item : listaDetalle) {
-                                                        %>
-                                                        
+                                                            <%
+                                                                int i = 0;
+                                                                for (AsistenciaDetalleBE item : listaDetalle) {
+                                                            %>
+
                                                             <tr>
                                                                 <td><%= ++i%></td>
                                                                 <td><%=item.getAlumno().getCodigo()%></td>
@@ -200,13 +202,13 @@
                                                                 <td><%= item.getEstadoAsistencia().getDescripcion()%></td>
                                                                 <td><%= item.getObservacion()%></td>
                                                             </tr>
-                                                        
-                                                        <%
-                                                            }
-                                                        %>
+
+                                                            <%
+                                                                }
+                                                            %>
                                                         </tbody>
                                                     </table>
-                                                        
+
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -251,13 +253,14 @@
         %>
         <script type="text/javascript">
             $(document).ready(function () {
-                        var mensaje = "<%=mensaje%>";
+                var mensaje = "<%=mensaje%>";
                 if (mensaje !== "null" && mensaje !== '') {
-                    alert(mensaje);
+
+                    swal(mensaje, "", "success");
                 }
             });
         </script>
-        
-        
+
+
     </body>
 </html>
