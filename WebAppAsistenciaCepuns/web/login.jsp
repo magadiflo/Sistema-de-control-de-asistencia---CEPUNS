@@ -19,21 +19,33 @@
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <!-- Font Awesome -->
         <link rel="stylesheet" href="css/font-awesome.css">
-
-        <!-- Theme style -->
-        <link rel="stylesheet" href="css/AdminLTE.min.css">
-        <!-- iCheck -->
-        <link rel="stylesheet" href="css/blue.css">
-
+        <link rel="stylesheet" href="css/login.css">
     </head>
 
     <body class="hold-transition login-page">
-        <div class="login-box">
-            <div class="login-logo">
-                <a href="login.jsp">
-                    <b class="">Sistema de Control de Asistencias</b>
+        <header class="encabezado" role="banner">
+            <div class="contenedor form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                <a href="#" class="logo">
+                    <img src="img/logo_uns.png" alt="Logo de la web" width="270">
                 </a>
             </div>
+            <div class="contenedor form-group col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                <div class="">
+                    <h1 id="titulo_cepuns">
+                        CENTRO PRE-UNIVERSITARIO<br>
+                        <span>CEPUNS</span>
+                    </h1>
+                </div>
+            </div>
+        </header> <!-- Fin de encabezado -->
+        <div class="contenedor form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="titulo_sistema_div">
+                <h1 id="titulo_sistema">
+                    SISTEMA DE CONTROL DE ASISTENCIA
+                </h1>
+            </div>
+        </div>
+        <div class="login-box">
             <!-- /.login-logo -->
             <div class="login-box-body">
                 <p class="login-box-msg">Ingrese sus datos de Acceso</p>
@@ -57,11 +69,8 @@
                         <!-- /.col -->
                     </div>
                 </form>
-
-
                 <a href="#">Olvidé mi password</a>
                 <br>
-
             </div>
             <!-- /.login-box-body -->
         </div>
@@ -75,18 +84,24 @@
 
         <script type="text/javascript">
             $(document).ready(function () {
-                        var mensaje = "<%=mensaje%>";
-                if (mensaje !== null && mensaje !== '') {
-        <%
-            mensaje = (String) request.getAttribute("mensaje");
-        %>
+            var mensaje = "<%=mensaje%>";
+                    if (mensaje !== null && mensaje !== '') {
+            <%
+                mensaje = (String) request.getAttribute("mensaje");
+            %>
         <script type="text/javascript">
-            $(document).ready(function () {
-                        var mensaje = "<%=mensaje%>";
-                if (mensaje !== "null" && mensaje !== '') {
-                    alert(mensaje);
+                $(document).ready(function () {
+
+
+     
+                    var mensaje = "<%=mensaje%>";
+                    if (mensaje !== "null" && mensaje !== '') {
+            alert(mensaje);
+        }
+        
+  
                 }
-            });
+                        );
         </script>
 
 
