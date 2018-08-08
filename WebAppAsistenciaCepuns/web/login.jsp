@@ -5,7 +5,7 @@
 --%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
-    String mensaje = (String)request.getAttribute("mensaje");
+    String mensaje = (String) request.getAttribute("mensaje");
 %>
 <!DOCTYPE html>
 <html>
@@ -73,15 +73,15 @@
         <!-- Bootbox -->
         <script src="js/bootbox.min.js"></script>
 
-		<script type="text/javascript">
+        <script type="text/javascript">
             $(document).ready(function () {
-                var mensaje = "<%=mensaje%>";
-                if(mensaje !== null && mensaje !== ''){
+                        var mensaje = "<%=mensaje%>";
+                if (mensaje !== null && mensaje !== '') {
                     alert(mensaje);
                 }
             });
         </script>
-		
-		
+
+
     </body>
 </html>
