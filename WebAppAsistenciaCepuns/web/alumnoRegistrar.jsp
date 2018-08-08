@@ -27,6 +27,8 @@
         <link rel="stylesheet" href="css/_all-skins.min.css">
         <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
         <link rel="shortcut icon" href="img/favicon.ico">
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+         
 
         <script type="text/javascript">
             function validarDocumento() {
@@ -292,5 +294,17 @@
         <!-- AdminLTE App -->
         <script src="js/app.min.js"></script>
 
+        <%
+            String mensaje = (String) request.getAttribute("mensaje");
+        %>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                        var mensaje = "<%=mensaje%>";
+                if (mensaje !== "null" && mensaje !== '') {
+                    swal(mensaje, "",  "success");
+                }
+            });
+        </script>
+        
     </body>
 </html>

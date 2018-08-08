@@ -29,7 +29,8 @@
         <link rel="stylesheet" href="css/_all-skins.min.css">
         <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
         <link rel="shortcut icon" href="img/favicon.ico">
-
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        
         
 
     </head>
@@ -109,8 +110,8 @@
         <script type="text/javascript">
             $(document).ready(function () {
                 var mensaje = "<%=mensaje%>";
-                if(mensaje !== null && mensaje !== ''){
-                    alert(mensaje);
+                if(mensaje !== "null" && mensaje !== ''){
+                    swal(mensaje, "",  "success");
                 }
             });
         </script>

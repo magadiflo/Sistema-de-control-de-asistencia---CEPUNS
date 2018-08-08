@@ -14,6 +14,8 @@ import com.empresa.proyecto.negocio.MatriculaEspecialidadManager;
 import com.empresa.proyecto.negocio.MatriculaManager;
 import com.empresa.proyecto.negocio.ParametroManager;
 import com.empresa.proyecto.util.Util;
+import com.empresa.proyecto.util.UtilSeguridad;
+import com.empresa.proyecto.util.constante.Constante;
 import com.empresa.proyecto.util.constante.ParametroTipoConstante;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -48,7 +50,7 @@ public class AlumnoEditarServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AlumnoEditarServlet</title>");            
+            out.println("<title>Servlet AlumnoEditarServlet</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet AlumnoEditarServlet at " + request.getContextPath() + "</h1>");
@@ -69,29 +71,39 @@ public class AlumnoEditarServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        int idAlumno = Util.obtenerValorEntero(request.getParameter("idAlumno"));
-        
-        ParametroBE parametro = new ParametroBE();
-        parametro.getParametroTipo().setIdentParametroTipo(ParametroTipoConstante.TIPO_DOCUMENTO);
-        List<ParametroBE> tiposDocumento =  new ParametroManager().obtener(parametro);
-        
-        MatriculaBE matriculaActual = new MatriculaManager().obtenerCicloActual();
-        
-        MatriculaEspecialidadBE matriculaEspecialidad = new MatriculaEspecialidadBE();
-        matriculaEspecialidad.getMatricula().setIdentMatricula(matriculaActual.getIdentMatricula());
-        List<MatriculaEspecialidadBE> listEspecialidades = new MatriculaEspecialidadManager().obtener(matriculaEspecialidad);
-        
-        AlumnoBE alumno = new AlumnoBE();
-        alumno.setIdentAlumno(idAlumno);
-        alumno = new AlumnoManager().obtener(alumno).get(0);
-        
-        request.setAttribute("tiposDocumento", tiposDocumento);
-        request.setAttribute("matriculaActual", matriculaActual);
-        request.setAttribute("listEspecialidades", listEspecialidades);
-        request.setAttribute("alumno", alumno);
-        
-        request.getRequestDispatcher("alumnoVer.jsp").forward(request, response);
+        if (UtilSeguridad.estaLogueado(request, response)) {
+            try {
+                Util.enviarMensaje(request);
+                int idAlumno = Util.obtenerValorEntero(request.getParameter("idAlumno"));
+
+                ParametroBE parametro = new ParametroBE();
+                parametro.getParametroTipo().setIdentParametroTipo(ParametroTipoConstante.TIPO_DOCUMENTO);
+                List<ParametroBE> tiposDocumento = new ParametroManager().obtener(parametro);
+
+                MatriculaBE matriculaActual = new MatriculaManager().obtenerCicloActual();
+
+                MatriculaEspecialidadBE matriculaEspecialidad = new MatriculaEspecialidadBE();
+                matriculaEspecialidad.getMatricula().setIdentMatricula(matriculaActual.getIdentMatricula());
+                List<MatriculaEspecialidadBE> listEspecialidades = new MatriculaEspecialidadManager().obtener(matriculaEspecialidad);
+
+                AlumnoBE alumno = new AlumnoBE();
+                alumno.setIdentAlumno(idAlumno);
+                alumno = new AlumnoManager().obtener(alumno).get(0);
+
+                request.setAttribute("tiposDocumento", tiposDocumento);
+                request.setAttribute("matriculaActual", matriculaActual);
+                request.setAttribute("listEspecialidades", listEspecialidades);
+                request.setAttribute("alumno", alumno);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                Util.guardarMensaje(request, Constante.MENSAJE_ERROR);
+                Util.enviarMensaje(request);
+            }
+            request.getRequestDispatcher("alumnoVer.jsp").forward(request, response);
+
+        }
+
     }
 
     /**
@@ -105,7 +117,7 @@ public class AlumnoEditarServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
     }
 
     /**

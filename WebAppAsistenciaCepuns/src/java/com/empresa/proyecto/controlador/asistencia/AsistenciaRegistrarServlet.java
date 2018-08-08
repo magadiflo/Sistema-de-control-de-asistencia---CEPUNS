@@ -12,6 +12,8 @@ import com.empresa.proyecto.negocio.AsistenciaDetalleManager;
 import com.empresa.proyecto.negocio.AsistenciaManager;
 import com.empresa.proyecto.negocio.ParametroManager;
 import com.empresa.proyecto.util.Util;
+import com.empresa.proyecto.util.UtilSeguridad;
+import com.empresa.proyecto.util.constante.Constante;
 import com.empresa.proyecto.util.constante.ParametroTipoConstante;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -46,7 +48,7 @@ public class AsistenciaRegistrarServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AsistenciaRegistrarServlet</title>");            
+            out.println("<title>Servlet AsistenciaRegistrarServlet</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet AsistenciaRegistrarServlet at " + request.getContextPath() + "</h1>");
@@ -67,19 +69,30 @@ public class AsistenciaRegistrarServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int idAsistencia = Util.obtenerValorEntero(request.getParameter("idasistencia"));
-        AsistenciaBE asistencia = new AsistenciaBE();
-        asistencia.setIdentAsistencia(idAsistencia);
-        asistencia = new AsistenciaManager().obtener(asistencia).get(0);
-        List<AsistenciaDetalleBE> listDetalle = new AsistenciaDetalleManager().obtener(asistencia);
-        ParametroBE parametroAsistencia = new ParametroBE();
-        parametroAsistencia.getParametroTipo().setIdentParametroTipo(ParametroTipoConstante.ESTADO_ASISTENCIA);
-        List<ParametroBE> estadosAsistencia = new ParametroManager().obtener(parametroAsistencia);
-        request.setAttribute("listDetalle",listDetalle );
-        request.setAttribute("asistencia",asistencia );
-        request.setAttribute("estadosAsistencia",estadosAsistencia );
-        
-        request.getRequestDispatcher("asistenciaRegistrar.jsp").forward(request, response);
+        if (UtilSeguridad.estaLogueado(request, response)) {
+            try {
+                Util.enviarMensaje(request);
+                int idAsistencia = Util.obtenerValorEntero(request.getParameter("idasistencia"));
+                AsistenciaBE asistencia = new AsistenciaBE();
+                asistencia.setIdentAsistencia(idAsistencia);
+                asistencia = new AsistenciaManager().obtener(asistencia).get(0);
+                List<AsistenciaDetalleBE> listDetalle = new AsistenciaDetalleManager().obtener(asistencia);
+                ParametroBE parametroAsistencia = new ParametroBE();
+                parametroAsistencia.getParametroTipo().setIdentParametroTipo(ParametroTipoConstante.ESTADO_ASISTENCIA);
+                List<ParametroBE> estadosAsistencia = new ParametroManager().obtener(parametroAsistencia);
+                request.setAttribute("listDetalle", listDetalle);
+                request.setAttribute("asistencia", asistencia);
+                request.setAttribute("estadosAsistencia", estadosAsistencia);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                Util.guardarMensaje(request, Constante.MENSAJE_ERROR);
+                Util.enviarMensaje(request);
+            }
+            request.getRequestDispatcher("asistenciaRegistrar.jsp").forward(request, response);
+
+        }
+
     }
 
     /**
@@ -93,26 +106,32 @@ public class AsistenciaRegistrarServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int idAsistenciaDetalle  = 0;
-        AsistenciaBE asistencia = new AsistenciaBE();
-        AsistenciaDetalleBE asistenciaDetalle = new AsistenciaDetalleBE();
-        int numeroRegistros = Util.obtenerValorEntero(request.getParameter("numeroAgregados"));
-        int idAsistencia = Util.obtenerValorEntero(request.getParameter("idAsistencia"));
-        
-        
-        asistencia.setIdentAsistencia(idAsistencia);
-        for (int i = 1; i <= numeroRegistros ; i++) {
-            asistenciaDetalle = new AsistenciaDetalleBE();
-            asistenciaDetalle.getAlumno().setIdentAlumno(Util.obtenerValorEntero(request.getParameter("idalumno"+i)));
-            asistenciaDetalle.getEstadoAsistencia().setIdentParametro(Util.obtenerValorEntero(request.getParameter("idestadoasistencia"+i)));
-            asistenciaDetalle.setObservacion(request.getParameter("observaciones" + i));
-            asistencia.addAsistenciaDetalle(asistenciaDetalle);
+        if (UtilSeguridad.estaLogueado(request, response)) {
+            try {
+                int idAsistenciaDetalle = 0;
+                AsistenciaBE asistencia = new AsistenciaBE();
+                AsistenciaDetalleBE asistenciaDetalle = new AsistenciaDetalleBE();
+                int numeroRegistros = Util.obtenerValorEntero(request.getParameter("numeroAgregados"));
+                int idAsistencia = Util.obtenerValorEntero(request.getParameter("idAsistencia"));
+
+                asistencia.setIdentAsistencia(idAsistencia);
+                for (int i = 1; i <= numeroRegistros; i++) {
+                    asistenciaDetalle = new AsistenciaDetalleBE();
+                    asistenciaDetalle.getAlumno().setIdentAlumno(Util.obtenerValorEntero(request.getParameter("idalumno" + i)));
+                    asistenciaDetalle.getEstadoAsistencia().setIdentParametro(Util.obtenerValorEntero(request.getParameter("idestadoasistencia" + i)));
+                    asistenciaDetalle.setObservacion(request.getParameter("observaciones" + i));
+                    asistencia.addAsistenciaDetalle(asistenciaDetalle);
+                }
+
+                idAsistenciaDetalle = new AsistenciaDetalleManager().registrar(asistencia);
+                Util.guardarMensaje(request, Constante.REGISTRO_EXITOSO);
+            } catch (Exception e) {
+                e.printStackTrace();
+                Util.guardarMensaje(request, Constante.MENSAJE_ERROR);
+            }
+            response.sendRedirect(request.getContextPath() + "/asistenciaRegistrar");
         }
-        
-        idAsistenciaDetalle = new AsistenciaDetalleManager().registrar(asistencia);
-        
-        response.sendRedirect(request.getContextPath() + "/asistenciaRegistrar");
-        
+
     }
 
     /**

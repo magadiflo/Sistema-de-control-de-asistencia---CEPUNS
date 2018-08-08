@@ -31,6 +31,7 @@
         <link rel="stylesheet" href="css/_all-skins.min.css">
         <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
         <link rel="shortcut icon" href="img/favicon.ico">  
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
         <!-- DATATABLES -->
         <link rel="stylesheet" type="text/css" href="datatables/jquery.dataTables.min.css"/>
@@ -305,8 +306,19 @@
         <script src="datatables/pdfmake.min.js"></script>
         <script src="datatables/vfs_fonts.js"></script>
 
+        <%
+            String mensaje = (String) request.getAttribute("mensaje");
+        %>
+
         <script>
                                                 $(document).ready(function () {
+
+                                                    var mensaje = "<%=mensaje%>";
+                                                    if (mensaje !== "null" && mensaje !== '') {
+
+                                                        swal(mensaje, "", "success");
+                                                    }
+
                                                     $('#tblEspecialidad').DataTable({
                                                         "paging": true,
                                                         "ordering": true,
@@ -318,7 +330,7 @@
                                                             "infoEmpty": "No hay registros disponibles",
                                                             "infoFiltered": "(filtrado de los registros totales de _MAX_ )"
                                                         },
-                                                        "iDisplayLength":25
+                                                        "iDisplayLength": 25
                                                     });
                                                 });
 
@@ -353,8 +365,8 @@
                                                     var fila = '<tr class="filas" id="fila' + cont + '">' +
                                                             '<td><button type="button" class="btn btn-danger" onClick=eliminarFila(' + cont + ')>X</button></td>' +
                                                             '<td>' + num_unidad + '</td>' +
-                                                            '<td><input type="hidden" name="fecha_inicio_unidad_agregada" value="'+inicio_unidad+'" >' + inicio_unidad + '</td>' +
-                                                            '<td><input type="hidden" name="fecha_fin_unidad_agregada" value="'+fin_unidad+'" >' + fin_unidad + '</td>' +
+                                                            '<td><input type="hidden" name="fecha_inicio_unidad_agregada" value="' + inicio_unidad + '" >' + inicio_unidad + '</td>' +
+                                                            '<td><input type="hidden" name="fecha_fin_unidad_agregada" value="' + fin_unidad + '" >' + fin_unidad + '</td>' +
                                                             '<td>Abierto</td>' +
                                                             '</tr>';
                                                     cont++;
@@ -378,6 +390,9 @@
                                                     $("#fila" + indice).remove();
                                                 }
         </script>
+
+
+
 
     </body>
 </html>

@@ -5,6 +5,8 @@
  */
 package com.empresa.proyecto.controlador.home;
 
+import com.empresa.proyecto.util.Util;
+import com.empresa.proyecto.util.UtilSeguridad;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -59,14 +61,11 @@ public class HomeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        String mensaje = (String)request.getSession().getAttribute("mensaje");
-        if(mensaje != null){
-            request.setAttribute("mensaje", mensaje);
-            request.getSession().setAttribute("mensaje", null);
+        if(UtilSeguridad.estaLogueado(request, response)){
+            Util.enviarMensaje(request);
+            request.getRequestDispatcher("index.jsp").forward(request, response);
         }
         
-        request.getRequestDispatcher("index.jsp").forward(request, response);
     }
 
     /**

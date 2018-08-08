@@ -7,6 +7,9 @@ package com.empresa.proyecto.controlador.matricula;
 
 import com.empresa.proyecto.entidad.MatriculaBE;
 import com.empresa.proyecto.negocio.MatriculaManager;
+import com.empresa.proyecto.util.Util;
+import com.empresa.proyecto.util.UtilSeguridad;
+import com.empresa.proyecto.util.constante.Constante;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -41,7 +44,7 @@ public class MatriculaListarServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet matriculaListar</title>");            
+            out.println("<title>Servlet matriculaListar</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet matriculaListar at " + request.getContextPath() + "</h1>");
@@ -62,12 +65,20 @@ public class MatriculaListarServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<MatriculaBE> listaMatricula = new MatriculaManager().obtener(new MatriculaBE());
-        
-        request.setAttribute("listaMatricula", listaMatricula);
-        
-        request.getRequestDispatcher("listarCiclos.jsp").forward(request, response);
-        
+        if (UtilSeguridad.estaLogueado(request, response)) {
+            try {
+                Util.enviarMensaje(request);
+                List<MatriculaBE> listaMatricula = new MatriculaManager().obtener(new MatriculaBE());
+                request.setAttribute("listaMatricula", listaMatricula);
+            } catch (Exception e) {
+                e.printStackTrace();
+                Util.guardarMensaje(request, Constante.MENSAJE_ERROR);
+                Util.enviarMensaje(request);
+            }
+
+            request.getRequestDispatcher("listarCiclos.jsp").forward(request, response);
+        }
+
     }
 
     /**
@@ -81,7 +92,7 @@ public class MatriculaListarServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
     }
 
     /**

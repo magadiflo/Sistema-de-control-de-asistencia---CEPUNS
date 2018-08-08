@@ -4,7 +4,6 @@
 <%@page import="com.empresa.proyecto.entidad.MatriculaBE"%>
 <!DOCTYPE html>
 <%
-    String mensaje = (String) request.getAttribute("mensaje");
     MatriculaBE matricula = (MatriculaBE) request.getAttribute("matricula");
     List<AsistenciaBE> listaAsistencia = (List<AsistenciaBE>) request.getAttribute("listaAsistencia");
 %>
@@ -27,6 +26,8 @@
         <link rel="stylesheet" href="css/_all-skins.min.css">
         <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
         <link rel="shortcut icon" href="img/favicon.ico">
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        
 
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
@@ -124,15 +125,7 @@
             </section><!-- /.content -->
         </div><!-- /.content-wrapper -->
         <!--Fin-Contenido-->
-        <script type="text/javascript">
-            <%
-                if (mensaje != null) {
-            %>
-                alert("<%=mensaje%>");
-            <%
-                }
-            %>
-        </script>
+        
         <footer class="main-footer">
             <div class="pull-right hidden-xs">
                 <b>Version</b> 2.3.0
@@ -150,5 +143,18 @@
         <!-- AdminLTE App -->
         <script src="js/app.min.js"></script>
 
+        <%
+            String mensaje = (String) request.getAttribute("mensaje");
+        %>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                        var mensaje = "<%=mensaje%>";
+                if (mensaje !== "null" && mensaje !== '') {
+                    
+        swal(mensaje, "",  "success");
+                }
+            });
+        </script>
+        
     </body>
 </html>

@@ -10,6 +10,8 @@ import com.empresa.proyecto.entidad.MatriculaEspecialidadBE;
 import com.empresa.proyecto.negocio.MatriculaEspecialidadManager;
 import com.empresa.proyecto.negocio.MatriculaManager;
 import com.empresa.proyecto.util.Util;
+import com.empresa.proyecto.util.UtilSeguridad;
+import com.empresa.proyecto.util.constante.Constante;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -43,7 +45,7 @@ public class AlumnoListarServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AlumnoListarServlet</title>");            
+            out.println("<title>Servlet AlumnoListarServlet</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet AlumnoListarServlet at " + request.getContextPath() + "</h1>");
@@ -64,17 +66,27 @@ public class AlumnoListarServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int idMatricula = Util.obtenerValorEntero(request.getParameter("idMatricula"));
-        MatriculaBE matricula = new MatriculaManager().obtener(new MatriculaBE(idMatricula)).get(0);
-        
-        MatriculaEspecialidadBE matriculaEspecialidad = new MatriculaEspecialidadBE();
-        matriculaEspecialidad.getMatricula().setIdentMatricula(idMatricula);
-        List<MatriculaEspecialidadBE> listaEspecialidad = new MatriculaEspecialidadManager().obtener(matriculaEspecialidad);
-        
-        request.setAttribute("matricula", matricula);
-        request.setAttribute("listaEspecialidad", listaEspecialidad);
-        
-        request.getRequestDispatcher("alumnoListar.jsp").forward(request, response);
+        if (UtilSeguridad.estaLogueado(request, response)) {
+            try {
+                Util.enviarMensaje(request);
+                int idMatricula = Util.obtenerValorEntero(request.getParameter("idMatricula"));
+                MatriculaBE matricula = new MatriculaManager().obtener(new MatriculaBE(idMatricula)).get(0);
+
+                MatriculaEspecialidadBE matriculaEspecialidad = new MatriculaEspecialidadBE();
+                matriculaEspecialidad.getMatricula().setIdentMatricula(idMatricula);
+                List<MatriculaEspecialidadBE> listaEspecialidad = new MatriculaEspecialidadManager().obtener(matriculaEspecialidad);
+
+                request.setAttribute("matricula", matricula);
+                request.setAttribute("listaEspecialidad", listaEspecialidad);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                Util.guardarMensaje(request, Constante.MENSAJE_ERROR);
+                Util.enviarMensaje(request);
+            }
+            request.getRequestDispatcher("alumnoListar.jsp").forward(request, response);
+        }
+
     }
 
     /**
@@ -88,7 +100,7 @@ public class AlumnoListarServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
     }
 
     /**

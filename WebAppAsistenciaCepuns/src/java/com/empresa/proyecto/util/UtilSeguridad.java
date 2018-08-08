@@ -17,9 +17,10 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class UtilSeguridad {
     
-    public boolean estaLogueado(HttpServletRequest request, HttpServletResponse response) throws IOException{
+    public static boolean estaLogueado(HttpServletRequest request, HttpServletResponse response) throws IOException{
         UsuarioBE usuario = (UsuarioBE) request.getSession().getAttribute(Constante.USUARIO_LOGUEADO);
-        
+        if(usuario == null)
+            response.sendRedirect(request.getContextPath() + "/login");
         return usuario != null;
     }
     

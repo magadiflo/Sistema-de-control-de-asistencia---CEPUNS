@@ -25,6 +25,7 @@
         <link rel="stylesheet" href="css/_all-skins.min.css">
         <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
         <link rel="shortcut icon" href="img/favicon.ico">
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
         <!-- DATATABLES -->
         <link rel="stylesheet" type="text/css" href="datatables/jquery.dataTables.min.css"/>
@@ -308,8 +309,18 @@
         <script src="datatables/pdfmake.min.js"></script>
         <script src="datatables/vfs_fonts.js"></script>
 
+        <%
+            String mensaje = (String) request.getAttribute("mensaje");
+        %>
         <script>
             $(document).ready(function () {
+
+                var mensaje = "<%=mensaje%>";
+                if (mensaje !== "null" && mensaje !== '') {
+
+                    swal(mensaje, "", "success");
+                }
+
                 $('#tablaalumnos').DataTable({
                     "paging": false,
                     "ordering": true,
@@ -325,6 +336,9 @@
                 });
             });
         </script>
+
+
+
 
     </body>
 </html>
