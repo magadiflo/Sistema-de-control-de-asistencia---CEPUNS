@@ -99,6 +99,8 @@ public class AlumnoRegistrarServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int idAlumno = 0;
+        int especialidad = Util.obtenerValorEntero(request.getParameter("especialidad"));
+        System.out.println("Especialidad: " + especialidad);
         AlumnoManager alumnoManager = new AlumnoManager();
         AlumnoBE alumno = new AlumnoBE();
         alumno.getPersona().setIdentPersona(Util.obtenerValorEntero(request.getParameter("idPersona")));
@@ -111,7 +113,7 @@ public class AlumnoRegistrarServlet extends HttpServlet {
         alumno.getPersona().setDireccion(request.getParameter("direccion"));
         alumno.getPersona().setTelefono(request.getParameter("telefono"));
         alumno.getPersona().setEmail(request.getParameter("email"));
-        alumno.getMatriculaEspecialidad().setIdentMatriculaEspecialidad(Util.obtenerValorEntero(request.getParameter("especialidad")));
+        alumno.getMatriculaEspecialidad().setIdentMatriculaEspecialidad(especialidad);
         System.out.println("*************MATRICULA ESPECIALIDAD ************ :"  + alumno.getMatriculaEspecialidad().getIdentMatriculaEspecialidad());
         alumno.setApoderado(request.getParameter("apoderado"));
         alumno.setTelefonoContacto(request.getParameter("telefono_contacto"));
