@@ -58,6 +58,7 @@ public class MatriculaManager {
         int idProgramacionHorario = 0;
         int idAsistencia = 0;
         int idTurno = 0;
+        int numeroUnidad = 0;
         AsistenciaBE asistencia = null;
         
         
@@ -90,6 +91,7 @@ public class MatriculaManager {
         
         //Registrar las unidades del ciclo
         for(ProgramacionHorarioBE unidad : matricula.getListProgramacionHorario()){
+            unidad.setUnidad(++numeroUnidad);
             unidad.getMatricula().setIdentMatricula(idMatricula);
             unidad.getEstadoUnidad().setIdentParametro(ParametroConstante.ESTADO_ABIERTO);
             idProgramacionHorario = programacionHorarioDao.registrar(unidad);

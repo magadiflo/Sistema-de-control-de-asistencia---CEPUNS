@@ -100,6 +100,14 @@ public class Util {
         return calendarToDate(calendar);
     }
     
+    public static Date obtenerDateFormatoAnioMesDia(String fecha, String characterSplit){
+        if(fecha == null){
+            return null;
+        }
+        String [] fecha_valores = fecha.split(characterSplit);
+        return obtenerDate(obtenerValorEntero(fecha_valores[2]), obtenerValorEntero(fecha_valores[1]), obtenerValorEntero(fecha_valores[0]));
+    }
+    
     public static void retornarJson(Object object, HttpServletRequest request, HttpServletResponse response) throws IOException{
         Gson gson = new Gson();
             String jsonString = gson.toJson(object);
