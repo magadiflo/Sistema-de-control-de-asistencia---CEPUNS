@@ -18,4 +18,5 @@ public class Constante {
     public static final String VACIO = "";
     public static final int VALOR_ERROR_TRANSACCION = -101;
     public static final int VALOR_EXITO_TRANSACCION = 1;
+    public static final String CHECKED_ON = "on";
 }

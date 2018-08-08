@@ -65,7 +65,10 @@ public class MySQLConexion {
 
     }
 
-    public Connection getConnection() {
+    public Connection getConnection() throws SQLException {
+        if(cn != null)
+            if(cn.isClosed())
+                conectar();
         return cn;
     }
 

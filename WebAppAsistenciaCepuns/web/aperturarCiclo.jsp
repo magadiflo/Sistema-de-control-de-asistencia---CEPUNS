@@ -93,11 +93,11 @@
                                             </div>
                                             <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                                 <label>Fecha de apertura: </label>
-                                                <input type="date" class="form-control" name="fecha_inicio" id="fecha_inicio" required>
+                                                <input type="date" class="form-control" name="fecha_inicio_ciclo" id="fecha_inicio" required>
                                             </div>
                                             <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                                 <label>Fecha de finalización: </label>
-                                                <input type="date" class="form-control" name="fecha_fin" id="fecha_fin" required>
+                                                <input type="date" class="form-control" name="fecha_fin_ciclo" id="fecha_fin" required>
                                             </div>
                                         </div>
                                         <!-- Fin del cuerpo - panel Configuración General -->
@@ -201,11 +201,11 @@
                                                         for (EspecialidadBE item : especialidades) {
                                                     %>
                                                     <tr>
-                                                        <td><%=++i%></td>
+                                                        <td><input type="hidden" name="idEspecialidades" value="<%=item.getIdentEspecialidad()%>"><%=++i%></td>
                                                         <td><%=item.getFacultad().getDescripcion()%></td>
                                                         <td><%=item.getDescripcion()%></td>
                                                         <td><%=item.getCodigo()%></td>
-                                                        <td><input type="checkbox" checked> Activo</td>
+                                                        <td><input type="checkbox" name="checkEspecialidades" checked> Activo</td>
                                                     </tr>
                                                     <%
                                                         }
@@ -353,8 +353,8 @@
                                                     var fila = '<tr class="filas" id="fila' + cont + '">' +
                                                             '<td><button type="button" class="btn btn-danger" onClick=eliminarFila(' + cont + ')>X</button></td>' +
                                                             '<td>' + num_unidad + '</td>' +
-                                                            '<td>' + inicio_unidad + '</td>' +
-                                                            '<td>' + fin_unidad + '</td>' +
+                                                            '<td><input type="hidden" name="fecha_inicio_unidad_agregada" value="'+inicio_unidad+'" >' + inicio_unidad + '</td>' +
+                                                            '<td><input type="hidden" name="fecha_fin_unidad_agregada" value="'+fin_unidad+'" >' + fin_unidad + '</td>' +
                                                             '<td>Abierto</td>' +
                                                             '</tr>';
                                                     cont++;
