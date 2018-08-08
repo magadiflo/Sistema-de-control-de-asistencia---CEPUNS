@@ -65,7 +65,8 @@
                                 $("#numeroAgregados").val(numeroagregados);
 
                             } else {
-                                alert('No hay un alumno con dicho codigo');
+                                
+                                swal('No hay un alumno con dicho codigo', "",  "error");
                             }
 
                         }, error: function (jqXHR, exception) {
@@ -96,11 +97,13 @@
                 var id_estado_asistencia = $("#estado_asistencia").val();
 
                 if (codigo == null || codigo == '') {
-                    alert('Debe colocar el codigo del alumno');
+                    
+                    swal('Debe colocar el codigo del alumno', "",  "waning");
                     return false;
                 }
                 if (id_estado_asistencia == 0) {
-                    alert('Debe seleccionar el estado de la asistencia');
+                    
+                    swal('Debe seleccionar el estado de la asistencia', "",  "waning");
                     return false;
                 }
                 return true;

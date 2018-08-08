@@ -54,7 +54,8 @@
                             $("#telefono").val(alumno.persona.telefono);
                             $("#email").val(alumno.persona.email);
                         } else {
-                            alert('No hay una persona registrada con dicho documento');
+                            
+                            swal('No hay una persona registrada con dicho documento', "",  "warning");
                         }
 
                     }, error: function (jqXHR, exception) {
