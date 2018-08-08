@@ -15,6 +15,8 @@ import com.empresa.proyecto.negocio.MatriculaEspecialidadManager;
 import com.empresa.proyecto.negocio.MatriculaManager;
 import com.empresa.proyecto.negocio.ParametroManager;
 import com.empresa.proyecto.util.Util;
+import com.empresa.proyecto.util.UtilSeguridad;
+import com.empresa.proyecto.util.constante.Constante;
 import com.empresa.proyecto.util.constante.ParametroTipoConstante;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -49,7 +51,7 @@ public class AlumnoRegistrarServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AlumnoRegistrarServlet</title>");            
+            out.println("<title>Servlet AlumnoRegistrarServlet</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet AlumnoRegistrarServlet at " + request.getContextPath() + "</h1>");
@@ -70,21 +72,31 @@ public class AlumnoRegistrarServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ParametroBE parametro = new ParametroBE();
-        parametro.getParametroTipo().setIdentParametroTipo(ParametroTipoConstante.TIPO_DOCUMENTO);
-        List<ParametroBE> tiposDocumento =  new ParametroManager().obtener(parametro);
-        
-        MatriculaBE matriculaActual = new MatriculaManager().obtenerCicloActual();
-        
-        MatriculaEspecialidadBE matriculaEspecialidad = new MatriculaEspecialidadBE();
-        matriculaEspecialidad.getMatricula().setIdentMatricula(matriculaActual.getIdentMatricula());
-        List<MatriculaEspecialidadBE> listEspecialidades = new MatriculaEspecialidadManager().obtener(matriculaEspecialidad);
-        
-        request.setAttribute("tiposDocumento", tiposDocumento);
-        request.setAttribute("matriculaActual", matriculaActual);
-        request.setAttribute("listEspecialidades", listEspecialidades);
-        
-        request.getRequestDispatcher("alumnoRegistrar.jsp").forward(request, response);
+        if (UtilSeguridad.estaLogueado(request, response)) {
+            try {
+                Util.enviarMensaje(request);
+                ParametroBE parametro = new ParametroBE();
+                parametro.getParametroTipo().setIdentParametroTipo(ParametroTipoConstante.TIPO_DOCUMENTO);
+                List<ParametroBE> tiposDocumento = new ParametroManager().obtener(parametro);
+
+                MatriculaBE matriculaActual = new MatriculaManager().obtenerCicloActual();
+
+                MatriculaEspecialidadBE matriculaEspecialidad = new MatriculaEspecialidadBE();
+                matriculaEspecialidad.getMatricula().setIdentMatricula(matriculaActual.getIdentMatricula());
+                List<MatriculaEspecialidadBE> listEspecialidades = new MatriculaEspecialidadManager().obtener(matriculaEspecialidad);
+
+                request.setAttribute("tiposDocumento", tiposDocumento);
+                request.setAttribute("matriculaActual", matriculaActual);
+                request.setAttribute("listEspecialidades", listEspecialidades);
+            } catch (Exception e) {
+                e.printStackTrace();
+                Util.guardarMensaje(request, Constante.MENSAJE_ERROR);
+                Util.enviarMensaje(request);
+            }
+
+            request.getRequestDispatcher("alumnoRegistrar.jsp").forward(request, response);
+        }
+
     }
 
     /**
@@ -98,30 +110,40 @@ public class AlumnoRegistrarServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int idAlumno = 0;
-        int especialidad = Util.obtenerValorEntero(request.getParameter("especialidad"));
-        System.out.println("Especialidad: " + especialidad);
-        AlumnoManager alumnoManager = new AlumnoManager();
-        AlumnoBE alumno = new AlumnoBE();
-        alumno.getPersona().setIdentPersona(Util.obtenerValorEntero(request.getParameter("idPersona")));
-        alumno.getPersona().getTipoDocumento().setIdentParametroTipo(Util.obtenerValorEntero(request.getParameter("tipo_documento")));
-        alumno.getPersona().setDocumento(request.getParameter("documento"));
-        alumno.getPersona().setPaterno(request.getParameter("paterno"));
-        alumno.getPersona().setMaterno(request.getParameter("materno"));
-        alumno.getPersona().setNombres(request.getParameter("nombres"));
-        alumno.getPersona().setFechaNacimiento(Util.obtenerDate(8, 11, 1999));
-        alumno.getPersona().setDireccion(request.getParameter("direccion"));
-        alumno.getPersona().setTelefono(request.getParameter("telefono"));
-        alumno.getPersona().setEmail(request.getParameter("email"));
-        alumno.getMatriculaEspecialidad().setIdentMatriculaEspecialidad(especialidad);
-        System.out.println("*************MATRICULA ESPECIALIDAD ************ :"  + alumno.getMatriculaEspecialidad().getIdentMatriculaEspecialidad());
-        alumno.setApoderado(request.getParameter("apoderado"));
-        alumno.setTelefonoContacto(request.getParameter("telefono_contacto"));
-        alumno.setCodigo(alumnoManager.generarCodigo(alumno.getMatriculaEspecialidad().getIdentMatriculaEspecialidad()));
-        idAlumno = alumnoManager.registrar(alumno);
-        
-        response.sendRedirect(request.getContextPath() + "/alumnoRegistrar");
-        
+        if (UtilSeguridad.estaLogueado(request, response)) {
+            try {
+                int idAlumno = 0;
+                int especialidad = Util.obtenerValorEntero(request.getParameter("especialidad"));
+                System.out.println("Especialidad: " + especialidad);
+
+                AlumnoManager alumnoManager = new AlumnoManager();
+                AlumnoBE alumno = new AlumnoBE();
+                alumno.getPersona().setIdentPersona(Util.obtenerValorEntero(request.getParameter("idPersona")));
+                alumno.getPersona().getTipoDocumento().setIdentParametroTipo(Util.obtenerValorEntero(request.getParameter("tipo_documento")));
+                alumno.getPersona().setDocumento(request.getParameter("documento"));
+                alumno.getPersona().setPaterno(request.getParameter("paterno"));
+                alumno.getPersona().setMaterno(request.getParameter("materno"));
+                alumno.getPersona().setNombres(request.getParameter("nombres"));
+                alumno.getPersona().setFechaNacimiento(Util.obtenerDate(8, 11, 1999));
+                alumno.getPersona().setDireccion(request.getParameter("direccion"));
+                alumno.getPersona().setTelefono(request.getParameter("telefono"));
+                alumno.getPersona().setEmail(request.getParameter("email"));
+                alumno.getMatriculaEspecialidad().setIdentMatriculaEspecialidad(especialidad);
+                System.out.println("*************MATRICULA ESPECIALIDAD ************ :" + alumno.getMatriculaEspecialidad().getIdentMatriculaEspecialidad());
+                alumno.setApoderado(request.getParameter("apoderado"));
+                alumno.setTelefonoContacto(request.getParameter("telefono_contacto"));
+                alumno.setCodigo(alumnoManager.generarCodigo(alumno.getMatriculaEspecialidad().getIdentMatriculaEspecialidad()));
+                idAlumno = alumnoManager.registrar(alumno);
+                Util.guardarMensaje(request, Constante.REGISTRO_EXITOSO);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                Util.guardarMensaje(request, Constante.MENSAJE_ERROR);
+            }
+            response.sendRedirect(request.getContextPath() + "/alumnoRegistrar");
+
+        }
+
     }
 
     /**

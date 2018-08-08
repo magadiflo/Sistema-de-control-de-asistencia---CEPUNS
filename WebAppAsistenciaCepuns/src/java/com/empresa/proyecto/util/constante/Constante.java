@@ -23,4 +23,8 @@ public class Constante {
     public static final String MENSAJE_ESPERA_COOKIE = "Debe esperar 5 minutos para volver a intentar";
     public static final String MENSAJE_LOGIN_FALLIDO = "Credenciales incorrectas";
     public static final String USUARIO_LOGUEADO = "usuarioLogueado";
+    public static final String MENSAJE = "mensaje";
+    public static final String REGISTRO_EXITOSO = "Se registro exitosamente";
+    public static final String ACTUALIZACION_EXITOSA = "Se actualizo exitosamente";
+    public static final String MENSAJE_ERROR = "Ocurrio un error.";
 }

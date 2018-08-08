@@ -109,7 +109,7 @@
         <script type="text/javascript">
             $(document).ready(function () {
                 var mensaje = "<%=mensaje%>";
-                if(mensaje !== null && mensaje !== ''){
+                if(mensaje !== "null" && mensaje !== ''){
                     alert(mensaje);
                 }
             });

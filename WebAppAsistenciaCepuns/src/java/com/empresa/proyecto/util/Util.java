@@ -115,4 +115,20 @@ public class Util {
             response.getWriter().write(jsonString);
     }
     
+    public static String obtenerMensaje(HttpServletRequest request){
+        return (String)request.getSession().getAttribute(Constante.MENSAJE);
+    }
+    
+    public static void enviarMensaje(HttpServletRequest request){
+        String mensaje = obtenerMensaje(request);
+        if(mensaje != null){
+            request.getSession().setAttribute(Constante.MENSAJE, null);
+            request.setAttribute(Constante.MENSAJE, mensaje);
+        }
+    }
+    
+    public static void guardarMensaje(HttpServletRequest request, String mensaje){
+        request.getSession().setAttribute(Constante.MENSAJE, mensaje);
+    }
+    
 }

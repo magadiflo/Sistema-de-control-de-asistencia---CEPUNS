@@ -139,5 +139,17 @@
         <!-- AdminLTE App -->
         <script src="js/app.min.js"></script>
 
+        <%
+            String mensaje = (String) request.getAttribute("mensaje");
+        %>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                        var mensaje = "<%=mensaje%>";
+                if (mensaje !== "null" && mensaje !== '') {
+                    alert(mensaje);
+                }
+            });
+        </script>
+        
     </body>
 </html>

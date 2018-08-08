@@ -308,8 +308,17 @@
         <script src="datatables/pdfmake.min.js"></script>
         <script src="datatables/vfs_fonts.js"></script>
 
+        <%
+            String mensaje = (String) request.getAttribute("mensaje");
+        %>
         <script>
             $(document).ready(function () {
+                
+                var mensaje = "<%=mensaje%>";
+                if (mensaje !== "null" && mensaje !== '') {
+                    alert(mensaje);
+                }
+                
                 $('#tablaalumnos').DataTable({
                     "paging": false,
                     "ordering": true,
@@ -325,6 +334,9 @@
                 });
             });
         </script>
+        
+        
+        
 
     </body>
 </html>

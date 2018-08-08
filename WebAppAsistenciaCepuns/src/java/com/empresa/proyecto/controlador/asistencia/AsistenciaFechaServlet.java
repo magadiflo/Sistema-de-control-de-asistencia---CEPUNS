@@ -12,6 +12,8 @@ import com.empresa.proyecto.negocio.AsistenciaDetalleManager;
 import com.empresa.proyecto.negocio.AsistenciaManager;
 import com.empresa.proyecto.negocio.MatriculaManager;
 import com.empresa.proyecto.util.Util;
+import com.empresa.proyecto.util.UtilSeguridad;
+import com.empresa.proyecto.util.constante.Constante;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -46,7 +48,7 @@ public class AsistenciaFechaServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AsistenciaFechaServlet</title>");            
+            out.println("<title>Servlet AsistenciaFechaServlet</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet AsistenciaFechaServlet at " + request.getContextPath() + "</h1>");
@@ -67,25 +69,30 @@ public class AsistenciaFechaServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String mensaje = (String)request.getSession().getAttribute("mensaje");
-        if(mensaje != null){
-            request.getSession().setAttribute("mensaje", null);
-            request.setAttribute("mensaje", mensaje);
+        if (UtilSeguridad.estaLogueado(request, response)) {
+            try {
+                Util.enviarMensaje(request);
+                int idMatricula = Util.obtenerValorEntero(request.getParameter("idMatricula"));
+                MatriculaBE matricula = new MatriculaBE();
+                AsistenciaBE asistencia = new AsistenciaBE();
+                asistencia.getProgramacionHorario().getMatricula().setIdentMatricula(idMatricula);
+                List<AsistenciaBE> listaAsistencia = new ArrayList<AsistenciaBE>();
+                if (idMatricula != 0) {
+                    matricula = new MatriculaManager().obtener(new MatriculaBE(idMatricula)).get(0);
+                    listaAsistencia = new AsistenciaManager().obtener(asistencia);
+                }
+
+                request.setAttribute("matricula", matricula);
+                request.setAttribute("listaAsistencia", listaAsistencia);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                Util.guardarMensaje(request, Constante.MENSAJE_ERROR);
+                Util.enviarMensaje(request);
+            }
+            request.getRequestDispatcher("asistenciaSeleccionarFecha.jsp").forward(request, response);
         }
-        int idMatricula = Util.obtenerValorEntero(request.getParameter("idMatricula"));
-        MatriculaBE matricula = new MatriculaBE();
-        AsistenciaBE asistencia = new AsistenciaBE();
-        asistencia.getProgramacionHorario().getMatricula().setIdentMatricula(idMatricula);
-        List<AsistenciaBE> listaAsistencia = new ArrayList<AsistenciaBE>();
-        if(idMatricula != 0){
-            matricula = new MatriculaManager().obtener(new MatriculaBE(idMatricula)).get(0);
-            listaAsistencia = new AsistenciaManager().obtener(asistencia);
-        }
-            
-        
-        request.setAttribute("matricula", matricula);
-        request.setAttribute("listaAsistencia", listaAsistencia);
-        request.getRequestDispatcher("asistenciaSeleccionarFecha.jsp").forward(request, response);
+
     }
 
     /**
@@ -99,14 +106,24 @@ public class AsistenciaFechaServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String fecha = request.getParameter("fecha");
-        int idAsistencia = new AsistenciaManager().obtenerAsistenciaPorFecha(fecha);
-        if(idAsistencia == 0){
-            request.getSession().setAttribute("mensaje", "No existe una asistencia para la fecha indicada");
-            response.sendRedirect(request.getContextPath() + "/asistenciaFecha");
-        }else{
-            response.sendRedirect(request.getContextPath() + "/asistenciaRegistrar?idasistencia=" +idAsistencia );
+        if (UtilSeguridad.estaLogueado(request, response)) {
+            try {
+                String fecha = request.getParameter("fecha");
+                int idAsistencia = new AsistenciaManager().obtenerAsistenciaPorFecha(fecha);
+                if (idAsistencia == 0) {
+                    request.getSession().setAttribute("mensaje", "No existe una asistencia para la fecha indicada");
+                    response.sendRedirect(request.getContextPath() + "/asistenciaFecha");
+                } else {
+                    response.sendRedirect(request.getContextPath() + "/asistenciaRegistrar?idasistencia=" + idAsistencia);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                Util.guardarMensaje(request, Constante.MENSAJE_ERROR);
+                response.sendRedirect(request.getContextPath() + "/asistenciaFecha");
+            }
+
         }
+
     }
 
     /**

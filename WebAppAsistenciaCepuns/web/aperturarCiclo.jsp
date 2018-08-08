@@ -305,8 +305,18 @@
         <script src="datatables/pdfmake.min.js"></script>
         <script src="datatables/vfs_fonts.js"></script>
 
+        <%
+            String mensaje = (String) request.getAttribute("mensaje");
+        %>
+        
         <script>
                                                 $(document).ready(function () {
+                                                    
+                                                            var mensaje = "<%=mensaje%>";
+                if (mensaje !== "null" && mensaje !== '') {
+                    alert(mensaje);
+                }
+                                                    
                                                     $('#tblEspecialidad').DataTable({
                                                         "paging": true,
                                                         "ordering": true,
@@ -379,5 +389,8 @@
                                                 }
         </script>
 
+        
+        
+        
     </body>
 </html>

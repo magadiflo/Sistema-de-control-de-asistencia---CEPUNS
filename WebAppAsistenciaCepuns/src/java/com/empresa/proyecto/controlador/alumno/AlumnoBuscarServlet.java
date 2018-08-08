@@ -8,6 +8,7 @@ package com.empresa.proyecto.controlador.alumno;
 import com.empresa.proyecto.entidad.AlumnoBE;
 import com.empresa.proyecto.negocio.AlumnoManager;
 import com.empresa.proyecto.util.Util;
+import com.empresa.proyecto.util.UtilSeguridad;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -42,7 +43,7 @@ public class AlumnoBuscarServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AlumnoBuscarServlet</title>");            
+            out.println("<title>Servlet AlumnoBuscarServlet</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet AlumnoBuscarServlet at " + request.getContextPath() + "</h1>");
@@ -63,42 +64,44 @@ public class AlumnoBuscarServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String codigo = request.getParameter("codigo");
-        String documento = request.getParameter("documento");
-        int idMatricula = Util.obtenerValorEntero(request.getParameter("idMatricula"));
-        int idMatriculaEspecialidad = Util.obtenerValorEntero(request.getParameter("idMatriculaEspecialidad"));
-        int busqueda = Util.obtenerValorEntero(request.getParameter("busqueda"));
-        String nombre = request.getParameter("nombre");
-        System.out.println("codigo: " + codigo);
-        System.out.println("documento: " + documento);
-        System.out.println("idMatricula: " + idMatricula);
-        System.out.println("idMatriculaEspecialidad: " + idMatriculaEspecialidad);
-        System.out.println("nombre: " + nombre);
-        AlumnoBE alumno = new AlumnoBE();
-        List<AlumnoBE> listaAlumno = null;
-        try {
-            alumno.setCodigo(codigo);
-            alumno.getPersona().setDocumento(documento);
-            alumno.getMatriculaEspecialidad().getMatricula().setIdentMatricula(idMatricula);
-            alumno.getMatriculaEspecialidad().setIdentMatriculaEspecialidad(idMatriculaEspecialidad);
-            alumno.getPersona().setNombres(nombre);
-            listaAlumno = new AlumnoManager().obtener(alumno);
-            if(listaAlumno.size() > 0)
-                alumno = listaAlumno.get(0);
-        } catch (Exception e) {
-            e.printStackTrace();
-            alumno = new AlumnoBE();
-            listaAlumno = new ArrayList<AlumnoBE>();
-        } finally{
-            if(busqueda == 1){
-                Util.retornarJson(alumno, request, response);
-            }else{
-                Util.retornarJson(listaAlumno, request, response);
+        if (UtilSeguridad.estaLogueado(request, response)) {
+            String codigo = request.getParameter("codigo");
+            String documento = request.getParameter("documento");
+            int idMatricula = Util.obtenerValorEntero(request.getParameter("idMatricula"));
+            int idMatriculaEspecialidad = Util.obtenerValorEntero(request.getParameter("idMatriculaEspecialidad"));
+            int busqueda = Util.obtenerValorEntero(request.getParameter("busqueda"));
+            String nombre = request.getParameter("nombre");
+            System.out.println("codigo: " + codigo);
+            System.out.println("documento: " + documento);
+            System.out.println("idMatricula: " + idMatricula);
+            System.out.println("idMatriculaEspecialidad: " + idMatriculaEspecialidad);
+            System.out.println("nombre: " + nombre);
+            AlumnoBE alumno = new AlumnoBE();
+            List<AlumnoBE> listaAlumno = null;
+            try {
+                alumno.setCodigo(codigo);
+                alumno.getPersona().setDocumento(documento);
+                alumno.getMatriculaEspecialidad().getMatricula().setIdentMatricula(idMatricula);
+                alumno.getMatriculaEspecialidad().setIdentMatriculaEspecialidad(idMatriculaEspecialidad);
+                alumno.getPersona().setNombres(nombre);
+                listaAlumno = new AlumnoManager().obtener(alumno);
+                if (listaAlumno.size() > 0) {
+                    alumno = listaAlumno.get(0);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                alumno = new AlumnoBE();
+                listaAlumno = new ArrayList<AlumnoBE>();
+            } finally {
+                if (busqueda == 1) {
+                    Util.retornarJson(alumno, request, response);
+                } else {
+                    Util.retornarJson(listaAlumno, request, response);
+                }
+
             }
-            
         }
-        
-        
+
     }
 
     /**
@@ -112,7 +115,7 @@ public class AlumnoBuscarServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
     }
 
     /**

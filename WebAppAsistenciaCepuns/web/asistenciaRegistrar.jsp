@@ -4,7 +4,6 @@
 <%@page import="java.util.List"%>
 <!DOCTYPE html>
 <%
-    String mensaje = (String) request.getAttribute("mensaje");
     AsistenciaBE asistencia = (AsistenciaBE) request.getAttribute("asistencia");
     List<ParametroBE> estadosAsistencia = (List<ParametroBE>) request.getAttribute("estadosAsistencia");
     List<AsistenciaDetalleBE> listaDetalle = (List<AsistenciaDetalleBE>) request.getAttribute("listDetalle");
@@ -247,5 +246,18 @@
         <!-- AdminLTE App -->
         <script src="js/app.min.js"></script>
 
+        <%
+            String mensaje = (String) request.getAttribute("mensaje");
+        %>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                        var mensaje = "<%=mensaje%>";
+                if (mensaje !== "null" && mensaje !== '') {
+                    alert(mensaje);
+                }
+            });
+        </script>
+        
+        
     </body>
 </html>

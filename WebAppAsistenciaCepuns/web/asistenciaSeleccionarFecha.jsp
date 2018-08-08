@@ -4,7 +4,6 @@
 <%@page import="com.empresa.proyecto.entidad.MatriculaBE"%>
 <!DOCTYPE html>
 <%
-    String mensaje = (String) request.getAttribute("mensaje");
     MatriculaBE matricula = (MatriculaBE) request.getAttribute("matricula");
     List<AsistenciaBE> listaAsistencia = (List<AsistenciaBE>) request.getAttribute("listaAsistencia");
 %>
@@ -124,15 +123,7 @@
             </section><!-- /.content -->
         </div><!-- /.content-wrapper -->
         <!--Fin-Contenido-->
-        <script type="text/javascript">
-            <%
-                if (mensaje != null) {
-            %>
-                alert("<%=mensaje%>");
-            <%
-                }
-            %>
-        </script>
+        
         <footer class="main-footer">
             <div class="pull-right hidden-xs">
                 <b>Version</b> 2.3.0
@@ -150,5 +141,17 @@
         <!-- AdminLTE App -->
         <script src="js/app.min.js"></script>
 
+        <%
+            String mensaje = (String) request.getAttribute("mensaje");
+        %>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                        var mensaje = "<%=mensaje%>";
+                if (mensaje !== "null" && mensaje !== '') {
+                    alert(mensaje);
+                }
+            });
+        </script>
+        
     </body>
 </html>

@@ -7,6 +7,7 @@ package com.empresa.proyecto.controlador.login;
 
 import com.empresa.proyecto.entidad.UsuarioBE;
 import com.empresa.proyecto.negocio.LoginManager;
+import com.empresa.proyecto.util.Util;
 import com.empresa.proyecto.util.constante.Constante;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -66,7 +67,7 @@ public class LoginServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //processRequest(request, response);
-
+        Util.enviarMensaje(request);
         request.getRequestDispatcher("login.jsp").forward(request, response);
     }
 
@@ -94,9 +95,10 @@ public class LoginServlet extends HttpServlet {
         boolean esperaPorFallidos = validarEsperaPorFallidos(request, nombreCookie);
         if (esperaPorFallidos) {
             //Enviamos el atributo mensaje, que sera utilizado en el JSP login.jsp
-            request.setAttribute("mensaje", Constante.MENSAJE_ESPERA_COOKIE);
+            request.getSession().setAttribute("mensaje", Constante.MENSAJE_ESPERA_COOKIE);
             //Redireccionamos al login.jsp
-            request.getRequestDispatcher("login.jsp").forward(request, response);
+            //request.getRequestDispatcher("login.jsp").forward(request, response);
+            response.sendRedirect(request.getContextPath() + "/login");
         } else {
             /*
                 Logica si no tiene 3 intentos fallidos
@@ -111,7 +113,8 @@ public class LoginServlet extends HttpServlet {
                 //Reiniciar los intentos fallidos a 0
                 request.getSession().setAttribute("intentosFallidos", "0");
                 //Enviar un mensaje que mostraremos con ayuda de javascript en la vista JSP (En index.jsp)
-                request.getSession().setAttribute("mensaje", "Bienvenido " + usuario.getCuenta());
+                Util.guardarMensaje(request, "Bienvenido " + usuario.getCuenta());
+                //request.getSession().setAttribute("mensaje", "Bienvenido " + usuario.getCuenta());
                 //Guardamos al usuario logueado en sesion:
                 request.getSession().setAttribute(Constante.USUARIO_LOGUEADO, usuario);
                 //Redireccional a la vista index.jsp. Importante redireccionar de esta forma.
@@ -143,15 +146,17 @@ public class LoginServlet extends HttpServlet {
                     //Reiniciamos los intentos a 0
                     request.getSession().setAttribute("intentosFallidos", "0");
                     //Mensaje que enviaremos al JSP
-                    request.setAttribute("mensaje", Constante.MENSAJE_ESPERA_COOKIE);
+                    //request.setAttribute("mensaje", Constante.MENSAJE_ESPERA_COOKIE);
+                    Util.guardarMensaje(request, Constante.MENSAJE_ESPERA_COOKIE);
                 }
                 // --Fin crear cookie--
                 else{
                     //Mensaje que enviaremos al JSP
-                    request.setAttribute("mensaje", Constante.MENSAJE_LOGIN_FALLIDO);
+                    //request.setAttribute("mensaje", Constante.MENSAJE_LOGIN_FALLIDO);
+                    Util.guardarMensaje(request, Constante.MENSAJE_LOGIN_FALLIDO);
                 }
                 //En cualquier de los dos casos: Redireccionamos al login
-                
+                response.sendRedirect(request.getContextPath() + "/home");
             }
         }
 

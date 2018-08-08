@@ -16,6 +16,7 @@ import com.empresa.proyecto.negocio.EspecialidadManager;
 import com.empresa.proyecto.negocio.MatriculaManager;
 import com.empresa.proyecto.negocio.ParametroManager;
 import com.empresa.proyecto.util.Util;
+import com.empresa.proyecto.util.UtilSeguridad;
 import com.empresa.proyecto.util.constante.Constante;
 import com.empresa.proyecto.util.constante.ParametroTipoConstante;
 import java.io.IOException;
@@ -51,7 +52,7 @@ public class MatriculaRegistrarServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet MatriculaRegistrarServlet</title>");            
+            out.println("<title>Servlet MatriculaRegistrarServlet</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet MatriculaRegistrarServlet at " + request.getContextPath() + "</h1>");
@@ -72,16 +73,26 @@ public class MatriculaRegistrarServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        ParametroBE filtroCiclo = new ParametroBE();
-        filtroCiclo.getParametroTipo().setIdentParametroTipo(ParametroTipoConstante.CICLO);
-        List<ParametroBE> ciclos = new ParametroManager().obtener(filtroCiclo);
-        
-        List<EspecialidadBE> especialidades = new EspecialidadManager().obtener(new EspecialidadBE());
-        
-        request.setAttribute("ciclos", ciclos);
-        request.setAttribute("especialidades", especialidades);
-        request.getRequestDispatcher("aperturarCiclo.jsp").forward(request, response);
+        if (UtilSeguridad.estaLogueado(request, response)) {
+            try {
+                Util.enviarMensaje(request);
+                ParametroBE filtroCiclo = new ParametroBE();
+                filtroCiclo.getParametroTipo().setIdentParametroTipo(ParametroTipoConstante.CICLO);
+                List<ParametroBE> ciclos = new ParametroManager().obtener(filtroCiclo);
+
+                List<EspecialidadBE> especialidades = new EspecialidadManager().obtener(new EspecialidadBE());
+
+                request.setAttribute("ciclos", ciclos);
+                request.setAttribute("especialidades", especialidades);
+            } catch (Exception e) {
+                e.printStackTrace();
+                Util.guardarMensaje(request, Constante.MENSAJE_ERROR);
+                Util.enviarMensaje(request);
+            }
+
+            request.getRequestDispatcher("aperturarCiclo.jsp").forward(request, response);
+        }
+
     }
 
     /**
@@ -95,62 +106,66 @@ public class MatriculaRegistrarServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String characterSplit = "-";
-        String[] idDias = null;
-        String[] idEspecialidades = null;
-        String[] checkEspecialidades = null;
-        String[] fecha_inicio_unidad = null;
-        String[] fecha_fin_unidad = null;
-        MatriculaDiasBE matriculaDias = null;
-        MatriculaEspecialidadBE matriculaEspecialidad = null;
-        ProgramacionHorarioBE unidad = null;
-        try {
-            MatriculaBE matricula = new MatriculaBE();
-            matricula.setAnio(Util.obtenerValorEntero(request.getParameter("anio")));
-            matricula.getCiclo().setIdentParametro(Util.obtenerValorEntero(request.getParameter("id_004_ciclo")));
-            matricula.setLimiteFaltasPorcentaje(Util.obtenerValorEntero(request.getParameter("limite_faltas_porcentaje")));
-            matricula.setAsignarPrimerTurnoDefecto(true);
+        if (UtilSeguridad.estaLogueado(request, response)) {
             
-            TurnoBE turno = new TurnoBE();
-            turno.setHoraInicio(request.getParameter("hora_inicio"));
-            turno.setHoraFin(request.getParameter("hora_fin"));
-            matricula.getListTurno().add(turno);
-            
-            idDias = request.getParameterValues("dias");
-            for (int i = 0; i < idDias.length; i++) {
-                matriculaDias = new MatriculaDiasBE();
-                matriculaDias.getDia().setIdentParametro(Util.obtenerValorEntero(idDias[i]));
-                matricula.addMatriculaDia(matriculaDias);
-            }
-            
-            checkEspecialidades = request.getParameterValues("checkEspecialidades");
-            idEspecialidades = request.getParameterValues("idEspecialidades");
-            for (int i = 0; i < checkEspecialidades.length; i++) {
-                if(Constante.CHECKED_ON.equals(checkEspecialidades[i])){
-                    matriculaEspecialidad = new MatriculaEspecialidadBE();
-                    matriculaEspecialidad.getEspecialidad().setIdentEspecialidad(Util.obtenerValorEntero(idEspecialidades[i]));
-                    matricula.addMatriculaEspecialidad(matriculaEspecialidad);
+            String characterSplit = "-";
+            String[] idDias = null;
+            String[] idEspecialidades = null;
+            String[] checkEspecialidades = null;
+            String[] fecha_inicio_unidad = null;
+            String[] fecha_fin_unidad = null;
+            MatriculaDiasBE matriculaDias = null;
+            MatriculaEspecialidadBE matriculaEspecialidad = null;
+            ProgramacionHorarioBE unidad = null;
+            try {
+                MatriculaBE matricula = new MatriculaBE();
+                matricula.setAnio(Util.obtenerValorEntero(request.getParameter("anio")));
+                matricula.getCiclo().setIdentParametro(Util.obtenerValorEntero(request.getParameter("id_004_ciclo")));
+                matricula.setLimiteFaltasPorcentaje(Util.obtenerValorEntero(request.getParameter("limite_faltas_porcentaje")));
+                matricula.setAsignarPrimerTurnoDefecto(true);
+
+                TurnoBE turno = new TurnoBE();
+                turno.setHoraInicio(request.getParameter("hora_inicio"));
+                turno.setHoraFin(request.getParameter("hora_fin"));
+                matricula.getListTurno().add(turno);
+
+                idDias = request.getParameterValues("dias");
+                for (int i = 0; i < idDias.length; i++) {
+                    matriculaDias = new MatriculaDiasBE();
+                    matriculaDias.getDia().setIdentParametro(Util.obtenerValorEntero(idDias[i]));
+                    matricula.addMatriculaDia(matriculaDias);
                 }
+
+                checkEspecialidades = request.getParameterValues("checkEspecialidades");
+                idEspecialidades = request.getParameterValues("idEspecialidades");
+                for (int i = 0; i < checkEspecialidades.length; i++) {
+                    if (Constante.CHECKED_ON.equals(checkEspecialidades[i])) {
+                        matriculaEspecialidad = new MatriculaEspecialidadBE();
+                        matriculaEspecialidad.getEspecialidad().setIdentEspecialidad(Util.obtenerValorEntero(idEspecialidades[i]));
+                        matricula.addMatriculaEspecialidad(matriculaEspecialidad);
+                    }
+                }
+
+                fecha_inicio_unidad = request.getParameterValues("fecha_inicio_unidad_agregada");
+                fecha_fin_unidad = request.getParameterValues("fecha_fin_unidad_agregada");
+                for (int i = 0; i < fecha_inicio_unidad.length; i++) {
+                    unidad = new ProgramacionHorarioBE();
+                    unidad.setFechaInicio(Util.obtenerDateFormatoAnioMesDia(fecha_inicio_unidad[i], characterSplit));
+                    unidad.setFechaFin(Util.obtenerDateFormatoAnioMesDia(fecha_fin_unidad[i], characterSplit));
+                    matricula.addProgramacionHorario(unidad);
+                }
+
+                int idMatricula = new MatriculaManager().registrar(matricula);
+                
+                Util.guardarMensaje(request, Constante.REGISTRO_EXITOSO);
+                
+            } catch (Exception e) {
+                e.printStackTrace();
+                Util.guardarMensaje(request, Constante.MENSAJE_ERROR);
             }
-            
-            fecha_inicio_unidad = request.getParameterValues("fecha_inicio_unidad_agregada");
-            fecha_fin_unidad = request.getParameterValues("fecha_fin_unidad_agregada");
-            for (int i = 0; i < fecha_inicio_unidad.length; i++) {
-                unidad = new ProgramacionHorarioBE();
-                unidad.setFechaInicio(Util.obtenerDateFormatoAnioMesDia(fecha_inicio_unidad[i], characterSplit));
-                unidad.setFechaFin(Util.obtenerDateFormatoAnioMesDia(fecha_fin_unidad[i], characterSplit));
-                matricula.addProgramacionHorario(unidad);
-            }
-            
-            int idMatricula = new MatriculaManager().registrar(matricula);
-            
-        } catch (Exception e) {
-            e.printStackTrace();
+            response.sendRedirect(request.getContextPath() + "/aperturarCiclo");
         }
-        
-        response.sendRedirect(request.getContextPath() + "/aperturarCiclo");
-        
-        
+
     }
 
     /**
