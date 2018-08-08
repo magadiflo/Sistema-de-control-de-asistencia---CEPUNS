@@ -317,7 +317,8 @@
                                                             "info": "Mostrando página _PAGE_ de _PAGES_",
                                                             "infoEmpty": "No hay registros disponibles",
                                                             "infoFiltered": "(filtrado de los registros totales de _MAX_ )"
-                                                        }
+                                                        },
+                                                        "iDisplayLength":25
                                                     });
                                                 });
 

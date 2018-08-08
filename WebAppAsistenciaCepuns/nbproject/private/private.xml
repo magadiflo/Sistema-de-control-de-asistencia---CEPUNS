@@ -2,15 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/Martín/Desktop/Sistema%20-%20Cepuns/Sistema-de-control-de-asistencia---CEPUNS/WebAppAsistenciaCepuns/src/java/com/empresa/proyecto/controlador/TestMatriculaServlet.java</file>
-            <file>file:/C:/Users/Martín/Desktop/Sistema%20-%20Cepuns/Sistema-de-control-de-asistencia---CEPUNS/WebAppAsistenciaCepuns/src/java/com/empresa/proyecto/controlador/matricula/matriculaListarServlet.java</file>
-            <file>file:/C:/Users/Martín/Desktop/Sistema%20-%20Cepuns/Sistema-de-control-de-asistencia---CEPUNS/WebAppAsistenciaCepuns/src/java/com/empresa/proyecto/controlador/TestAlumnoServlet.java</file>
-            <file>file:/C:/Users/Martín/Desktop/Sistema%20-%20Cepuns/Sistema-de-control-de-asistencia---CEPUNS/WebAppAsistenciaCepuns/web/listarCiclos.jsp</file>
-            <file>file:/C:/Users/Martín/Desktop/Sistema%20-%20Cepuns/Sistema-de-control-de-asistencia---CEPUNS/WebAppAsistenciaCepuns/web/aperturarCiclo.jsp</file>
-            <file>file:/C:/Users/Martín/Desktop/Sistema%20-%20Cepuns/Sistema-de-control-de-asistencia---CEPUNS/WebAppAsistenciaCepuns/web/WEB-INF/layout/menu.jsp</file>
-            <file>file:/C:/Users/Martín/Desktop/Sistema%20-%20Cepuns/Sistema-de-control-de-asistencia---CEPUNS/WebAppAsistenciaCepuns/src/java/com/empresa/proyecto/controlador/MyListener.java</file>
-            <file>file:/C:/Users/Martín/Desktop/Sistema%20-%20Cepuns/Sistema-de-control-de-asistencia---CEPUNS/WebAppAsistenciaCepuns/src/java/com/empresa/proyecto/controlador/TestAsistenciaServlet.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>
